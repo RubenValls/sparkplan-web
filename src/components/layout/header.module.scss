@@ -1,0 +1,50 @@
+@use "@/styles/variables.scss" as *;
+
+.header {
+  width: 100%;
+  background-color: $color-surface;
+  border-bottom: 1px solid $color-border;
+  padding: 16px 0;
+
+  &__content {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+
+  &__logo {
+    display: flex;
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__nav {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__navItem {
+    color: $color-text;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.2s;
+
+    &:hover {
+      color: $color-primary;
+    }
+  }
+}
