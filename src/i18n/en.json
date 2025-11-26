@@ -1,0 +1,13 @@
+{
+  "HOME": {
+    "TITLE": "Welcome to SparkPlan",
+    "SUBTITLE": "Transform your ideas into actionable plans using AI and automation."
+  },
+  "AUTH": {
+    "LOGIN": "Sign in",
+    "LOGOUT": "Logout"
+  },
+  "HEADER": {
+    "SWITCH_LANG": "Change language"
+  }
+}
