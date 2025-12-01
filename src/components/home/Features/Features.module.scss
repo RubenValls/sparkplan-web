@@ -1,0 +1,46 @@
+@use "@/styles/variables" as *;
+
+.features {
+  padding: var(--spacing-3xl) var(--spacing-md);
+  background: linear-gradient(to bottom, var(--color-background), var(--color-surface));
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__heading {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-text-primary);
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+  }
+}
+
+.feature {
+  text-align: center;
+  padding: var(--spacing-lg);
+
+  &__icon {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+}

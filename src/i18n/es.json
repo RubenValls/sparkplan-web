@@ -1,7 +1,39 @@
 {
   "HOME": {
     "TITLE": "Bienvenido a SparkPlan",
-    "SUBTITLE": "Transforma tus ideas en planes accionables mediante IA y automatización."
+    "SUBTITLE": "Transforma tus ideas en planes accionables mediante IA y automatización.",
+    "HERO": {
+      "TITLE": "Transforma Tus Ideas en Planes de Acción",
+      "SUBTITLE": "SparkPlan usa IA para convertir tus pensamientos en planes estructurados y accionables — guardados automáticamente en tu Google Drive.",
+      "GET_STARTED": "Comenzar Gratis",
+      "GO_TO_DASHBOARD": "Ir al Panel"
+    },
+    "HOW_IT_WORKS": {
+      "HEADING": "Cómo Funciona",
+      "STEP_1_TITLE": "Inicia sesión con Google",
+      "STEP_1_DESC": "Autenticación segura usando tu cuenta de Google.",
+      "STEP_2_TITLE": "Comparte Tu Idea",
+      "STEP_2_DESC": "Describe tu idea en cualquier idioma — simple o detallada.",
+      "STEP_3_TITLE": "La IA Genera Tu Plan",
+      "STEP_3_DESC": "Nuestra IA crea un plan estructurado con pasos, recursos y cronogramas.",
+      "STEP_4_TITLE": "Guardado Automático en Drive",
+      "STEP_4_DESC": "Tu plan se guarda automáticamente en tu Google Drive en una carpeta dedicada."
+    },
+    "FEATURES": {
+      "HEADING": "¿Por Qué SparkPlan?",
+      "FEATURE_1_TITLE": "Rapidísimo",
+      "FEATURE_1_DESC": "Genera planes completos en segundos, no en horas.",
+      "FEATURE_2_TITLE": "Soporte Multilingüe",
+      "FEATURE_2_DESC": "Escribe en inglés o español — la IA se adapta a tu idioma.",
+      "FEATURE_3_TITLE": "Almacenamiento en la Nube",
+      "FEATURE_3_DESC": "Todos los planes se guardan de forma segura en tu Google Drive personal."
+    },
+    "CTA": {
+      "HEADING": "¿Listo para Dar Vida a Tus Ideas?",
+      "TEXT": "Únete a miles de creadores, emprendedores y pensadores que usan SparkPlan.",
+      "START_NOW": "Comenzar Ahora",
+      "GO_TO_DASHBOARD": "Ir al Panel"
+    }
   },
   "AUTH": {
     "LOGIN": "Iniciar sesión",

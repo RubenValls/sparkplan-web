@@ -1,0 +1,68 @@
+@use "@/styles/variables" as *;
+
+.howItWorks {
+  padding: var(--spacing-3xl) var(--spacing-md);
+  background: var(--color-background);
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__heading {
+    text-align: center;
+    font-size: clamp(2rem, 4vw, 3rem);
+    margin-bottom: var(--spacing-2xl);
+    color: var(--color-text-primary);
+  }
+
+  &__steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+  }
+}
+
+.step {
+  background: var(--color-surface);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  &__icon {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  &__number {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background: var(--color-primary);
+    color: var(--color-text-inverse);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 1.25rem;
+    line-height: 40px;
+    margin-bottom: var(--spacing-md);
+  }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: var(--spacing-sm);
+    color: var(--color-text-primary);
+  }
+
+  &__description {
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+}

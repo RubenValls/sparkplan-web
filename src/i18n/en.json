@@ -1,7 +1,39 @@
 {
   "HOME": {
     "TITLE": "Welcome to SparkPlan",
-    "SUBTITLE": "Transform your ideas into actionable plans using AI and automation."
+    "SUBTITLE": "Transform your ideas into actionable plans using AI and automation.",
+    "HERO": {
+      "TITLE": "Transform Your Ideas into Action Plans",
+      "SUBTITLE": "SparkPlan uses AI to turn your thoughts into structured, actionable plans — automatically saved to your Google Drive.",
+      "GET_STARTED": "Get Started Free",
+      "GO_TO_DASHBOARD": "Go to Dashboard"
+    },
+    "HOW_IT_WORKS": {
+      "HEADING": "How It Works",
+      "STEP_1_TITLE": "Sign in with Google",
+      "STEP_1_DESC": "Secure authentication using your Google account.",
+      "STEP_2_TITLE": "Share Your Idea",
+      "STEP_2_DESC": "Describe your idea in any language — keep it simple or detailed.",
+      "STEP_3_TITLE": "AI Generates Your Plan",
+      "STEP_3_DESC": "Our AI creates a structured plan with steps, resources, and timelines.",
+      "STEP_4_TITLE": "Auto-Save to Drive",
+      "STEP_4_DESC": "Your plan is automatically saved to your Google Drive in a dedicated folder."
+    },
+    "FEATURES": {
+      "HEADING": "Why SparkPlan?",
+      "FEATURE_1_TITLE": "Lightning Fast",
+      "FEATURE_1_DESC": "Generate comprehensive plans in seconds, not hours.",
+      "FEATURE_2_TITLE": "Multilingual Support",
+      "FEATURE_2_DESC": "Write in English or Spanish — AI adapts to your language.",
+      "FEATURE_3_TITLE": "Cloud Storage",
+      "FEATURE_3_DESC": "All plans are securely stored in your personal Google Drive."
+    },
+    "CTA": {
+      "HEADING": "Ready to Bring Your Ideas to Life?",
+      "TEXT": "Join thousands of creators, entrepreneurs, and thinkers using SparkPlan.",
+      "START_NOW": "Start Now",
+      "GO_TO_DASHBOARD": "Go to Dashboard"
+    }
   },
   "AUTH": {
     "LOGIN": "Sign in",
