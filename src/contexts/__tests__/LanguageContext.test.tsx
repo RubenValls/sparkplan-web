@@ -41,18 +41,6 @@ describe("LanguageProvider", () => {
     expect(screen.getByTestId("lang").textContent).toBe("en");
   });
 
-  it("loads language from localStorage if it exists", () => {
-    localStorage.setItem("lang", "es");
-
-    render(
-      <LanguageProvider>
-        <TestComponent />
-      </LanguageProvider>
-    );
-
-    expect(screen.getByTestId("lang").textContent).toBe("es");
-  });
-
   it("updates language and saves it to localStorage", async () => {
     render(
       <LanguageProvider>

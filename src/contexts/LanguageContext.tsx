@@ -12,10 +12,7 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 function getInitialLang(): SupportedLang {
-  if (typeof window === "undefined") return "en";
-
-  const saved = localStorage.getItem("lang") as SupportedLang | null;
-  return saved ?? "en";
+  return "en";
 }
 
 export function LanguageProvider({children}: {children: React.ReactNode}) {
