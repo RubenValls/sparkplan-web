@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Lock, Lightbulb, Bot, FolderOpen } from "lucide-react";
 import styles from "./HowItWorks.module.scss";
 
 export default function HowItWorks() {
@@ -8,28 +9,24 @@ export default function HowItWorks() {
 
   const steps = [
     {
-      number: "1",
       title: t("STEP_1_TITLE"),
       description: t("STEP_1_DESC"),
-      icon: "🔐"
+      icon: Lock
     },
     {
-      number: "2",
       title: t("STEP_2_TITLE"),
       description: t("STEP_2_DESC"),
-      icon: "💡"
+      icon: Lightbulb
     },
     {
-      number: "3",
       title: t("STEP_3_TITLE"),
       description: t("STEP_3_DESC"),
-      icon: "🤖"
+      icon: Bot
     },
     {
-      number: "4",
       title: t("STEP_4_TITLE"),
       description: t("STEP_4_DESC"),
-      icon: "📁"
+      icon: FolderOpen
     }
   ];
 
@@ -38,14 +35,18 @@ export default function HowItWorks() {
       <div className={styles.howItWorks__container}>
         <h2 className={styles.howItWorks__heading}>{t("HEADING")}</h2>
         <div className={styles.howItWorks__steps}>
-          {steps.map((step) => (
-            <div key={step.number} className={styles.step}>
-              <div className={styles.step__icon}>{step.icon}</div>
-              <div className={styles.step__number}>{step.number}</div>
-              <h3 className={styles.step__title}>{step.title}</h3>
-              <p className={styles.step__description}>{step.description}</p>
-            </div>
-          ))}
+          {steps.map((step) => {
+            const IconComponent = step.icon;
+            return (
+              <div key={step.title} className={styles.step}>
+                <div className={styles.step__icon}>
+                  <IconComponent />
+                </div>
+                <h3 className={styles.step__title}>{step.title}</h3>
+                <p className={styles.step__description}>{step.description}</p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>

@@ -15,22 +15,14 @@ describe("HowItWorks", () => {
     
     expect(screen.getByText("STEP_1_TITLE")).toBeInTheDocument();
     expect(screen.getByText("STEP_1_DESC")).toBeInTheDocument();
-    expect(screen.getByText("🔐")).toBeInTheDocument();
-    expect(screen.getByText("1")).toBeInTheDocument();
     
     expect(screen.getByText("STEP_2_TITLE")).toBeInTheDocument();
     expect(screen.getByText("STEP_2_DESC")).toBeInTheDocument();
-    expect(screen.getByText("💡")).toBeInTheDocument();
-    expect(screen.getByText("2")).toBeInTheDocument();
     
     expect(screen.getByText("STEP_3_TITLE")).toBeInTheDocument();
     expect(screen.getByText("STEP_3_DESC")).toBeInTheDocument();
-    expect(screen.getByText("🤖")).toBeInTheDocument();
-    expect(screen.getByText("3")).toBeInTheDocument();
     
     expect(screen.getByText("STEP_4_TITLE")).toBeInTheDocument();
     expect(screen.getByText("STEP_4_DESC")).toBeInTheDocument();
-    expect(screen.getByText("📁")).toBeInTheDocument();
-    expect(screen.getByText("4")).toBeInTheDocument();
   });
 });

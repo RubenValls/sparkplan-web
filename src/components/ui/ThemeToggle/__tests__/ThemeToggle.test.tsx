@@ -15,7 +15,6 @@ vi.mock("lucide-react", () => ({
 
 describe("ThemeToggle", () => {
   let localStorageMock: { [key: string]: string };
-  let consoleLogSpy: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
     // Mock localStorage
@@ -53,13 +52,10 @@ describe("ThemeToggle", () => {
     // Mock setAttribute
     document.documentElement.setAttribute = vi.fn();
 
-    // Spy on console.log
-    consoleLogSpy = vi.spyOn(console, "log").mockImplementation(() => {});
   });
 
   afterEach(() => {
     vi.clearAllMocks();
-    consoleLogSpy.mockRestore();
   });
 
   it("should render placeholder when not mounted", () => {
@@ -87,7 +83,6 @@ describe("ThemeToggle", () => {
 
     expect(localStorage.setItem).toHaveBeenCalledWith("theme", "dark");
     expect(document.documentElement.setAttribute).toHaveBeenCalledWith("data-theme", "dark");
-    expect(consoleLogSpy).toHaveBeenCalledWith("Theme toggled to", "dark");
   });
 
   it("should initialize with saved dark theme and toggle to light", async () => {
@@ -109,7 +104,6 @@ describe("ThemeToggle", () => {
 
     expect(localStorage.setItem).toHaveBeenCalledWith("theme", "light");
     expect(document.documentElement.setAttribute).toHaveBeenCalledWith("data-theme", "light");
-    expect(consoleLogSpy).toHaveBeenCalledWith("Theme toggled to", "light");
   });
 
   it("should use system preference when no saved theme", async () => {

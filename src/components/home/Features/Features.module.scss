@@ -2,7 +2,7 @@
 
 .features {
   padding: var(--spacing-3xl) var(--spacing-md);
-  background: linear-gradient(to bottom, var(--color-background), var(--color-surface));
+  background: linear-gradient(to bottom, var(--color-bg), var(--color-surface));
 
   &__container {
     max-width: 1200px;
@@ -13,7 +13,7 @@
     text-align: center;
     font-size: clamp(2rem, 4vw, 3rem);
     margin-bottom: var(--spacing-2xl);
-    color: var(--color-text-primary);
+    color: var(--color-text);
   }
 
   &__grid {
@@ -28,19 +28,31 @@
   padding: var(--spacing-lg);
 
   &__icon {
-    font-size: 4rem;
-    margin-bottom: var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    background: var(--color-primary);
+    border-radius: var(--border-radius-full);
+    color: var(--color-text-inverse);
+    
+    svg {
+      width: 40px;
+      height: 40px;
+    }
   }
 
   &__title {
     font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: var(--spacing-sm);
-    color: var(--color-text-primary);
+    color: var(--color-text);
   }
 
   &__description {
-    color: var(--color-text-secondary);
+    color: var(--color-text-secondary, var(--color-muted));
     line-height: 1.6;
   }
 }
