@@ -1,7 +1,7 @@
 "use client";
 
 import {createContext, useContext, useState} from "react";
-import {languages, SupportedLang} from "@/i18n";
+import {i18nConfig, languages, SupportedLang} from "@/i18n";
 import {NextIntlClientProvider} from "next-intl";
 
 interface LanguageContextValue {
@@ -28,6 +28,7 @@ export function LanguageProvider({children}: {children: React.ReactNode}) {
       <NextIntlClientProvider 
         locale={lang}
         messages={languages[lang]}
+        timeZone={i18nConfig.timeZone}
       >
         {children}
       </NextIntlClientProvider>

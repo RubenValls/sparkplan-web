@@ -1,14 +1,22 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Hero from "../Hero";
+import { signIn } from "next-auth/react";
 
-// Mock de next-intl
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
 }));
 
+vi.mock("next-auth/react", () => ({
+  signIn: vi.fn(),
+}));
+
 describe("Hero", () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it("should render all content", () => {
     render(<Hero />);
     
@@ -22,6 +30,7 @@ describe("Hero", () => {
     render(<Hero />);
     
     await user.click(screen.getByRole("button"));
-    // No lanza error = test pasa
+    
+    expect(signIn).toHaveBeenCalledWith("google", { callbackUrl: "/dashboard" });
   });
 });

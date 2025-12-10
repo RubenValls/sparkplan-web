@@ -1,13 +1,15 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { signIn } from "next-auth/react";
+import { ROUTES } from "@/constants/routes";
 import styles from "./Hero.module.scss";
 
 export default function Hero() {
   const translations = useTranslations("HOME.HERO");
 
   const handleGetStarted = () => {
-    //@TODO(): Implement Get Started
+    signIn("google", { callbackUrl: ROUTES.DASHBOARD });
   };
 
   return (

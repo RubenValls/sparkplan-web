@@ -1,13 +1,15 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { signIn } from "next-auth/react";
+import { ROUTES } from "@/constants/routes";
 import styles from "./CTA.module.scss";
 
 export default function CTA() {
   const t = useTranslations("HOME.CTA");
 
   const handleAction = () => {
-    //@TODO(): Implement Get Started
+    signIn("google", { callbackUrl: ROUTES.DASHBOARD });
   };
 
   return (

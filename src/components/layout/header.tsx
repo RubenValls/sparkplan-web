@@ -1,18 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { useSession, signIn, signOut } from "next-auth/react";
 import Logo from "@/components/ui/Logo/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle/ThemeToggle";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher/LanguageSwitcher";
+import { useTranslations } from "next-intl";
+import { ROUTES } from "@/constants/routes";
 import styles from "./Header.module.scss";
 
 export default function Header() {
-  const session = false; //@TODO(): Implement session logic
+  const { data: session, status } = useSession();
+  const t = useTranslations("AUTH");
+  const isLoading = status === "loading";
 
   return (
     <header className={styles.header}>
       <div className={styles.header__container}>
-        <Link href="/" className={styles.header__brand}>
+        <Link href={ROUTES.HOME} className={styles.header__brand}>
           <Logo className={styles.header__logo} />
           <span className={styles.header__title}>SparkPlan</span>
         </Link>
@@ -23,34 +28,25 @@ export default function Header() {
             <LanguageSwitcher />
           </div>
 
-          {}
-          {
+          {!isLoading && (
             <div className={styles.header__actions}>
               {session ? (
-                <>
-                  <Link 
-                    href="/dashboard" 
-                    className={styles.header__link}
+                  <button
+                    onClick={() => signOut({ callbackUrl: ROUTES.HOME })}
+                    className={`${styles.header__link} ${styles["header__link--primary"]}`}
                   >
-                    Dashboard
-                  </Link>
-                  <Link
-                    href="/api/auth/signout"
-                    className={`${styles.header__link} ${styles['header__link--primary']}`}
-                  >
-                    Logout
-                  </Link>
-                </>
+                    {t("LOGOUT")}
+                  </button>
               ) : (
-                <Link
-                  href="/api/auth/signin"
-                  className={`${styles.header__link} ${styles['header__link--primary']}`}
+                <button
+                  onClick={() => signIn("google", { callbackUrl: ROUTES.DASHBOARD })}
+                  className={`${styles.header__link} ${styles["header__link--primary"]}`}
                 >
-                  Sign In
-                </Link>
+                  {t("LOGIN")}
+                </button>
               )}
             </div>
-          }
+          )}
         </nav>
       </div>
     </header>

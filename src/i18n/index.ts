@@ -7,3 +7,9 @@ export const languages = {
 };
 
 export type SupportedLang = keyof typeof languages;
+
+export const i18nConfig = {
+  locales: ["en", "es"] as const,
+  defaultLocale: "en" as const,
+  timeZone: "UTC",
+} as const;
