@@ -1,0 +1,65 @@
+@use "@/styles/variables" as *;
+
+.welcomeCard {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  margin-bottom: var(--spacing-xl);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  color: var(--color-text-inverse, #fff);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--border-radius-full);
+    flex-shrink: 0;
+
+    svg {
+      width: 32px;
+      height: 32px;
+    }
+  }
+
+  &__text {
+    flex: 1;
+  }
+
+  &__greeting {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: var(--spacing-xs);
+  }
+
+  &__subtitle {
+    font-size: 1rem;
+    opacity: 0.95;
+  }
+
+  @media (max-width: 640px) {
+    padding: var(--spacing-lg);
+
+    &__header {
+      gap: var(--spacing-md);
+    }
+
+    &__icon {
+      width: 48px;
+      height: 48px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+}

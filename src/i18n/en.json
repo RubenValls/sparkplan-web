@@ -35,9 +35,39 @@
       "GO_TO_DASHBOARD": "Go to Dashboard"
     }
   },
+  "DASHBOARD": {
+    "WELCOME": {
+      "GREETING": "Welcome back,",
+      "SUBTITLE": "Ready to turn your next idea into reality?",
+      "PLANS_CREATED": "Plans created",
+      "LAST_PLAN": "Last plan"
+    },
+    "IDEA_FORM": {
+      "TITLE": "Share Your Idea",
+      "LABEL": "Describe your idea",
+      "PLACEHOLDER": "Example: A mobile app to help people find local farmers markets and connect directly with producers...",
+      "SUBMIT": "Generate Plan",
+      "PROCESSING": "Generating your plan...",
+      "MIN_LENGTH_ERROR": "Please write at least 50 characters to help us understand your idea better.",
+      "SUCCESS_MESSAGE": "Your plan has been generated successfully!",
+      "ERROR_MESSAGE": "Something went wrong. Please try again.",
+      "VIEW_IN_DRIVE": "View in Google Drive",
+      "TIPS_TITLE": "Tips for best results:",
+      "TIP_1": "Write in any language you prefer — the plan will be generated in that language",
+      "TIP_2": "Focus on describing your core idea, not formatting or structure",
+      "TIP_3": "Be specific about your goals and target audience",
+      "TIP_4": "Don't worry about length — quality over quantity",
+      "LOADING_STEP_1": "Analyzing your idea...",
+      "LOADING_STEP_2": "Researching market opportunities...",
+      "LOADING_STEP_3": "Building strategic framework...",
+      "LOADING_STEP_4": "Developing implementation roadmap...",
+      "LOADING_STEP_5": "Organizing action plan...",
+      "LOADING_STEP_6": "Finalizing your professional plan..."
+    }
+  },
   "AUTH": {
     "LOGIN": "Sign in",
-    "LOGOUT": "Logout"
+    "LOGOUT": "Exit"
   },
   "HEADER": {
     "SWITCH_LANG": "Change language"

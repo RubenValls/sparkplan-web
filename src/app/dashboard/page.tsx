@@ -3,22 +3,21 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { ROUTES } from "@/constants/routes";
 import styles from "./page.module.scss";
+import WelcomeCard from "./components/WelcomeCard/WelcomeCard";
+import IdeaForm from "./components/IdeaForm/IdeaForm";
 
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
+  if (!session || !session.user) {
     redirect(ROUTES.HOME);
   }
 
   return (
     <main className={styles.dashboard}>
       <div className={styles.dashboard__container}>
-        <h1 className={styles.dashboard__title}>Dashboard</h1>
-        <p className={styles.dashboard__welcome}>
-          Welcome, {session.user?.name || "User"}!
-        </p>
-        <p className={styles.dashboard__email}>{session.user?.email}</p>
+        <WelcomeCard user={session.user} />
+        <IdeaForm />
       </div>
     </main>
   );

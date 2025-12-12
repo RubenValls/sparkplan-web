@@ -35,9 +35,39 @@
       "GO_TO_DASHBOARD": "Ir al Panel"
     }
   },
+  "DASHBOARD": {
+    "WELCOME": {
+      "GREETING": "Bienvenido de nuevo,",
+      "SUBTITLE": "¿Listo para convertir tu próxima idea en realidad?",
+      "PLANS_CREATED": "Planes creados",
+      "LAST_PLAN": "Último plan"
+    },
+    "IDEA_FORM": {
+      "TITLE": "Comparte Tu Idea",
+      "LABEL": "Describe tu idea",
+      "PLACEHOLDER": "Ejemplo: Una app móvil para ayudar a las personas a encontrar mercados locales de agricultores y conectar directamente con productores...",
+      "SUBMIT": "Generar Plan",
+      "PROCESSING": "Generando tu plan...",
+      "MIN_LENGTH_ERROR": "Por favor escribe al menos 50 caracteres para ayudarnos a entender mejor tu idea.",
+      "SUCCESS_MESSAGE": "¡Tu plan ha sido generado exitosamente!",
+      "ERROR_MESSAGE": "Algo salió mal. Por favor intenta de nuevo.",
+      "VIEW_IN_DRIVE": "Ver en Google Drive",
+      "TIPS_TITLE": "Consejos para mejores resultados:",
+      "TIP_1": "Escribe en el idioma que prefieras — el plan se generará en ese idioma",
+      "TIP_2": "Céntrate en describir tu idea principal, no en el formato o estructura",
+      "TIP_3": "Sé específico sobre tus objetivos y público objetivo",
+      "TIP_4": "No te preocupes por la extensión — calidad sobre cantidad",
+      "LOADING_STEP_1": "Analizando tu idea...",
+      "LOADING_STEP_2": "Investigando oportunidades de mercado...",
+      "LOADING_STEP_3": "Construyendo marco estratégico...",
+      "LOADING_STEP_4": "Desarrollando hoja de ruta...",
+      "LOADING_STEP_5": "Organizando plan de acción...",
+      "LOADING_STEP_6": "Finalizando tu plan profesional..."
+    }
+  },
   "AUTH": {
     "LOGIN": "Iniciar sesión",
-    "LOGOUT": "Cerrar sesión"
+    "LOGOUT": "Salir"
   },
   "HEADER": {
     "SWITCH_LANG": "Cambiar idioma"

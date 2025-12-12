@@ -8,6 +8,10 @@ export const ROUTES = {
   },
 
   DASHBOARD: "/dashboard",
+
+  API: {
+    GENERATE_PLAN: "/api/generate-plan",
+  },
 } as const;
 
 export type RouteKey = keyof typeof ROUTES;
