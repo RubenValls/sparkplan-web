@@ -62,7 +62,9 @@
       "LOADING_STEP_3": "Construyendo marco estratégico...",
       "LOADING_STEP_4": "Desarrollando hoja de ruta...",
       "LOADING_STEP_5": "Organizando plan de acción...",
-      "LOADING_STEP_6": "Finalizando tu plan profesional..."
+      "LOADING_STEP_6": "Finalizando tu plan profesional...",
+      "SAVING_STEP_1": "Convirtiendo a PDF...",
+      "SAVING_STEP_2": "Subiendo a Google Drive..."
     }
   },
   "AUTH": {

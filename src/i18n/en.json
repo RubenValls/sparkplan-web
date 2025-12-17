@@ -1,10 +1,10 @@
 {
   "HOME": {
     "TITLE": "Welcome to SparkPlan",
-    "SUBTITLE": "Transform your ideas into actionable plans using AI and automation.",
+    "SUBTITLE": "Transform your ideas into actionable plans with AI and automation.",
     "HERO": {
-      "TITLE": "Transform Your Ideas into Action Plans",
-      "SUBTITLE": "SparkPlan uses AI to turn your thoughts into structured, actionable plans — automatically saved to your Google Drive.",
+      "TITLE": "Turn Your Ideas Into Action Plans",
+      "SUBTITLE": "SparkPlan uses AI to convert your thoughts into structured, actionable plans — automatically saved to your Google Drive.",
       "GET_STARTED": "Get Started Free",
       "GO_TO_DASHBOARD": "Go to Dashboard"
     },
@@ -13,7 +13,7 @@
       "STEP_1_TITLE": "Sign in with Google",
       "STEP_1_DESC": "Secure authentication using your Google account.",
       "STEP_2_TITLE": "Share Your Idea",
-      "STEP_2_DESC": "Describe your idea in any language — keep it simple or detailed.",
+      "STEP_2_DESC": "Describe your idea in any language — simple or detailed.",
       "STEP_3_TITLE": "AI Generates Your Plan",
       "STEP_3_DESC": "Our AI creates a structured plan with steps, resources, and timelines.",
       "STEP_4_TITLE": "Auto-Save to Drive",
@@ -22,7 +22,7 @@
     "FEATURES": {
       "HEADING": "Why SparkPlan?",
       "FEATURE_1_TITLE": "Lightning Fast",
-      "FEATURE_1_DESC": "Generate comprehensive plans in seconds, not hours.",
+      "FEATURE_1_DESC": "Generate complete plans in seconds, not hours.",
       "FEATURE_2_TITLE": "Multilingual Support",
       "FEATURE_2_DESC": "Write in English or Spanish — AI adapts to your language.",
       "FEATURE_3_TITLE": "Cloud Storage",
@@ -45,31 +45,33 @@
     "IDEA_FORM": {
       "TITLE": "Share Your Idea",
       "LABEL": "Describe your idea",
-      "PLACEHOLDER": "Example: A mobile app to help people find local farmers markets and connect directly with producers...",
+      "PLACEHOLDER": "Example: A mobile app to help people find local farmer's markets and connect directly with producers...",
       "SUBMIT": "Generate Plan",
       "PROCESSING": "Generating your plan...",
-      "MIN_LENGTH_ERROR": "Please write at least 50 characters to help us understand your idea better.",
-      "SUCCESS_MESSAGE": "Your plan has been generated successfully!",
+      "MIN_LENGTH_ERROR": "Please write at least 50 characters to help us better understand your idea.",
+      "SUCCESS_MESSAGE": "Your plan has been successfully generated!",
       "ERROR_MESSAGE": "Something went wrong. Please try again.",
       "VIEW_IN_DRIVE": "View in Google Drive",
-      "TIPS_TITLE": "Tips for best results:",
-      "TIP_1": "Write in any language you prefer — the plan will be generated in that language",
-      "TIP_2": "Focus on describing your core idea, not formatting or structure",
+      "TIPS_TITLE": "Tips for better results:",
+      "TIP_1": "Write in your preferred language — the plan will be generated in that language",
+      "TIP_2": "Focus on describing your main idea, not the format or structure",
       "TIP_3": "Be specific about your goals and target audience",
       "TIP_4": "Don't worry about length — quality over quantity",
       "LOADING_STEP_1": "Analyzing your idea...",
       "LOADING_STEP_2": "Researching market opportunities...",
       "LOADING_STEP_3": "Building strategic framework...",
-      "LOADING_STEP_4": "Developing implementation roadmap...",
+      "LOADING_STEP_4": "Developing roadmap...",
       "LOADING_STEP_5": "Organizing action plan...",
-      "LOADING_STEP_6": "Finalizing your professional plan..."
+      "LOADING_STEP_6": "Finalizing your professional plan...",
+      "SAVING_STEP_1": "Converting to PDF...",
+      "SAVING_STEP_2": "Uploading to Google Drive..."
     }
   },
   "AUTH": {
-    "LOGIN": "Sign in",
-    "LOGOUT": "Exit"
+    "LOGIN": "Log In",
+    "LOGOUT": "Log Out"
   },
   "HEADER": {
-    "SWITCH_LANG": "Change language"
+    "SWITCH_LANG": "Switch language"
   }
 }

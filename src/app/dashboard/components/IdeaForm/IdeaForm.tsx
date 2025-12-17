@@ -1,17 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Lightbulb, Sparkles } from "lucide-react";
 import { ROUTES } from "@/constants/routes";
 import Loading from "@/components/ui/Loading/Loading";
+import { usePDFPrint } from "@/hooks/usePdfPrint";
+import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import styles from "./IdeaForm.module.scss";
 import PlanResult from "../PlanResult/PlanResult";
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
+  
+  const planResultRef = useRef<HTMLDivElement>(null);
+
+  const { printToPDF, generatePDFBlob, isPrinting, isGenerating } = usePDFPrint();
+  const { uploadToDrive, isUploading } = useGoogleDrive();
+  
   const [idea, setIdea] = useState("");
   const [loading, setLoading] = useState(false);
+  const [savingToDrive, setSavingToDrive] = useState(false);
   const [result, setResult] = useState<{
     success: boolean;
     message: string;
@@ -32,6 +41,11 @@ export default function IdeaForm() {
     t("LOADING_STEP_4"),
     t("LOADING_STEP_5"),
     t("LOADING_STEP_6"),
+  ];
+
+  const savingSteps = [
+    t("SAVING_STEP_1"),
+    t("SAVING_STEP_2"),
   ];
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,11 +92,37 @@ export default function IdeaForm() {
   };
 
   const handleDownloadPDF = () => {
-    console.log("Download PDF");
+    if (!planResultRef.current) {
+      return;
+    }
+
+    printToPDF(planResultRef.current);
   };
 
-  const handleSaveToDrive = () => {
-    console.log("Save to Drive");
+  const handleSaveToDrive = async () => {
+    if (!planResultRef.current || !result?.plan) {
+      return;
+    }
+
+    setSavingToDrive(true);
+
+    try {
+      const pdfBlob = await generatePDFBlob(planResultRef.current);
+
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const date = new Date().toISOString().split('T')[0];
+      const fileName = `SparkPlan-${date}.pdf`;
+
+      const { fileUrl } = await uploadToDrive(pdfBlob, fileName);
+
+      setSavingToDrive(false);
+
+      window.open(fileUrl, "_blank");
+    } catch (error) {
+      setSavingToDrive(false);
+      console.error("Error saving to Google Drive:", error);
+    }
   };
 
   return (
@@ -92,18 +132,12 @@ export default function IdeaForm() {
           <Lightbulb className={styles.ideaForm__icon} />
           <h2 className={styles.ideaForm__title}>{t("TITLE")}</h2>
         </div>
-
-        {result?.rateLimit && (
-          <div className={styles.ideaForm__rateLimit}>
-            <span className={styles.ideaForm__rateLimitText}>
-              {result.rateLimit.remaining} of {result.rateLimit.limit} plans remaining this hour
-            </span>
-          </div>
-        )}
       </div>
 
       {loading ? (
-        <Loading steps={loadingSteps} duration={20000} size="large" />
+        <Loading steps={loadingSteps} duration={100000} size="large" />
+      ) : savingToDrive ? (
+        <Loading steps={savingSteps} duration={10000} size="large" />
       ) : (
         <>
           <form onSubmit={handleSubmit} className={styles.ideaForm__form}>
@@ -150,7 +184,7 @@ export default function IdeaForm() {
 
             <button
               type="submit"
-              disabled={loading || !isValid}
+              disabled={loading || !isValid || isPrinting || isGenerating || isUploading || savingToDrive}
               className={styles.ideaForm__submit}
             >
               {t("SUBMIT")}
@@ -159,6 +193,7 @@ export default function IdeaForm() {
 
           {result && (
             <PlanResult
+              ref={planResultRef}
               success={result.success}
               message={result.message}
               plan={result.plan}
