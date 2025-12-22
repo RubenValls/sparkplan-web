@@ -73,5 +73,10 @@
   },
   "HEADER": {
     "SWITCH_LANG": "Cambiar idioma"
+  },
+  "DONATION": {
+    "TITLE": "Invítanos a un café",
+    "DESCRIPTION": "Si SparkPlan te ha sido útil, considera hacer una pequeña donación. Tu apoyo nos ayuda a mantener y mejorar la aplicación para todos.",
+    "BUTTON": "Donar con PayPal"
   }
 }

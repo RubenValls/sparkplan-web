@@ -9,6 +9,7 @@ import { usePDFPrint } from "@/hooks/usePdfPrint";
 import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import styles from "./IdeaForm.module.scss";
 import PlanResult from "../PlanResult/PlanResult";
+import DonationCard from "@/components/ui/DonationCard/DonationCard";
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
@@ -190,6 +191,8 @@ export default function IdeaForm() {
               {t("SUBMIT")}
             </button>
           </form>
+
+          {result && result.success && <DonationCard />}
 
           {result && (
             <PlanResult
