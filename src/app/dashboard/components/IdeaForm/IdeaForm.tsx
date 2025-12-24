@@ -136,9 +136,9 @@ export default function IdeaForm() {
       </div>
 
       {loading ? (
-        <Loading steps={loadingSteps} duration={100000} size="large" />
+        <Loading steps={loadingSteps} duration={30000} size="large" />
       ) : savingToDrive ? (
-        <Loading steps={savingSteps} duration={10000} size="large" />
+        <Loading steps={savingSteps} duration={5000} size="large" />
       ) : (
         <>
           <form onSubmit={handleSubmit} className={styles.ideaForm__form}>

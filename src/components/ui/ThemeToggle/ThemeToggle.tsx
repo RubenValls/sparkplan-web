@@ -1,44 +1,35 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { useEffect, useState } from "react";
 import styles from "./ThemeToggle.module.scss";
 
-function getInitialTheme(): "light" | "dark" {
-  if (typeof window === "undefined") return "light";
-  
-  const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
-  if (savedTheme) return savedTheme;
-  
-  return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-}
-
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
-  const [isClient, setIsClient] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
-    
-    Promise.resolve().then(() => setIsClient(true));
-  }, [theme]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setMounted(true);
+  }, []);
 
-  const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    document.documentElement.setAttribute("data-theme", newTheme);
-  };
-
-  if (!isClient) {
+  if (!mounted) {
     return (
-      <div className={styles.themeToggle} aria-hidden="true" />
+      <button 
+        className={styles.themeToggle}
+        disabled
+        aria-label="Toggle theme"
+        style={{ opacity: 0.5, pointerEvents: "none" }}
+      >
+        <Sun className={styles.themeToggle__icon} />
+      </button>
     );
   }
 
   return (
     <button
-      onClick={toggleTheme}
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
       className={styles.themeToggle}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}

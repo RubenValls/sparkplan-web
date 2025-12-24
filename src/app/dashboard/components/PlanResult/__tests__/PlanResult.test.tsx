@@ -29,24 +29,6 @@ describe("PlanResult", () => {
     expect(screen.getByText("SparkPlan")).toBeInTheDocument();
   });
 
-  it("should render emoji for numbered section", () => {
-    const { container } = render(
-      <PlanResult success={true} message="Success" plan="## 1. Test" />
-    );
-
-    const emoji = container.querySelector('[class*="emoji"]');
-    expect(emoji?.textContent).toBe("📋");
-  });
-
-  it("should not render emoji for non-numbered section", () => {
-    const { container } = render(
-      <PlanResult success={true} message="Success" plan="## Test" />
-    );
-
-    const emoji = container.querySelector('[class*="emoji"]');
-    expect(emoji).not.toBeInTheDocument();
-  });
-
   it("should call onDownloadPDF when button clicked", async () => {
     const handleDownload = vi.fn();
     const user = userEvent.setup();

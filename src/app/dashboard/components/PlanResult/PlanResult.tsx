@@ -1,6 +1,6 @@
 "use client";
 
-import { forwardRef, useMemo } from "react";
+import { forwardRef } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
@@ -17,24 +17,6 @@ interface PlanResultProps {
 
 const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
   ({ success, message, plan, onDownloadPDF, onSaveToDrive }, ref) => {
-    const sectionEmojis: Record<number, string> = useMemo(() => {
-      return {
-        1: "📋",
-        2: "🎯",
-        3: "🔍",
-        4: "💎",
-        5: "📊",
-        6: "💼",
-        7: "🚀",
-        8: "🛠️",
-        9: "⚙️",
-        10: "💰",
-        11: "⚠️",
-        12: "📈",
-        13: "✅",
-        14: "🎓",
-      };
-    }, []);
 
     if (!success) {
       return (
@@ -104,14 +86,8 @@ const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
                 <h1 className={styles.planResult__h1}>{children}</h1>
               ),
               h2: ({ children }) => {
-                const text = String(children);
-                const match = text.match(/^(\d+)\./);
-                const sectionNumber = match ? parseInt(match[1]) : null;
-                const emoji = sectionNumber ? sectionEmojis[sectionNumber] : null;
-
                 return (
                   <h2 className={styles.planResult__h2}>
-                    {emoji && <span className={styles.planResult__emoji}>{emoji}</span>}
                     {children}
                   </h2>
                 );

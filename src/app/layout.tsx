@@ -4,6 +4,7 @@ import "./globals.scss";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import Header from "@/components/layout/Header";
+import { ThemeProvider } from "next-themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,12 +27,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <SessionProvider>
           <LanguageProvider>
-            <Header />
-            {children}
+            <ThemeProvider attribute="data-theme" defaultTheme="system">
+              <Header />
+              {children}
+            </ThemeProvider>
           </LanguageProvider>
         </SessionProvider>
       </body>
