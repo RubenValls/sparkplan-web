@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { i18nConfig, languages, SupportedLang } from "@/i18n";
 import { NextIntlClientProvider } from "next-intl";
+import { SupportedLang, languages, i18nConfig } from "@/config/i18n";
 
 interface LanguageContextValue {
   lang: SupportedLang;

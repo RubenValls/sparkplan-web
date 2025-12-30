@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/config/routes";
 import styles from "./page.module.scss";
 import WelcomeCard from "./components/WelcomeCard/WelcomeCard";
 import IdeaForm from "./components/IdeaForm/IdeaForm";

@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/config/routes";
 import styles from "./Hero.module.scss";
 
 export default function Hero() {

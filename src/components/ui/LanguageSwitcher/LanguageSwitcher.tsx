@@ -1,6 +1,6 @@
 "use client";
 
-import { useLang } from "@/contexts/LanguageContext";
+import { useLang } from "@/components/providers/LanguageProvider";
 import { Globe } from "lucide-react";
 import styles from "./LanguageSwitcher.module.scss";
 

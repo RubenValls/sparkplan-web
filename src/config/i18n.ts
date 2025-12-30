@@ -1,9 +1,9 @@
-import en from "./en.json";
-import es from "./es.json";
+import en from "@/locales/en.json";
+import es from "@/locales/es.json";
 
 export const languages = {
   en,
-  es
+  es,
 };
 
 export type SupportedLang = keyof typeof languages;
@@ -13,3 +13,8 @@ export const i18nConfig = {
   defaultLocale: "en" as const,
   timeZone: "UTC",
 } as const;
+
+export const localeNames: Record<SupportedLang, string> = {
+  en: "English",
+  es: "Español",
+};

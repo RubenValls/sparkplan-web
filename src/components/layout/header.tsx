@@ -6,7 +6,7 @@ import Logo from "@/components/ui/Logo/Logo";
 import ThemeToggle from "@/components/ui/ThemeToggle/ThemeToggle";
 import LanguageSwitcher from "@/components/ui/LanguageSwitcher/LanguageSwitcher";
 import { useTranslations } from "next-intl";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/config/routes";
 import styles from "./Header.module.scss";
 
 export default function Header() {

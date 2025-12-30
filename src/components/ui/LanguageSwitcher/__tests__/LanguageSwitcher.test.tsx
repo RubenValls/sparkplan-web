@@ -5,7 +5,7 @@ import LanguageSwitcher from "../LanguageSwitcher";
 
 const mockSetLang = vi.fn();
 
-vi.mock("@/contexts/LanguageContext", () => ({
+vi.mock("@/components/providers/LanguageProvider", () => ({
   useLang: vi.fn(),
 }));
 
@@ -20,7 +20,7 @@ describe("LanguageSwitcher", () => {
   });
 
   it("should render with lang 'en' and toggle to 'es'", async () => {
-    const { useLang } = await import("@/contexts/LanguageContext");
+    const { useLang } = await import("@/components/providers/LanguageProvider");
     vi.mocked(useLang).mockReturnValue({
       lang: "en",
       setLang: mockSetLang,
@@ -38,7 +38,7 @@ describe("LanguageSwitcher", () => {
   });
 
   it("should render with lang 'es' and toggle to 'en'", async () => {
-    const { useLang } = await import("@/contexts/LanguageContext");
+    const { useLang } = await import("@/components/providers/LanguageProvider");
     vi.mocked(useLang).mockReturnValue({
       lang: "es",
       setLang: mockSetLang,

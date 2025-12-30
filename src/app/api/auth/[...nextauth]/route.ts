@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
-import { ROUTES } from "@/constants/routes";
+import { ROUTES } from "@/config/routes";
 
 export const authOptions: NextAuthOptions = {
   providers: [

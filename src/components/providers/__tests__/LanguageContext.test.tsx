@@ -1,8 +1,8 @@
 import {describe, it, expect, vi, beforeEach} from "vitest";
 import {render, screen, waitFor} from "@testing-library/react";
-import {useLang, LanguageProvider} from "../LanguageContext";
 import {ReactNode} from "react";
 import userEvent from "@testing-library/user-event";
+import { LanguageProvider, useLang } from "../LanguageProvider";
 
 // Mock next-intl
 vi.mock("next-intl", () => ({
