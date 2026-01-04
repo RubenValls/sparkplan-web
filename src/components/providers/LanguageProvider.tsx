@@ -3,6 +3,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { SupportedLang, languages, i18nConfig } from "@/config/i18n";
+import { getBrowserLanguage, getStorageItem, setStorageItem } from "@/utils";
 
 interface LanguageContextValue {
   lang: SupportedLang;
@@ -12,16 +13,14 @@ interface LanguageContextValue {
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
 function getInitialLang(): SupportedLang {
-  if (typeof window !== "undefined") {
-    const savedLang = localStorage.getItem("lang") as SupportedLang | null;
-    if (savedLang === "en" || savedLang === "es") {
-      return savedLang;
-    }
+  const savedLang = getStorageItem<SupportedLang>("lang");
+  if (savedLang === "en" || savedLang === "es") {
+    return savedLang;
   }
-  if (typeof window !== "undefined") {
-    const browserLang = navigator.language.split("-")[0];
-    if (browserLang === "es") return "es";
-  }
+  
+  const browserLang = getBrowserLanguage();
+  if (browserLang === "es") return "es";
+  
   return "en";
 }
 
@@ -41,7 +40,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   }, [lang, mounted]);
 
   function setLang(newLang: SupportedLang) {
-    localStorage.setItem("lang", newLang);
+    setStorageItem("lang", newLang);
     setLangState(newLang);
   }
 

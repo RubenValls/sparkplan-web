@@ -10,6 +10,7 @@ import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import styles from "./IdeaForm.module.scss";
 import PlanResult from "../PlanResult/PlanResult";
 import DonationCard from "@/components/ui/DonationCard/DonationCard";
+import { formatDateISO } from "@/utils";
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
@@ -112,8 +113,7 @@ export default function IdeaForm() {
 
       await new Promise(resolve => setTimeout(resolve, 500));
 
-      const date = new Date().toISOString().split('T')[0];
-      const fileName = `SparkPlan-${date}.pdf`;
+      const fileName = `SparkPlan-${formatDateISO()}.pdf`;
 
       const { fileUrl } = await uploadToDrive(pdfBlob, fileName);
 
