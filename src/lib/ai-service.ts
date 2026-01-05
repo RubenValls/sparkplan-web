@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { env } from "@/config/env";
 
 export interface GeneratePlanOptions {
   idea: string;
@@ -14,11 +15,11 @@ export interface GeneratePlanResponse {
 }
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: env.openaiApiKey,
 });
 
 function getSystemPrompt(): string {
-  const prompt = process.env.AI_SYSTEM_PROMPT;
+  const prompt = env.aiSystemPrompt;
   
   if (!prompt || prompt.trim().length === 0) {
     throw new Error(

@@ -2,12 +2,13 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import { ROUTES } from "@/config/routes";
+import { env } from "@/config/env";
 
 export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+      clientId: env.googleClientId,
+      clientSecret: env.googleClientSecret,
       authorization: {
         params: {
           scope: [
@@ -56,7 +57,7 @@ export const authOptions: NextAuthOptions = {
     maxAge: 30 * 24 * 60 * 60,
   },
 
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: env.nextAuthSecret,
 };
 
 async function refreshAccessToken(token: JWT) {
@@ -65,8 +66,8 @@ async function refreshAccessToken(token: JWT) {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams({
-        client_id: process.env.GOOGLE_CLIENT_ID!,
-        client_secret: process.env.GOOGLE_CLIENT_SECRET!,
+        client_id: env.googleClientId,
+        client_secret: env.googleClientSecret,
         grant_type: "refresh_token",
         refresh_token: token.refreshToken as string,
       }),
