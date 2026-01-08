@@ -6,7 +6,7 @@ import CTA from "@/components/home/CTA/CTA";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { ROUTES } from "@/config/routes";
+import { ROUTES } from "@/config";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);

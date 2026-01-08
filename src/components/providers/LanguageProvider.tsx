@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { NextIntlClientProvider } from "next-intl";
-import { SupportedLang, languages, i18nConfig } from "@/config/i18n";
+import { SupportedLang, languages, i18nConfig } from "@/config";
 import { getBrowserLanguage, getStorageItem, setStorageItem } from "@/utils";
 
 interface LanguageContextValue {

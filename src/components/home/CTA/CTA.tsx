@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
-import { ROUTES } from "@/config/routes";
+import { ROUTES } from "@/config";
 import styles from "./CTA.module.scss";
 
 export default function CTA() {

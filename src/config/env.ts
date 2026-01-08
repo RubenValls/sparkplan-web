@@ -5,6 +5,11 @@ function getEnvVar(key: string, defaultValue?: string): string {
     if (defaultValue !== undefined) {
       return defaultValue;
     }
+    
+    if (process.env.NODE_ENV === "test" || process.env.VITEST === "true") {
+      return `test-${key.toLowerCase().replace(/_/g, "-")}`;
+    }
+    
     throw new Error(`Missing required environment variable: ${key}`);
   }
   
@@ -36,7 +41,11 @@ export const env = {
 
 export type Environment = typeof env;
 
-if (typeof window === "undefined") {
+if (
+  typeof window === "undefined" && 
+  process.env.NODE_ENV !== "test" && 
+  !process.env.VITEST
+) {
   validateEnv();
 }
 

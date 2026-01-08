@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Lightbulb, Sparkles } from "lucide-react";
-import { ROUTES } from "@/config/routes";
+import { ROUTES } from "@/config";
 import Loading from "@/components/ui/Loading/Loading";
 import { usePDFPrint } from "@/hooks/usePdfPrint";
 import { useGoogleDrive } from "@/hooks/useGoogleDrive";
