@@ -16,107 +16,130 @@ export function usePDFPrint(): UsePDFPrintReturn {
   const [error, setError] = useState<Error | null>(null);
 
   // ✅ Nueva función: Generar PDF como Blob usando jsPDF
-  const generatePDFBlob = useCallback(async (element: HTMLElement): Promise<Blob> => {
-    setIsGenerating(true);
-    setError(null);
+  const generatePDFBlob = useCallback(
+    async (element: HTMLElement): Promise<Blob> => {
+      setIsGenerating(true);
+      setError(null);
 
-    try {
-      const contentElement = element.querySelector('[class*="planResult__content"]');
-      const footerElement = element.querySelector('[class*="planResult__footer"]');
+      try {
+        const contentElement = element.querySelector(
+          '[class*="planResult__content"]'
+        );
+        const footerElement = element.querySelector(
+          '[class*="planResult__footer"]'
+        );
 
-      if (!contentElement) {
-        throw new Error("Plan content not found");
-      }
+        if (!contentElement) {
+          throw new Error("Plan content not found");
+        }
 
-      // Crear contenedor temporal con todos los estilos
-      const tempContainer = document.createElement('div');
-      tempContainer.style.position = 'absolute';
-      tempContainer.style.left = '-9999px';
-      tempContainer.style.width = '794px'; // A4 width in pixels (210mm)
-      tempContainer.style.background = 'white';
-      tempContainer.style.padding = '0';
-      
-      // Añadir header
-      const header = document.createElement('div');
-      header.style.cssText = `
+        // Crear contenedor temporal con todos los estilos
+        const tempContainer = document.createElement("div");
+        tempContainer.style.position = "absolute";
+        tempContainer.style.left = "-9999px";
+        tempContainer.style.width = "794px"; // A4 width in pixels (210mm)
+        tempContainer.style.background = "white";
+        tempContainer.style.padding = "0";
+
+        // Añadir header
+        const header = document.createElement("div");
+        header.style.cssText = `
         text-align: center;
         padding: 40px 20px;
         background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
         color: white;
         margin: 0;
       `;
-      header.innerHTML = `
+        header.innerHTML = `
         <h1 style="font-size: 32px; font-weight: 700; margin-bottom: 8px; color: white;">SparkPlan</h1>
         <p style="font-size: 16px; opacity: 0.9; color: white;">Professional Business Plan Generator</p>
       `;
-      tempContainer.appendChild(header);
+        tempContainer.appendChild(header);
 
-      // Añadir contenido
-      const content = document.createElement('div');
-      content.style.cssText = 'padding: 40px 60px;';
-      content.innerHTML = contentElement.innerHTML;
-      tempContainer.appendChild(content);
+        // Añadir contenido
+        const content = document.createElement("div");
+        content.style.cssText = "padding: 40px 60px;";
+        content.innerHTML = contentElement.innerHTML;
+        tempContainer.appendChild(content);
 
-      // Añadir footer
-      if (footerElement) {
-        const footer = footerElement.cloneNode(true) as HTMLElement;
-        footer.style.cssText = 'padding: 20px 60px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #e5e5e5; margin-top: 40px;';
-        tempContainer.appendChild(footer);
-      }
+        // Añadir footer
+        if (footerElement) {
+          const footer = footerElement.cloneNode(true) as HTMLElement;
+          footer.style.cssText =
+            "padding: 20px 60px; text-align: center; font-size: 12px; color: #666; border-top: 1px solid #e5e5e5; margin-top: 40px;";
+          tempContainer.appendChild(footer);
+        }
 
-      document.body.appendChild(tempContainer);
+        document.body.appendChild(tempContainer);
 
-      // Generar canvas con html2canvas
-      const canvas = await html2canvas(tempContainer, {
-        scale: 2,
-        useCORS: true,
-        logging: false,
-        backgroundColor: '#ffffff',
-        windowWidth: 794,
-      });
+        // Generar canvas con html2canvas
+        const canvas = await html2canvas(tempContainer, {
+          scale: 2,
+          useCORS: true,
+          logging: false,
+          backgroundColor: "#ffffff",
+          windowWidth: 794,
+        });
 
-      // Eliminar contenedor temporal
-      document.body.removeChild(tempContainer);
+        // Eliminar contenedor temporal
+        document.body.removeChild(tempContainer);
 
-      // Crear PDF con jsPDF
-      const pdf = new jsPDF({
-        orientation: 'portrait',
-        unit: 'mm',
-        format: 'a4',
-        compress: true,
-      });
+        // Crear PDF con jsPDF
+        const pdf = new jsPDF({
+          orientation: "portrait",
+          unit: "mm",
+          format: "a4",
+          compress: true,
+        });
 
-      const imgData = canvas.toDataURL('image/jpeg', 0.95);
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = pdf.internal.pageSize.getHeight();
-      const imgWidth = pdfWidth;
-      const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+        const imgData = canvas.toDataURL("image/jpeg", 0.95);
+        const pdfWidth = pdf.internal.pageSize.getWidth();
+        const pdfHeight = pdf.internal.pageSize.getHeight();
+        const imgWidth = pdfWidth;
+        const imgHeight = (canvas.height * pdfWidth) / canvas.width;
 
-      let heightLeft = imgHeight;
-      let position = 0;
+        let heightLeft = imgHeight;
+        let position = 0;
 
-      // Primera página
-      pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
-      heightLeft -= pdfHeight;
-
-      // Páginas adicionales si es necesario
-      while (heightLeft > 0) {
-        position = heightLeft - imgHeight;
-        pdf.addPage();
-        pdf.addImage(imgData, 'JPEG', 0, position, imgWidth, imgHeight);
+        // Primera página
+        pdf.addImage({
+          imageData: imgData,
+          format: "JPEG",
+          x: 0,
+          y: position,
+          width: imgWidth,
+          height: imgHeight,
+        });
         heightLeft -= pdfHeight;
-      }
 
-      const blob = pdf.output('blob');
-      setIsGenerating(false);
-      return blob;
-    } catch (err) {
-      const error = err instanceof Error ? err : new Error("Failed to generate PDF");
-      setError(error);
-      setIsGenerating(false);
-      throw error;
-    }
-  }, []);
+        // Páginas adicionales si es necesario
+        while (heightLeft > 0) {
+          position = heightLeft - imgHeight;
+          pdf.addPage();
+          pdf.addImage({
+            imageData: imgData,
+            format: "JPEG",
+            x: 0,
+            y: position,
+            width: imgWidth,
+            height: imgHeight,
+          });
+          heightLeft -= pdfHeight;
+        }
+
+        const blob = pdf.output("blob");
+        setIsGenerating(false);
+        return blob;
+      } catch (err) {
+        const error =
+          err instanceof Error ? err : new Error("Failed to generate PDF");
+        setError(error);
+        setIsGenerating(false);
+        throw error;
+      }
+    },
+    []
+  );
 
   // ✅ Función existente: Imprimir PDF (descargar)
   const printToPDF = useCallback((element: HTMLElement) => {
@@ -124,8 +147,12 @@ export function usePDFPrint(): UsePDFPrintReturn {
     setError(null);
 
     try {
-      const contentElement = element.querySelector('[class*="planResult__content"]');
-      const footerElement = element.querySelector('[class*="planResult__footer"]');
+      const contentElement = element.querySelector(
+        '[class*="planResult__content"]'
+      );
+      const footerElement = element.querySelector(
+        '[class*="planResult__footer"]'
+      );
 
       if (!contentElement) {
         throw new Error("Plan content not found");
@@ -349,7 +376,7 @@ function buildDefaultFooter(): string {
 async function waitForDocumentReady(printWindow: Window): Promise<void> {
   const doc = printWindow.document;
   const images = Array.from(doc.images);
-  
+
   if (images.length === 0) {
     return Promise.resolve();
   }
