@@ -1,12 +1,11 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { User } from "next-auth";
 import { Sparkles } from "lucide-react";
 import styles from "./WelcomeCard.module.scss";
 
 interface WelcomeCardProps {
-  user: User;
+  user: string | null | undefined;
 }
 
 export default function WelcomeCard({ user }: WelcomeCardProps) {
@@ -20,7 +19,7 @@ export default function WelcomeCard({ user }: WelcomeCardProps) {
         </div>
         <div className={styles.welcomeCard__text}>
           <h1 className={styles.welcomeCard__greeting}>
-            {t("GREETING")} {user.name?.split(" ")[0] || "User"}!
+            {t("GREETING")} {user?.split(" ")[0] || "User"}!
           </h1>
           <p className={styles.welcomeCard__subtitle}>{t("SUBTITLE")}</p>
         </div>
