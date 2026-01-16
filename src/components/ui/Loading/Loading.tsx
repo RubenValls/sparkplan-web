@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import styles from "./Loading.module.scss";
+import { useTranslations } from "next-intl";
 
 interface LoadingProps {
   steps?: string[];
@@ -17,6 +18,7 @@ export default function Loading({
   size = "medium",
   message,
 }: LoadingProps) {
+  const t = useTranslations("LOADING");
   const [currentStep, setCurrentStep] = useState(0);
   const hasSteps = steps && steps.length > 0;
   const stepDuration = hasSteps ? duration / steps.length : 0;
@@ -64,7 +66,10 @@ export default function Loading({
               </div>
 
               <p className={styles.loading__step}>
-                Step {currentStep + 1} of {steps.length}
+                {t("STEP_OF", {
+                  current: currentStep + 1,
+                  total: steps.length,
+                })}
               </p>
             </>
           ) : (

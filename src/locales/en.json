@@ -78,5 +78,8 @@
     "TITLE": "Buy us a coffee",
     "DESCRIPTION": "If SparkPlan has been useful to you, consider making a small donation. Your support helps us maintain and improve the app for everyone.",
     "BUTTON": "Donate with PayPal"
+  },
+  "LOADING": {
+    "STEP_OF": "Step {current} of {total}"
   }
 }

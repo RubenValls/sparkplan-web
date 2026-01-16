@@ -2,6 +2,15 @@ import { render, screen, act } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import Loading from "../Loading";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string, params?: Record<string, number>) => {
+    if (key === "STEP_OF" && params) {
+      return `Step ${params.current} of ${params.total}`;
+    }
+    return key;
+  },
+}));
+
 describe("Loading", () => {
   beforeEach(() => {
     vi.useFakeTimers();
