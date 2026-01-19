@@ -3,6 +3,20 @@ import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
 import PlanResult from "../PlanResult";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => {
+    const translations: Record<string, string> = {
+      SUBTITLE: "Professional Business Plan Generator",
+      DOWNLOAD_PDF_TITLE: "Download as PDF",
+      SAVE_TO_DRIVE_TITLE: "Save to Google Drive",
+      PDF_BUTTON: "PDF",
+      DRIVE_BUTTON: "Drive",
+      GENERATED_WITH: "Generated with SparkPlan • {date}",
+    };
+    return translations[key] || key;
+  },
+}));
+
 describe("PlanResult", () => {
   it("should render error state", () => {
     render(<PlanResult success={false} message="Error message" />);

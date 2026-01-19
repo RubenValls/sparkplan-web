@@ -44,6 +44,8 @@
     },
     "IDEA_FORM": {
       "TITLE": "Share Your Idea",
+      "HISTORY_TITLE": "Business Plans History",
+      "COMING_SOON": "Feature coming soon",
       "LABEL": "Describe your idea",
       "PLACEHOLDER": "Example: A mobile app to help people find local farmer's markets and connect directly with producers...",
       "SUBMIT": "Generate Plan",
@@ -65,6 +67,14 @@
       "LOADING_STEP_6": "Finalizing your professional plan...",
       "SAVING_STEP_1": "Converting to PDF...",
       "SAVING_STEP_2": "Uploading to Google Drive..."
+    },
+    "PLAN_RESULT": {
+      "SUBTITLE": "Professional Business Plan Generator",
+      "DOWNLOAD_PDF_TITLE": "Download as PDF",
+      "SAVE_TO_DRIVE_TITLE": "Save to Google Drive",
+      "PDF_BUTTON": "PDF",
+      "DRIVE_BUTTON": "Drive",
+      "GENERATED_WITH": "Generated with SparkPlan • {date}"
     }
   },
   "AUTH": {

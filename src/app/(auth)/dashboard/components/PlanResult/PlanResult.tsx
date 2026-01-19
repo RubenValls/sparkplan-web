@@ -2,9 +2,11 @@
 
 import { forwardRef } from "react";
 import ReactMarkdown from "react-markdown";
+import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { CheckCircle, XCircle, Download, Sparkles, Save } from "lucide-react";
+import { useTranslations } from "next-intl";
 import styles from "./PlanResult.module.scss";
 
 interface PlanResultProps {
@@ -17,7 +19,6 @@ interface PlanResultProps {
 
 const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
   ({ success, message, plan, onDownloadPDF, onSaveToDrive }, ref) => {
-
     if (!success) {
       return (
         <div className={`${styles.planResult} ${styles["planResult--error"]}`}>
@@ -38,118 +39,171 @@ const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
         ref={ref}
         className={`${styles.planResult} ${styles["planResult--success"]}`}
       >
-        <div className={styles.planResult__brand}>
-          <div className={styles.planResult__brandContent}>
-            <Sparkles className={styles.planResult__brandIcon} />
-            <div>
-              <h3 className={styles.planResult__brandTitle}>SparkPlan</h3>
-              <p className={styles.planResult__brandSubtitle}>
-                Professional Business Plan Generator
-              </p>
-            </div>
-          </div>
-          <div className={styles.planResult__actions}>
-            {onDownloadPDF && (
-              <button
-                onClick={onDownloadPDF}
-                className={styles.planResult__actionBtn}
-                title="Download as PDF"
-              >
-                <Download size={20} />
-                PDF
-              </button>
-            )}
-            {onSaveToDrive && (
-              <button
-                onClick={onSaveToDrive}
-                className={`${styles.planResult__actionBtn} ${styles["planResult__actionBtn--primary"]}`}
-                title="Save to Google Drive"
-              >
-                <Save size={20} />
-                Drive
-              </button>
-            )}
-          </div>
-        </div>
+        <BrandHeader 
+          onDownloadPDF={onDownloadPDF}
+          onSaveToDrive={onSaveToDrive}
+        />
 
-        <div className={styles.planResult__successHeader}>
-          <CheckCircle className={styles.planResult__successIcon} />
-          <p className={styles.planResult__message}>{message}</p>
-        </div>
+        <SuccessMessage message={message} />
 
-        <div className={styles.planResult__content}>
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeRaw]}
-            components={{
-              h1: ({ children }) => (
-                <h1 className={styles.planResult__h1}>{children}</h1>
-              ),
-              h2: ({ children }) => {
-                return (
-                  <h2 className={styles.planResult__h2}>
-                    {children}
-                  </h2>
-                );
-              },
-              h3: ({ children }) => (
-                <h3 className={styles.planResult__h3}>{children}</h3>
-              ),
-              h4: ({ children }) => (
-                <h4 className={styles.planResult__h4}>{children}</h4>
-              ),
-              p: ({ children }) => (
-                <p className={styles.planResult__p}>{children}</p>
-              ),
-              ul: ({ children }) => (
-                <ul className={styles.planResult__ul}>{children}</ul>
-              ),
-              ol: ({ children }) => (
-                <ol className={styles.planResult__ol}>{children}</ol>
-              ),
-              li: ({ children }) => (
-                <li className={styles.planResult__li}>{children}</li>
-              ),
-              table: ({ children }) => (
-                <div className={styles.planResult__tableWrapper}>
-                  <table className={styles.planResult__table}>{children}</table>
-                </div>
-              ),
-              blockquote: ({ children }) => (
-                <blockquote className={styles.planResult__blockquote}>
-                  {children}
-                </blockquote>
-              ),
-              code: ({ ...props }) => {
-                const isInline = !props.className;
+        <MarkdownContent plan={plan} />
 
-                if (isInline) {
-                  return (
-                    <code className={styles.planResult__inlineCode} {...props} />
-                  );
-                }
-
-                return (
-                  <pre className={styles.planResult__codeBlock}>
-                    <code {...props} />
-                  </pre>
-                );
-              },
-              hr: () => <hr className={styles.planResult__hr} />,
-            }}
-          >
-            {plan}
-          </ReactMarkdown>
-        </div>
-
-        <div className={styles.planResult__footer}>
-          <Sparkles size={16} />
-          <p>Generated with SparkPlan • {new Date().toLocaleDateString()}</p>
-        </div>
+        <Footer />
       </div>
     );
   }
 );
+
+function BrandHeader({ 
+  onDownloadPDF, 
+  onSaveToDrive 
+}: Pick<PlanResultProps, "onDownloadPDF" | "onSaveToDrive">) {
+  const t = useTranslations("DASHBOARD.PLAN_RESULT");
+
+  return (
+    <div className={styles.planResult__brand}>
+      <div className={styles.planResult__brandContent}>
+        <Sparkles className={styles.planResult__brandIcon} />
+        <div>
+          <h3 className={styles.planResult__brandTitle}>SparkPlan</h3>
+          <p className={styles.planResult__brandSubtitle}>
+            {t("SUBTITLE")}
+          </p>
+        </div>
+      </div>
+      <ActionButtons 
+        onDownloadPDF={onDownloadPDF}
+        onSaveToDrive={onSaveToDrive}
+      />
+    </div>
+  );
+}
+
+function ActionButtons({ 
+  onDownloadPDF, 
+  onSaveToDrive 
+}: Pick<PlanResultProps, "onDownloadPDF" | "onSaveToDrive">) {
+  const t = useTranslations("DASHBOARD.PLAN_RESULT");
+
+  return (
+    <div className={styles.planResult__actions}>
+      {onDownloadPDF && (
+        <button
+          onClick={onDownloadPDF}
+          className={styles.planResult__actionBtn}
+          title={t("DOWNLOAD_PDF_TITLE")}
+        >
+          <Download size={20} />
+          {t("PDF_BUTTON")}
+        </button>
+      )}
+      {onSaveToDrive && (
+        <button
+          onClick={onSaveToDrive}
+          className={`${styles.planResult__actionBtn} ${styles["planResult__actionBtn--primary"]}`}
+          title={t("SAVE_TO_DRIVE_TITLE")}
+        >
+          <Save size={20} />
+          {t("DRIVE_BUTTON")}
+        </button>
+      )}
+    </div>
+  );
+}
+
+function SuccessMessage({ message }: { message: string }) {
+  return (
+    <div className={styles.planResult__successHeader}>
+      <CheckCircle className={styles.planResult__successIcon} />
+      <p className={styles.planResult__message}>{message}</p>
+    </div>
+  );
+}
+
+function MarkdownContent({ plan }: { plan: string }) {
+  return (
+    <div className={styles.planResult__content}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={createMarkdownComponents()}
+      >
+        {plan}
+      </ReactMarkdown>
+    </div>
+  );
+}
+
+function createMarkdownComponents(): Components {
+  return {
+    h1: ({ children, ...props }) => (
+      <h1 className={styles.planResult__h1} {...props}>{children}</h1>
+    ),
+    h2: ({ children, ...props }) => (
+      <h2 className={styles.planResult__h2} {...props}>{children}</h2>
+    ),
+    h3: ({ children, ...props }) => (
+      <h3 className={styles.planResult__h3} {...props}>{children}</h3>
+    ),
+    h4: ({ children, ...props }) => (
+      <h4 className={styles.planResult__h4} {...props}>{children}</h4>
+    ),
+    p: ({ children, ...props }) => (
+      <p className={styles.planResult__p} {...props}>{children}</p>
+    ),
+    ul: ({ children, ...props }) => (
+      <ul className={styles.planResult__ul} {...props}>{children}</ul>
+    ),
+    ol: ({ children, ...props }) => (
+      <ol className={styles.planResult__ol} {...props}>{children}</ol>
+    ),
+    li: ({ children, ...props }) => (
+      <li className={styles.planResult__li} {...props}>{children}</li>
+    ),
+    table: ({ children, ...props }) => (
+      <div className={styles.planResult__tableWrapper}>
+        <table className={styles.planResult__table} {...props}>{children}</table>
+      </div>
+    ),
+    blockquote: ({ children, ...props }) => (
+      <blockquote className={styles.planResult__blockquote} {...props}>
+        {children}
+      </blockquote>
+    ),
+    code: ({ className, children, ...props }) => {
+      const isInline = !className;
+
+      if (isInline) {
+        return (
+          <code className={styles.planResult__inlineCode} {...props}>
+            {children}
+          </code>
+        );
+      }
+
+      return (
+        <pre className={styles.planResult__codeBlock}>
+          <code className={className} {...props}>
+            {children}
+          </code>
+        </pre>
+      );
+    },
+    hr: ({ ...props }) => <hr className={styles.planResult__hr} {...props} />,
+  };
+}
+
+function Footer() {
+  const t = useTranslations("DASHBOARD.PLAN_RESULT");
+  const currentDate = new Date().toLocaleDateString();
+
+  return (
+    <div className={styles.planResult__footer}>
+      <Sparkles size={16} />
+      <p>{t("GENERATED_WITH", { date: currentDate })}</p>
+    </div>
+  );
+}
 
 PlanResult.displayName = "PlanResult";
 

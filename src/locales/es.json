@@ -44,6 +44,8 @@
     },
     "IDEA_FORM": {
       "TITLE": "Comparte Tu Idea",
+      "HISTORY_TITLE": "Historial de Planes de Negocio",
+      "COMING_SOON": "Funcionalidad disponible próximamente",
       "LABEL": "Describe tu idea",
       "PLACEHOLDER": "Ejemplo: Una app móvil para ayudar a las personas a encontrar mercados locales de agricultores y conectar directamente con productores...",
       "SUBMIT": "Generar Plan",
@@ -65,6 +67,14 @@
       "LOADING_STEP_6": "Finalizando tu plan profesional...",
       "SAVING_STEP_1": "Convirtiendo a PDF...",
       "SAVING_STEP_2": "Subiendo a Google Drive..."
+    },
+    "PLAN_RESULT": {
+      "SUBTITLE": "Generador Profesional de Planes de Negocio",
+      "DOWNLOAD_PDF_TITLE": "Descargar como PDF",
+      "SAVE_TO_DRIVE_TITLE": "Guardar en Google Drive",
+      "PDF_BUTTON": "PDF",
+      "DRIVE_BUTTON": "Drive",
+      "GENERATED_WITH": "Generado con SparkPlan • {date}"
     }
   },
   "AUTH": {
