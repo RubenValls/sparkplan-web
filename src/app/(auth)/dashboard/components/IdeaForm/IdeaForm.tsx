@@ -105,10 +105,6 @@ export default function IdeaForm() {
             >
               <form onSubmit={handleSubmit} className={styles.ideaForm__form}>
                 <div className={styles.ideaForm__field}>
-                  <label htmlFor="idea" className={styles.ideaForm__label}>
-                    {t("LABEL")}
-                  </label>
-
                   <textarea
                     id="idea"
                     value={idea}
