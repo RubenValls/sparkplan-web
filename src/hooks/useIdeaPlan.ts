@@ -2,7 +2,14 @@ import { ROUTES } from "@/config";
 import { PlanResultInterface } from "@/types";
 import { useState } from "react";
 
-export function useIdeaPlan() {
+interface UseIdeaPlanReturn {
+  result: PlanResultInterface | null;
+  loading: boolean;
+  generatePlan: (idea: string) => Promise<void>;
+  setResult: (result: PlanResultInterface | null) => void;
+}
+
+export function useIdeaPlan(): UseIdeaPlanReturn {
   const [result, setResult] = useState<PlanResultInterface | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -34,5 +41,5 @@ export function useIdeaPlan() {
     }
   };
 
-  return { result, loading, generatePlan };
+  return { result, loading, generatePlan, setResult };
 }

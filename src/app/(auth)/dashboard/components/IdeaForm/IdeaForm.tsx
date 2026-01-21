@@ -8,29 +8,32 @@ import styles from "./IdeaForm.module.scss";
 
 import Loading from "@/components/ui/Loading/Loading";
 import DonationCard from "@/components/ui/DonationCard/DonationCard";
+import Accordion from "@/components/ui/Accordion/Accordion";
 import PlanResult from "../PlanResult/PlanResult";
+import PlanHistoryList from "../PlanHistoryList/PlanHistoryList";
 
 import { usePDFPrint } from "@/hooks/usePdfPrint";
 import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import { useIdeaPlan } from "@/hooks/useIdeaPlan";
+import { usePlanHistory } from "@/hooks/usePlanHistory";
 
 import { formatDateISO } from "@/utils";
-import Accordion from "@/components/ui/Accordion/Accordion";
 
-type Accordion = "create" | "history" | null;
+type AccordionSection = "create" | "history" | null;
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
 
   const planResultRef = useRef<HTMLDivElement>(null);
 
-  const { result, loading, generatePlan } = useIdeaPlan();
+  const { result, loading, generatePlan, setResult } = useIdeaPlan();
   const { printToPDF, generatePDFBlob, isPrinting, isGenerating } = usePDFPrint();
   const { uploadToDrive, isUploading } = useGoogleDrive();
+  const { plans, loading: plansLoading, error: plansError, refetch } = usePlanHistory();
 
   const [idea, setIdea] = useState("");
   const [savingToDrive, setSavingToDrive] = useState(false);
-  const [expandedSection, setExpandedSection] = useState<Accordion>("create");
+  const [expandedSection, setExpandedSection] = useState<AccordionSection>("create");
 
   const MIN_LENGTH = 50;
   const isValid = idea.trim().length >= MIN_LENGTH;
@@ -56,6 +59,7 @@ export default function IdeaForm() {
     await generatePlan(idea.trim());
     setIdea("");
     setExpandedSection(null);
+    refetch();
   };
 
   const handleDownloadPDF = () => {
@@ -81,8 +85,44 @@ export default function IdeaForm() {
     }
   };
 
-  const toggleSection = (section: Accordion) => {
+  const toggleSection = (section: AccordionSection) => {
     setExpandedSection(expandedSection === section ? null : section);
+  };
+
+  const handleViewPlan = (id: string) => {
+    const plan = plans.find((p) => p.id === id);
+
+    if (!plan) {
+      console.error("Plan not found:", id);
+      return;
+    }
+
+    setResult({
+      success: true,
+      message: "SUCCESS_MESSAGE",
+      plan: plan.plan,
+    });
+
+    // Cerrar el acordeón del historial
+    setExpandedSection(null);
+
+    // Scroll al resultado
+    setTimeout(() => {
+      planResultRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
+  const handleDownloadPlan = (id: string) => {
+    console.log("Descargar plan:", id);
+    // TODO: Implementar descarga directa
+  };
+
+  const handleDeletePlan = async (id: string) => {
+    console.log("Eliminar plan:", id);
+    // TODO: Implementar eliminación
   };
 
   const isBusy =
@@ -164,9 +204,14 @@ export default function IdeaForm() {
               isExpanded={expandedSection === "history"}
               onToggle={() => toggleSection("history")}
             >
-              <div className={styles.ideaForm__comingSoon}>
-                <p>{t("COMING_SOON")}</p>
-              </div>
+              <PlanHistoryList
+                plans={plans}
+                loading={plansLoading}
+                error={plansError}
+                onView={handleViewPlan}
+                onDownload={handleDownloadPlan}
+                onDelete={handleDeletePlan}
+              />
             </Accordion>
           </div>
 

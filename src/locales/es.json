@@ -75,6 +75,14 @@
       "PDF_BUTTON": "PDF",
       "DRIVE_BUTTON": "Drive",
       "GENERATED_WITH": "Generado con SparkPlan • {date}"
+    },
+    "PLAN_HISTORY": {
+      "LOADING": "Cargando planes...",
+      "ERROR": "Error al cargar los planes: {error}",
+      "EMPTY": "No tienes planes guardados aún.",
+      "VIEW": "Ver plan",
+      "DOWNLOAD": "Descargar PDF",
+      "DELETE": "Eliminar plan"
     }
   },
   "AUTH": {

@@ -1,0 +1,126 @@
+@use "@/styles/variables" as *;
+
+.planHistory {
+  &__loading,
+  &__error,
+  &__empty {
+    padding: var(--spacing-xl);
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 0.9375rem;
+  }
+
+  &__error {
+    color: var(--color-error, #ef4444);
+  }
+
+  &__table {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+  }
+
+  &__row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--color-bg);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-md);
+    transition: all 0.2s;
+
+    &:hover {
+      border-color: var(--color-primary);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  &__name {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    min-width: 0;
+  }
+
+  &__nameText {
+    font-weight: 500;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__date {
+    font-size: 0.8125rem;
+    color: var(--color-muted);
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--spacing-xs);
+    flex-shrink: 0;
+  }
+
+  &__actionButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--color-surface);
+      border-color: var(--color-primary);
+
+      .planHistory__actionIcon {
+        color: var(--color-primary);
+      }
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &--delete {
+      &:hover {
+        border-color: var(--color-error, #ef4444);
+
+        .planHistory__actionIcon {
+          color: var(--color-error, #ef4444);
+        }
+      }
+    }
+  }
+
+  &__actionIcon {
+    width: 18px;
+    height: 18px;
+    color: var(--color-muted);
+    transition: color 0.2s;
+  }
+
+  @media (max-width: 640px) {
+    &__row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--spacing-sm);
+    }
+
+    &__actions {
+      width: 100%;
+      justify-content: flex-end;
+    }
+
+    &__nameText {
+      white-space: normal;
+    }
+  }
+}
