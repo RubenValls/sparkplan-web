@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 import { useTranslations } from "next-intl";
-import { Lightbulb, History, ChevronDown, Plus } from "lucide-react";
+import { Lightbulb, History, Plus } from "lucide-react";
 
 import styles from "./IdeaForm.module.scss";
 
@@ -15,8 +15,9 @@ import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import { useIdeaPlan } from "@/hooks/useIdeaPlan";
 
 import { formatDateISO } from "@/utils";
+import Accordion from "@/components/ui/Accordion/Accordion";
 
-type AccordionSection = "create" | "history" | null;
+type Accordion = "create" | "history" | null;
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
@@ -29,7 +30,7 @@ export default function IdeaForm() {
 
   const [idea, setIdea] = useState("");
   const [savingToDrive, setSavingToDrive] = useState(false);
-  const [expandedSection, setExpandedSection] = useState<AccordionSection>("create");
+  const [expandedSection, setExpandedSection] = useState<Accordion>("create");
 
   const MIN_LENGTH = 50;
   const isValid = idea.trim().length >= MIN_LENGTH;
@@ -80,7 +81,7 @@ export default function IdeaForm() {
     }
   };
 
-  const toggleSection = (section: AccordionSection) => {
+  const toggleSection = (section: Accordion) => {
     setExpandedSection(expandedSection === section ? null : section);
   };
 
@@ -96,7 +97,7 @@ export default function IdeaForm() {
       ) : (
         <>
           <div className={styles.ideaForm__accordions}>
-            <AccordionSection
+            <Accordion
               id="create"
               icon={<Plus className={styles.ideaForm__accordionIcon} />}
               title={t("TITLE")}
@@ -154,9 +155,9 @@ export default function IdeaForm() {
                   {t("SUBMIT")}
                 </button>
               </form>
-            </AccordionSection>
+            </Accordion>
 
-            <AccordionSection
+            <Accordion
               id="history"
               icon={<History className={styles.ideaForm__accordionIcon} />}
               title={t("HISTORY_TITLE")}
@@ -166,7 +167,7 @@ export default function IdeaForm() {
               <div className={styles.ideaForm__comingSoon}>
                 <p>{t("COMING_SOON")}</p>
               </div>
-            </AccordionSection>
+            </Accordion>
           </div>
 
           {result?.success && <DonationCard />}
@@ -183,54 +184,6 @@ export default function IdeaForm() {
           )}
         </>
       )}
-    </div>
-  );
-}
-
-interface AccordionSectionProps {
-  id: string;
-  icon: React.ReactNode;
-  title: string;
-  isExpanded: boolean;
-  onToggle: () => void;
-  children: React.ReactNode;
-}
-
-function AccordionSection({
-  id,
-  icon,
-  title,
-  isExpanded,
-  onToggle,
-  children,
-}: AccordionSectionProps) {
-  return (
-    <div className={styles.ideaForm__accordionItem}>
-      <button
-        onClick={onToggle}
-        className={styles.ideaForm__accordionTrigger}
-        aria-expanded={isExpanded}
-        aria-controls={`accordion-content-${id}`}
-      >
-        <div className={styles.ideaForm__accordionHeader}>
-          {icon}
-          <span className={styles.ideaForm__accordionTitle}>{title}</span>
-        </div>
-        <ChevronDown
-          className={`${styles.ideaForm__chevron} ${
-            isExpanded ? styles["ideaForm__chevron--expanded"] : ""
-          }`}
-        />
-      </button>
-
-      <div
-        id={`accordion-content-${id}`}
-        className={`${styles.ideaForm__accordionContent} ${
-          !isExpanded ? styles["ideaForm__accordionContent--collapsed"] : ""
-        }`}
-      >
-        {children}
-      </div>
     </div>
   );
 }

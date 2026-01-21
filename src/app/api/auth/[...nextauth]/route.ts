@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import { ROUTES } from "@/config";
 import { env } from "@/config/env";
+import { ensureUserExists } from "@/lib/supabase";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -25,6 +26,18 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
+    async signIn({ user }) {
+      if (!user.email) return false;
+      
+      try {
+        await ensureUserExists(user.email);
+        return true;
+      } catch (error) {
+        console.error("Error ensuring user exists:", error);
+        return false;
+      }
+    },
+
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;

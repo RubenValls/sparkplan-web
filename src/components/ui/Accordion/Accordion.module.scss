@@ -1,0 +1,86 @@
+@use "@/styles/variables" as *;
+
+.accordion {
+  background: var(--color-bg);
+  border-radius: var(--border-radius-md);
+  border: 2px solid var(--color-border);
+  overflow: hidden;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: var(--color-primary);
+  }
+
+  &__trigger {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: var(--color-surface);
+    }
+
+    &:focus {
+      outline: none;
+      background: var(--color-surface);
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+  }
+
+  &__icon {
+    width: 24px;
+    height: 24px;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--color-text);
+    text-align: left;
+  }
+
+  &__chevron {
+    width: 20px;
+    height: 20px;
+    color: var(--color-muted);
+    transition: transform 0.6s ease;
+    flex-shrink: 0;
+
+    &--expanded {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__content {
+    max-height: 2000px;
+    overflow: hidden;
+    transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.5s ease;
+    opacity: 1;
+    padding: 24px var(--spacing-lg) var(--spacing-lg);
+
+    &--collapsed {
+      max-height: 0;
+      opacity: 0;
+      padding: 0 var(--spacing-lg);
+    }
+  }
+
+  @media (max-width: 640px) {
+    &__title {
+      font-size: 1rem;
+    }
+  }
+}
