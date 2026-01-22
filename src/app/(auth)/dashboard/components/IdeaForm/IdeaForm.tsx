@@ -17,12 +17,15 @@ import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import { useIdeaPlan } from "@/hooks/useIdeaPlan";
 import { usePlanHistory } from "@/hooks/usePlanHistory";
 
+import { deleteBusinessPlan } from "@/lib/supabase";
 import { formatDateISO } from "@/utils";
+import ConfirmDialog from "@/components/ui/ConfirmDialog/ConfirmDialog";
 
 type AccordionSection = "create" | "history" | null;
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
+  const tHistory = useTranslations("DASHBOARD.PLAN_HISTORY");
 
   const planResultRef = useRef<HTMLDivElement>(null);
 
@@ -34,6 +37,9 @@ export default function IdeaForm() {
   const [idea, setIdea] = useState("");
   const [savingToDrive, setSavingToDrive] = useState(false);
   const [expandedSection, setExpandedSection] = useState<AccordionSection>("create");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [planToDelete, setPlanToDelete] = useState<string | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   const MIN_LENGTH = 50;
   const isValid = idea.trim().length >= MIN_LENGTH;
@@ -103,30 +109,74 @@ export default function IdeaForm() {
       plan: plan.plan,
     });
 
-    // Cerrar el acordeón del historial
     setExpandedSection(null);
 
-    // Scroll al resultado
     setTimeout(() => {
       planResultRef.current?.scrollIntoView({
         behavior: "smooth",
         block: "start",
       });
-    }, 100);
+    }, 0);
   };
 
   const handleDownloadPlan = (id: string) => {
-    console.log("Descargar plan:", id);
-    // TODO: Implementar descarga directa
+    const plan = plans.find((p) => p.id === id);
+
+    if (!plan) {
+      console.error("Plan not found:", id);
+      return;
+    }
+
+    setResult({
+      success: true,
+      message: "SUCCESS_MESSAGE",
+      plan: plan.plan,
+    });
+
+    setTimeout(() => {
+      handleDownloadPDF();
+    }, 0);
   };
 
-  const handleDeletePlan = async (id: string) => {
-    console.log("Eliminar plan:", id);
-    // TODO: Implementar eliminación
+  const handleDeletePlan = (id: string) => {
+    setPlanToDelete(id);
+    setDeleteDialogOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!planToDelete) return;
+
+    setDeleting(true);
+
+    try {
+      await deleteBusinessPlan(planToDelete);
+      
+      if (result && plans.find(p => p.id === planToDelete)?.plan === result.plan) {
+        setResult(null);
+      }
+
+      await refetch();
+    } catch (error) {
+      console.error("Error deleting plan:", error);
+    } finally {
+      setDeleting(false);
+      setDeleteDialogOpen(false);
+      setPlanToDelete(null);
+    }
+  };
+
+  const cancelDelete = () => {
+    setDeleteDialogOpen(false);
+    setPlanToDelete(null);
   };
 
   const isBusy =
-    loading || savingToDrive || isPrinting || isGenerating || isUploading;
+    loading || 
+    savingToDrive || 
+    isPrinting || 
+    isGenerating || 
+    isUploading ||
+    deleting;
 
   return (
     <div className={styles.ideaForm}>
@@ -227,6 +277,17 @@ export default function IdeaForm() {
               onSaveToDrive={handleSaveToDrive}
             />
           )}
+
+          <ConfirmDialog
+            isOpen={deleteDialogOpen}
+            title={tHistory("DELETE_CONFIRM_TITLE")}
+            message={tHistory("DELETE_CONFIRM_MESSAGE")}
+            confirmText={tHistory("DELETE_CONFIRM_BUTTON")}
+            cancelText={tHistory("DELETE_CANCEL_BUTTON")}
+            variant="danger"
+            onConfirm={confirmDelete}
+            onCancel={cancelDelete}
+          />
         </>
       )}
     </div>

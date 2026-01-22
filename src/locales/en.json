@@ -82,7 +82,11 @@
       "EMPTY": "You don't have any saved plans yet.",
       "VIEW": "View plan",
       "DOWNLOAD": "Download PDF",
-      "DELETE": "Delete plan"
+      "DELETE": "Delete plan",
+      "DELETE_CONFIRM_TITLE": "Delete plan?",
+      "DELETE_CONFIRM_MESSAGE": "This action cannot be undone. The plan will be permanently deleted.",
+      "DELETE_CONFIRM_BUTTON": "Delete",
+      "DELETE_CANCEL_BUTTON": "Cancel"
     }
   },
   "AUTH": {

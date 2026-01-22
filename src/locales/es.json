@@ -82,7 +82,11 @@
       "EMPTY": "No tienes planes guardados aún.",
       "VIEW": "Ver plan",
       "DOWNLOAD": "Descargar PDF",
-      "DELETE": "Eliminar plan"
+      "DELETE": "Eliminar plan",
+      "DELETE_CONFIRM_TITLE": "¿Eliminar plan?",
+      "DELETE_CONFIRM_MESSAGE": "Esta acción no se puede deshacer. El plan será eliminado permanentemente.",
+      "DELETE_CONFIRM_BUTTON": "Eliminar",
+      "DELETE_CANCEL_BUTTON": "Cancelar"
     }
   },
   "AUTH": {
