@@ -2,6 +2,7 @@ import styles from "./page.module.scss";
 import Hero from "@/components/home/Hero/Hero";
 import HowItWorks from "@/components/home/HowItWorks/HowItWorks";
 import Features from "@/components/home/Features/Features";
+import PricingSection from "@/components/home/PricingSection/PricingSection";
 import CTA from "@/components/home/CTA/CTA";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -11,15 +12,16 @@ import { ROUTES } from "@/config";
 export default async function Home() {
   const session = await getServerSession(authOptions);
   
-    if (session && session.user) {
-      redirect(ROUTES.DASHBOARD);
-    }
+  if (session && session.user) {
+    redirect(ROUTES.DASHBOARD);
+  }
 
   return (
     <main className={styles.home}>
       <Hero />
       <HowItWorks />
       <Features />
+      <PricingSection />
       <CTA />
     </main>
   );

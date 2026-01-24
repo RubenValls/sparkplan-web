@@ -28,6 +28,10 @@
       "FEATURE_3_TITLE": "Cloud Storage",
       "FEATURE_3_DESC": "All plans are securely stored in your personal Google Drive."
     },
+    "PRICING": {
+      "HEADING": "Choose Your Plan",
+      "SUBHEADING": "Start free and upgrade when you need it"
+    },
     "CTA": {
       "HEADING": "Ready to Bring Your Ideas to Life?",
       "TEXT": "Join thousands of creators, entrepreneurs, and thinkers using SparkPlan.",
