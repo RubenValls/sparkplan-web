@@ -7,7 +7,7 @@ export const withAuth: MiddlewareFactory = (next) => {
   return async (request: NextRequest) => {
     const { pathname } = request.nextUrl;
 
-    const protectedRoutes = ["/dashboard"];
+    const protectedRoutes = ["/dashboard", "/plans"];
 
     const isProtected = protectedRoutes.some((route) =>
       pathname.startsWith(route)

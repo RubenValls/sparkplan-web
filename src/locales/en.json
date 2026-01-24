@@ -89,12 +89,19 @@
       "DELETE_CANCEL_BUTTON": "Cancel"
     }
   },
+  "PLANS": {
+    "META_TITLE": "Plans & Pricing - SparkPlan",
+    "META_DESCRIPTION": "Choose the perfect plan for your needs",
+    "TITLE": "Choose your plan",
+    "SUBTITLE": "Select the plan that best fits your needs"
+  },
   "AUTH": {
     "LOGIN": "Log In",
     "LOGOUT": "Log Out"
   },
   "HEADER": {
-    "SWITCH_LANG": "Switch language"
+    "SWITCH_LANG": "Switch language",
+    "PRICING": "Pricing"
   },
   "DONATION": {
     "TITLE": "Buy us a coffee",
@@ -103,5 +110,46 @@
   },
   "LOADING": {
     "STEP_OF": "Step {current} of {total}"
+  },
+  "PRICING": {
+    "FREE": {
+      "TITLE": "FREE",
+      "PRICE": "Free",
+      "DESCRIPTION": "Perfect to try SparkPlan",
+      "FEATURE_1": "3 plans per week",
+      "FEATURE_2": "AI generation",
+      "FEATURE_3": "PDF download",
+      "FEATURE_4": "Google Drive save",
+      "FEATURE_5": "No history",
+      "BUTTON": "Start Free"
+    },
+    "PLUS": {
+      "TITLE": "PLUS",
+      "PRICE": "$1.49",
+      "PERIOD": "/month",
+      "DESCRIPTION": "Ideal for active entrepreneurs",
+      "FEATURE_1": "2 plans per day",
+      "FEATURE_2": "AI generation",
+      "FEATURE_3": "PDF download",
+      "FEATURE_4": "Google Drive save",
+      "FEATURE_5": "Plans history",
+      "FEATURE_6": "Priority support",
+      "BUTTON": "Select Plan"
+    },
+    "PRO": {
+      "TITLE": "PRO",
+      "PRICE": "$4.99",
+      "PERIOD": "/month",
+      "DESCRIPTION": "For professionals without limits",
+      "FEATURE_1": "Unlimited plans",
+      "FEATURE_2": "AI generation",
+      "FEATURE_3": "PDF download",
+      "FEATURE_4": "Google Drive save",
+      "FEATURE_5": "Plans history",
+      "FEATURE_6": "Priority support",
+      "BUTTON": "Select Plan"
+    },
+    "CURRENT_PLAN": "Current plan",
+    "MOST_POPULAR": "Most popular"
   }
 }

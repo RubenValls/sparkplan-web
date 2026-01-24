@@ -1,0 +1,15 @@
+@use "@/styles/variables" as *;
+
+.pricing {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--spacing-xl);
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--spacing-xl);
+
+  @media (max-width: 968px) {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+  }
+}

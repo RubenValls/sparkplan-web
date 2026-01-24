@@ -89,12 +89,19 @@
       "DELETE_CANCEL_BUTTON": "Cancelar"
     }
   },
+  "PLANS": {
+    "META_TITLE": "Planes y Precios - SparkPlan",
+    "META_DESCRIPTION": "Elige el plan perfecto para tus necesidades",
+    "TITLE": "Elige tu plan",
+    "SUBTITLE": "Selecciona el plan que mejor se adapte a tus necesidades"
+  },
   "AUTH": {
     "LOGIN": "Iniciar sesión",
     "LOGOUT": "Salir"
   },
   "HEADER": {
-    "SWITCH_LANG": "Cambiar idioma"
+    "SWITCH_LANG": "Cambiar idioma",
+    "PRICING": "Planes"
   },
   "DONATION": {
     "TITLE": "Invítanos a un café",
@@ -103,5 +110,46 @@
   },
   "LOADING": {
     "STEP_OF": "Paso {current} de {total}"
+  },
+  "PRICING": {
+    "FREE": {
+      "TITLE": "FREE",
+      "PRICE": "Gratis",
+      "DESCRIPTION": "Perfecto para probar SparkPlan",
+      "FEATURE_1": "3 planes semanales",
+      "FEATURE_2": "Generación con IA",
+      "FEATURE_3": "Descarga en PDF",
+      "FEATURE_4": "Guardado en Google Drive",
+      "FEATURE_5": "Sin historial",
+      "BUTTON": "Comenzar Gratis"
+    },
+    "PLUS": {
+      "TITLE": "PLUS",
+      "PRICE": "$1.49",
+      "PERIOD": "/mes",
+      "DESCRIPTION": "Ideal para emprendedores activos",
+      "FEATURE_1": "2 planes diarios",
+      "FEATURE_2": "Generación con IA",
+      "FEATURE_3": "Descarga en PDF",
+      "FEATURE_4": "Guardado en Google Drive",
+      "FEATURE_5": "Historial de planes",
+      "FEATURE_6": "Soporte prioritario",
+      "BUTTON": "Seleccionar Plan"
+    },
+    "PRO": {
+      "TITLE": "PRO",
+      "PRICE": "$4.99",
+      "PERIOD": "/mes",
+      "DESCRIPTION": "Para profesionales sin límites",
+      "FEATURE_1": "Planes ilimitados",
+      "FEATURE_2": "Generación con IA",
+      "FEATURE_3": "Descarga en PDF",
+      "FEATURE_4": "Guardado en Google Drive",
+      "FEATURE_5": "Historial de planes",
+      "FEATURE_6": "Soporte prioritario",
+      "BUTTON": "Seleccionar Plan"
+    },
+    "CURRENT_PLAN": "Plan actual",
+    "MOST_POPULAR": "Más popular"
   }
 }

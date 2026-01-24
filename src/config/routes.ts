@@ -9,6 +9,8 @@ export const ROUTES = {
 
   DASHBOARD: "/dashboard",
 
+  PLANS: "/plans",
+
   API: {
     GENERATE_PLAN: "/api/generate-plan",
   },

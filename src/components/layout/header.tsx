@@ -12,6 +12,7 @@ import styles from "./Header.module.scss";
 export default function Header() {
   const { data: session, status } = useSession();
   const t = useTranslations("AUTH");
+  const tHeader = useTranslations("HEADER");
   const isLoading = status === "loading";
 
   return (
@@ -31,12 +32,20 @@ export default function Header() {
           {!isLoading && (
             <div className={styles.header__actions}>
               {session ? (
+                <>
+                  <Link
+                    href={ROUTES.PLANS}
+                    className={styles.header__link}
+                  >
+                    {tHeader("PRICING")}
+                  </Link>
                   <button
                     onClick={() => signOut({ callbackUrl: ROUTES.HOME })}
                     className={`${styles.header__link} ${styles["header__link--primary"]}`}
                   >
                     {t("LOGOUT")}
                   </button>
+                </>
               ) : (
                 <button
                   onClick={() => signIn("google", { callbackUrl: ROUTES.DASHBOARD })}
