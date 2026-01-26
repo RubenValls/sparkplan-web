@@ -105,7 +105,8 @@
   },
   "HEADER": {
     "SWITCH_LANG": "Switch language",
-    "PRICING": "Pricing"
+    "PRICING": "Pricing",
+    "DASHBOARD": "Dashboard"
   },
   "DONATION": {
     "TITLE": "Buy us a coffee",

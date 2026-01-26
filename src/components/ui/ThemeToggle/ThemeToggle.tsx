@@ -5,7 +5,11 @@ import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
 import styles from "./ThemeToggle.module.scss";
 
-export default function ThemeToggle() {
+interface ThemeToggleProps {
+  variant?: "default" | "menu";
+}
+
+export default function ThemeToggle({ variant = "default" }: ThemeToggleProps) {
   const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
 
@@ -17,7 +21,7 @@ export default function ThemeToggle() {
   if (!mounted) {
     return (
       <button 
-        className={styles.themeToggle}
+        className={`${styles.themeToggle} ${styles[`themeToggle--${variant}`]}`}
         disabled
         aria-label="Toggle theme"
         style={{ opacity: 0.5, pointerEvents: "none" }}
@@ -30,7 +34,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === "light" ? "dark" : "light")}
-      className={styles.themeToggle}
+      className={`${styles.themeToggle} ${styles[`themeToggle--${variant}`]}`}
       aria-label={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
       title={`Switch to ${theme === "light" ? "dark" : "light"} mode`}
     >

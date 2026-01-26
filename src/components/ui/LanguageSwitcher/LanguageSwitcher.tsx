@@ -4,7 +4,11 @@ import { useLang } from "@/components/providers/LanguageProvider";
 import { Globe } from "lucide-react";
 import styles from "./LanguageSwitcher.module.scss";
 
-export default function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  variant?: "default" | "menu";
+}
+
+export default function LanguageSwitcher({ variant = "default" }: LanguageSwitcherProps) {
   const { lang, setLang } = useLang();
 
   const toggleLanguage = () => {
@@ -15,7 +19,7 @@ export default function LanguageSwitcher() {
   return (
     <button
       onClick={toggleLanguage}
-      className={styles.languageSwitcher}
+      className={`${styles.languageSwitcher} ${styles[`languageSwitcher--${variant}`]}`}
       aria-label={`Switch to ${lang === "en" ? "Spanish" : "English"}`}
       title={`Switch to ${lang === "en" ? "Spanish" : "English"}`}
     >

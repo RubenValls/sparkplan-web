@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 const mockSignIn = vi.fn();
 const mockSignOut = vi.fn();
 const mockUseSession = vi.fn();
+const mockUsePathname = vi.fn();
 
 vi.mock("next-auth/react", () => ({
   useSession: () => mockUseSession(),
@@ -14,13 +15,23 @@ vi.mock("next-auth/react", () => ({
   signOut: (...args: unknown[]) => mockSignOut(...args),
 }));
 
+vi.mock("next/navigation", () => ({
+  usePathname: () => mockUsePathname(),
+}));
+
 vi.mock("next-intl", () => ({
-  useTranslations: () => (key: string) => {
-    const translations: Record<string, string> = {
-      LOGIN: "Log In",
-      LOGOUT: "Log Out",
+  useTranslations: (namespace: string) => (key: string) => {
+    const translations: Record<string, Record<string, string>> = {
+      AUTH: {
+        LOGIN: "Log In",
+        LOGOUT: "Log Out",
+      },
+      HEADER: {
+        PRICING: "Pricing",
+        DASHBOARD: "Dashboard",
+      },
     };
-    return translations[key] || key;
+    return translations[namespace]?.[key] || key;
   },
 }));
 
@@ -46,17 +57,14 @@ vi.mock("@/components/ui/Logo/Logo", () => ({
   ),
 }));
 
-vi.mock("@/components/ui/ThemeToggle/ThemeToggle", () => ({
-  default: () => <button data-testid="theme-toggle">Theme</button>,
-}));
-
-vi.mock("@/components/ui/LanguageSwitcher/LanguageSwitcher", () => ({
-  default: () => <button data-testid="language-switcher">Language</button>,
+vi.mock("@/components/ui/SettingsMenu/SettingsMenu", () => ({
+  default: () => <button data-testid="settings-menu">Settings</button>,
 }));
 
 describe("Header", () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    mockUsePathname.mockReturnValue("/dashboard");
   });
 
   describe("Loading state", () => {
@@ -129,6 +137,34 @@ describe("Header", () => {
 
       expect(mockSignOut).toHaveBeenCalledWith({ callbackUrl: "/" });
     });
+
+    it("should render Pricing link when on dashboard", () => {
+      mockUseSession.mockReturnValue({
+        data: { user: { name: "Test User" } },
+        status: "authenticated",
+      });
+      mockUsePathname.mockReturnValue("/dashboard");
+
+      render(<Header />);
+
+      expect(screen.getByText("Pricing")).toBeInTheDocument();
+      const link = screen.getByText("Pricing").closest("a");
+      expect(link).toHaveAttribute("href", "/plans");
+    });
+
+    it("should render Dashboard link when on plans page", () => {
+      mockUseSession.mockReturnValue({
+        data: { user: { name: "Test User" } },
+        status: "authenticated",
+      });
+      mockUsePathname.mockReturnValue("/plans");
+
+      render(<Header />);
+
+      expect(screen.getByText("Dashboard")).toBeInTheDocument();
+      const link = screen.getByText("Dashboard").closest("a");
+      expect(link).toHaveAttribute("href", "/dashboard");
+    });
   });
 
   describe("Rendering", () => {
@@ -144,7 +180,7 @@ describe("Header", () => {
       expect(screen.getByText("SparkPlan")).toBeInTheDocument();
     });
 
-    it("should render theme toggle", () => {
+    it("should render settings menu", () => {
       mockUseSession.mockReturnValue({
         data: null,
         status: "unauthenticated",
@@ -152,18 +188,7 @@ describe("Header", () => {
 
       render(<Header />);
 
-      expect(screen.getByTestId("theme-toggle")).toBeInTheDocument();
-    });
-
-    it("should render language switcher", () => {
-      mockUseSession.mockReturnValue({
-        data: null,
-        status: "unauthenticated",
-      });
-
-      render(<Header />);
-
-      expect(screen.getByTestId("language-switcher")).toBeInTheDocument();
+      expect(screen.getByTestId("settings-menu")).toBeInTheDocument();
     });
 
     it("should render link to home", () => {

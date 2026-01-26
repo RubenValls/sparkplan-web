@@ -105,7 +105,8 @@
   },
   "HEADER": {
     "SWITCH_LANG": "Cambiar idioma",
-    "PRICING": "Planes"
+    "PRICING": "Planes",
+    "DASHBOARD": "Dashboard"
   },
   "DONATION": {
     "TITLE": "Invítanos a un café",

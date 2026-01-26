@@ -1,0 +1,74 @@
+@use "@/styles/variables" as *;
+
+.settingsMenu {
+  position: relative;
+
+  &__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: transparent;
+    border: none;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all 0.2s;
+    color: var(--color-text);
+
+    &:hover {
+      background: var(--color-bg);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+
+    &[aria-expanded="true"] {
+      background: var(--color-bg);
+    }
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s;
+
+    [aria-expanded="true"] & {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    padding: var(--spacing-sm);
+    z-index: 1000;
+    animation: slideDown 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__dropdown {
+      right: -8px;
+    }
+  }
+}
