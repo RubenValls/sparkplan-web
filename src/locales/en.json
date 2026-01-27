@@ -97,7 +97,8 @@
     "META_TITLE": "Plans & Pricing - SparkPlan",
     "META_DESCRIPTION": "Choose the perfect plan for your needs",
     "TITLE": "Choose your plan",
-    "SUBTITLE": "Select the plan that best fits your needs"
+    "SUBTITLE": "Select the plan that best fits your needs",
+    "REDIRECTING": "Redirecting..."
   },
   "AUTH": {
     "LOGIN": "Log In",
@@ -133,7 +134,7 @@
       "PRICE": "$1.49",
       "PERIOD": "/month",
       "DESCRIPTION": "Ideal for active entrepreneurs",
-      "FEATURE_1": "2 plans per day",
+      "FEATURE_1": "3 plans per day",
       "FEATURE_2": "AI generation",
       "FEATURE_3": "PDF download",
       "FEATURE_4": "Google Drive save",
@@ -155,6 +156,8 @@
       "BUTTON": "Select Plan"
     },
     "CURRENT_PLAN": "Current plan",
-    "MOST_POPULAR": "Most popular"
+    "MOST_POPULAR": "Most popular",
+    "MANAGE_PLAN": "Manage Plan",
+    "LOADING": ""
   }
 }

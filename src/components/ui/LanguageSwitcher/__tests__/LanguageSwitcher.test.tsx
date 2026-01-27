@@ -9,7 +9,7 @@ vi.mock("@/components/providers/LanguageProvider", () => ({
   useLang: vi.fn(),
 }));
 
-// Mock de lucide-react
+// Mock lucide-react
 vi.mock("lucide-react", () => ({
   Globe: () => <div data-testid="globe-icon">Globe</div>,
 }));

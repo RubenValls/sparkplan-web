@@ -15,7 +15,7 @@ vi.mock("lucide-react", () => ({
   ),
 }));
 
-// Wrapper con ThemeProvider
+// Wrapper ThemeProvider
 const ThemeWrapper = ({ children }: { children: ReactNode }) => (
   <ThemeProvider attribute="data-theme" defaultTheme="light">
     {children}
@@ -67,11 +67,9 @@ describe("ThemeToggle", () => {
       </ThemeWrapper>
     );
 
-    // ✅ El placeholder puede ser cualquier botón al inicio
     const buttons = container.querySelectorAll('button');
     expect(buttons.length).toBeGreaterThan(0);
     
-    // ✅ Verificar que hay al menos un botón
     const button = buttons[0];
     expect(button).toBeInTheDocument();
   });
@@ -83,7 +81,6 @@ describe("ThemeToggle", () => {
       </ThemeWrapper>
     );
 
-    // Esperar a que se monte y tenga un aria-label específico
     await waitFor(() => {
       const button = screen.getByRole("button");
       expect(button).toBeInTheDocument();
@@ -112,19 +109,15 @@ describe("ThemeToggle", () => {
       </ThemeWrapper>
     );
 
-    // Esperar a que se monte
     await waitFor(() => {
       expect(screen.getByRole("button")).toBeInTheDocument();
     }, { timeout: 3000 });
 
-    // Esperar a que el botón tenga el aria-label correcto
     const button = await screen.findByRole("button", { name: /switch to dark/i });
     expect(button).toBeInTheDocument();
 
-    // Click para cambiar a dark
     await user.click(button);
 
-    // Después del click, debe cambiar a sun icon
     await waitFor(() => {
       expect(screen.getByTestId("sun-icon")).toBeInTheDocument();
     }, { timeout: 3000 });
@@ -133,23 +126,19 @@ describe("ThemeToggle", () => {
   it("should toggle from dark to light", async () => {
     const user = userEvent.setup();
     
-    // Iniciar con tema oscuro
     render(
       <ThemeProvider attribute="data-theme" defaultTheme="dark">
         <ThemeToggle />
       </ThemeProvider>
     );
 
-    // Esperar a que se monte con tema oscuro
     await waitFor(() => {
       expect(screen.getByTestId("sun-icon")).toBeInTheDocument();
     }, { timeout: 3000 });
 
-    // Click para cambiar a light
     const button = screen.getByRole("button", { name: /switch to light/i });
     await user.click(button);
 
-    // Después del click, debe cambiar a moon icon
     await waitFor(() => {
       expect(screen.getByTestId("moon-icon")).toBeInTheDocument();
     }, { timeout: 3000 });

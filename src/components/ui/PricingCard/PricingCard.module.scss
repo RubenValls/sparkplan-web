@@ -26,8 +26,6 @@
   }
 
   &--current {
-    opacity: 0.7;
-
     &:hover {
       transform: none;
     }
@@ -45,6 +43,10 @@
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
+
+    &--current {
+      background: var(--color-secondary);
+    }
   }
 
   &__header {
@@ -159,7 +161,37 @@
         background: var(--color-primary-dark);
       }
     }
-  }
+
+    &--manage {
+      background: var(--color-secondary);
+      color: white;
+      border-color: var(--color-secondary);
+
+      &:hover:not(:disabled) {
+        background: var(--color-secondary-dark);
+        border-color: var(--color-secondary-dark);
+      }
+    }
+    &--loading {
+        cursor: wait;
+        opacity: 0.8;
+      }
+    }
+
+    &__buttonSpinner {
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
   @media (max-width: 768px) {
     padding: var(--spacing-lg);

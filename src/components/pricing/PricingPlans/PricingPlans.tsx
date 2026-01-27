@@ -14,6 +14,8 @@ interface PricingPlansProps {
   onFreePlanClick?: () => void;
   onPlusPlanClick?: () => void;
   onProPlanClick?: () => void;
+  onManageSubscription?: () => void;
+  isLoading?: boolean;
 }
 
 export default function PricingPlans({
@@ -22,7 +24,11 @@ export default function PricingPlans({
   onFreePlanClick,
   onPlusPlanClick,
   onProPlanClick,
+  onManageSubscription,
+  isLoading = false,
 }: PricingPlansProps) {
+  const hasPaidPlan = currentPlan === "PLUS" || currentPlan === "PRO";
+
   return (
     <div className={styles.pricing}>
       <PricingCard
@@ -30,19 +36,24 @@ export default function PricingPlans({
         isCurrentPlan={currentPlan === "FREE"}
         showButton={showButtons.free}
         onButtonClick={onFreePlanClick}
+        isLoading={isLoading && currentPlan === "FREE"}
       />
       <PricingCard
         plan="PLUS"
-        isPopular
+        isPopular={currentPlan !== "PLUS"}
         isCurrentPlan={currentPlan === "PLUS"}
-        showButton={showButtons.plus}
-        onButtonClick={onPlusPlanClick}
+        showButton={hasPaidPlan ? currentPlan === "PLUS" : showButtons.plus}
+        buttonVariant={currentPlan === "PLUS" ? "manage" : "default"}
+        onButtonClick={currentPlan === "PLUS" ? onManageSubscription : onPlusPlanClick}
+        isLoading={isLoading && (currentPlan === "PLUS" || (!hasPaidPlan && showButtons.plus))}
       />
       <PricingCard
         plan="PRO"
         isCurrentPlan={currentPlan === "PRO"}
-        showButton={showButtons.pro}
-        onButtonClick={onProPlanClick}
+        showButton={hasPaidPlan ? currentPlan === "PRO" : showButtons.pro}
+        buttonVariant={currentPlan === "PRO" ? "manage" : "default"}
+        onButtonClick={currentPlan === "PRO" ? onManageSubscription : onProPlanClick}
+        isLoading={isLoading && (currentPlan === "PRO" || (!hasPaidPlan && showButtons.pro))}
       />
     </div>
   );

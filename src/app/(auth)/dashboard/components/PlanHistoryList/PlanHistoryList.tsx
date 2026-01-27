@@ -40,7 +40,9 @@ export default function PlanHistoryList({
     );
   }
 
-  if (plans.length === 0) {
+  const plansWithContent = plans.filter((plan) => plan.plan && plan.plan.trim() !== "");
+
+  if (plansWithContent.length === 0) {
     return (
       <div className={styles.planHistory__empty}>
         <p>{t("EMPTY")}</p>
@@ -51,7 +53,7 @@ export default function PlanHistoryList({
   return (
     <div className={styles.planHistory}>
       <div className={styles.planHistory__table}>
-        {plans.map((plan) => (
+        {plansWithContent.map((plan) => (
           <div key={plan.id} className={styles.planHistory__row}>
             <div className={styles.planHistory__name}>
               <span className={styles.planHistory__nameText}>

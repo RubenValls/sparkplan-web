@@ -73,13 +73,11 @@ describe("Loading", () => {
       expect(progressBar).toBeInTheDocument();
     });
 
-    // ✅ FIX 1: Usar toMatch con regex para tolerancia de precisión
     it("should show correct initial progress percentage", () => {
       const { container } = render(<Loading steps={steps} />);
       const progressBar = container.querySelector(
         '[class*="progressBar"]'
       ) as HTMLElement;
-      // Tolerante a pequeñas diferencias de precisión en flotantes
       expect(progressBar.style.width).toMatch(/^33\.333333/);
     });
 
@@ -126,7 +124,6 @@ describe("Loading", () => {
       expect(screen.getByText("Step 3 of 3")).toBeInTheDocument();
     });
 
-    // ✅ FIX 2: Usar regex para progreso
     it("should update progress bar as steps advance", () => {
       const duration = 9000;
       const { container } = render(<Loading steps={steps} duration={duration} />);
@@ -134,16 +131,13 @@ describe("Loading", () => {
       const getProgressBar = () =>
         container.querySelector('[class*="progressBar"]') as HTMLElement;
 
-      // Initial progress (step 1 of 3) - ~33.33%
       expect(getProgressBar().style.width).toMatch(/^33\.333333/);
 
-      // Advance to step 2 - ~66.67%
       act(() => {
         vi.advanceTimersByTime(3000);
       });
       expect(getProgressBar().style.width).toMatch(/^66\.666666/);
 
-      // Advance to step 3 - 100%
       act(() => {
         vi.advanceTimersByTime(3000);
       });
@@ -265,7 +259,6 @@ describe("Loading", () => {
   });
 
   describe("Re-rendering behavior", () => {
-    // ✅ FIX 3: Resetear estado al rerender
     it("should restart from first step when steps prop changes", () => {
       const { rerender, unmount } = render(
         <Loading steps={["Old 1", "Old 2"]} duration={6000} />
@@ -273,18 +266,15 @@ describe("Loading", () => {
 
       expect(screen.getByText("Old 1")).toBeInTheDocument();
 
-      // Advance time
       act(() => {
         vi.advanceTimersByTime(3000);
       });
       expect(screen.getByText("Old 2")).toBeInTheDocument();
 
-      // Unmount y volver a montar con nuevos steps
       unmount();
       
       render(<Loading steps={["New 1", "New 2"]} duration={6000} />);
 
-      // Should be at first step
       expect(screen.getByText("New 1")).toBeInTheDocument();
     });
 

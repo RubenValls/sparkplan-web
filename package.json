@@ -12,6 +12,7 @@
     "test:ci": "vitest --coverage"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.6.4",
     "@supabase/supabase-js": "^2.91.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.0.0",
@@ -26,7 +27,8 @@
     "react-markdown": "^10.1.0",
     "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1",
-    "sass": "^1.94.2"
+    "sass": "^1.94.2",
+    "stripe": "^20.2.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.9.1",

@@ -1,23 +1,48 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import PricingPlans from "@/components/pricing/PricingPlans/PricingPlans";
+import { useStripeCheckout } from "@/hooks/useStripeCheckout";
+import { useStripePortal } from "@/hooks/useStripePortal";
+import { getUserByEmail } from "@/lib/supabase";
+import { STRIPE_PRICE_IDS } from "@/config";
+import type { PlanType } from "@/types/pricing";
 
 export default function PlansPage() {
   const t = useTranslations("PLANS");
+  const { data: session } = useSession();
+  const { createCheckoutSession, loading: checkoutLoading } = useStripeCheckout();
+  const { openPortal, loading: portalLoading } = useStripePortal();
+  const [currentPlan, setCurrentPlan] = useState<PlanType>("FREE");
 
-  // TODO: Obtener el plan actual del usuario desde Supabase
-  const currentPlan = "FREE"; // Temporal
+  useEffect(() => {
+    const fetchUserPlan = async () => {
+      if (!session?.user?.email) return;
+
+      const user = await getUserByEmail(session.user.email);
+      if (user?.subscription) {
+        setCurrentPlan(user.subscription as PlanType);
+      }
+    };
+
+    fetchUserPlan();
+  }, [session]);
 
   const handlePlusPlan = () => {
-    console.log("Iniciar pago PLUS");
-    // TODO: Integrar con Stripe/PayPal
+    createCheckoutSession(STRIPE_PRICE_IDS.PLUS);
   };
 
   const handleProPlan = () => {
-    console.log("Iniciar pago PRO");
-    // TODO: Integrar con Stripe/PayPal
+    createCheckoutSession(STRIPE_PRICE_IDS.PRO);
   };
+
+  const handleManageSubscription = () => {
+    openPortal();
+  };
+
+  const isLoading = checkoutLoading || portalLoading;
 
   return (
     <div style={{ padding: "4rem 2rem" }}>
@@ -35,6 +60,8 @@ export default function PlansPage() {
         showButtons={{ free: false, plus: true, pro: true }}
         onPlusPlanClick={handlePlusPlan}
         onProPlanClick={handleProPlan}
+        onManageSubscription={handleManageSubscription}
+        isLoading={isLoading}
       />
     </div>
   );

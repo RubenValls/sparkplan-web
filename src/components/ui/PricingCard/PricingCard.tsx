@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, X } from "lucide-react";
+import { Check, X, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./PricingCard.module.scss";
 import type { PlanType } from "@/types/pricing";
@@ -12,6 +12,8 @@ interface PricingCardProps {
   onButtonClick?: () => void;
   buttonText?: string;
   showButton?: boolean;
+  buttonVariant?: "default" | "manage";
+  isLoading?: boolean;
 }
 
 type FeatureKey = "FEATURE_1" | "FEATURE_2" | "FEATURE_3" | "FEATURE_4" | "FEATURE_5" | "FEATURE_6";
@@ -28,6 +30,8 @@ export default function PricingCard({
   onButtonClick,
   buttonText,
   showButton = true,
+  buttonVariant = "default",
+  isLoading = false,
 }: PricingCardProps) {
   const t = useTranslations(`PRICING.${plan}`);
   const tCommon = useTranslations("PRICING");
@@ -41,14 +45,33 @@ export default function PricingCard({
     ...(plan === "PRO" ? [{ key: "FEATURE_6" as FeatureKey, included: true }] : []),
   ];
 
+  const getButtonText = () => {
+    if (isLoading) {
+      return tCommon("LOADING");
+    }
+    if (buttonVariant === "manage") {
+      return tCommon("MANAGE_PLAN");
+    }
+    if (isCurrentPlan) {
+      return tCommon("CURRENT_PLAN");
+    }
+    return buttonText || t("BUTTON");
+  };
+
+  const showBadge = isCurrentPlan || isPopular;
+  const badgeText = isCurrentPlan ? tCommon("CURRENT_PLAN") : tCommon("MOST_POPULAR");
+  const badgeClass = isCurrentPlan ? styles["card__badge--current"] : "";
+
   return (
     <div
       className={`${styles.card} ${isPopular ? styles["card--popular"] : ""} ${
         isCurrentPlan ? styles["card--current"] : ""
       }`}
     >
-      {isPopular && (
-        <div className={styles.card__badge}>{tCommon("MOST_POPULAR")}</div>
+      {showBadge && (
+        <div className={`${styles.card__badge} ${badgeClass}`}>
+          {badgeText}
+        </div>
       )}
 
       <div className={styles.card__header}>
@@ -87,11 +110,16 @@ export default function PricingCard({
         <button
           className={`${styles.card__button} ${
             isPopular ? styles["card__button--popular"] : ""
+          } ${buttonVariant === "manage" ? styles["card__button--manage"] : ""} ${
+            isLoading ? styles["card__button--loading"] : ""
           }`}
           onClick={onButtonClick}
-          disabled={isCurrentPlan}
+          disabled={isCurrentPlan && buttonVariant !== "manage" || isLoading}
         >
-          {isCurrentPlan ? tCommon("CURRENT_PLAN") : buttonText || t("BUTTON")}
+          {isLoading && (
+            <Loader2 className={styles.card__buttonSpinner} />
+          )}
+          <span>{getButtonText()}</span>
         </button>
       )}
     </div>

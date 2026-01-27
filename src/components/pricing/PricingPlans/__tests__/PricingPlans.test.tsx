@@ -35,7 +35,7 @@ describe('PricingPlans', () => {
     expect(screen.getByTestId('card-FREE')).toBeInTheDocument();
     expect(screen.getByTestId('card-PLUS')).toBeInTheDocument();
     expect(screen.getByTestId('card-PRO')).toBeInTheDocument();
-    expect(screen.getByText('Popular')).toBeInTheDocument(); // PLUS is popular
+    expect(screen.getByText('Popular')).toBeInTheDocument(); 
   });
 
   it('should mark FREE as current plan', () => {

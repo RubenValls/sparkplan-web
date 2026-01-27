@@ -155,7 +155,6 @@ Some text after`}
       />
     );
 
-    // Buscar el <pre> que envuelve el code block
     const codeBlock = container.querySelector('pre[class*="planResult__codeBlock"]');
     expect(codeBlock).toBeInTheDocument();
   });
