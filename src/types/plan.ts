@@ -1,3 +1,5 @@
+import { UsageLimitErrorResponse } from "./usage-limits";
+
 export interface PlanResultInterface {
     success: boolean;
     message: string;
@@ -6,4 +8,5 @@ export interface PlanResultInterface {
       remaining: number;
       limit: number;
     };
+  errorData?: UsageLimitErrorResponse;
   }

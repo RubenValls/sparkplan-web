@@ -5,7 +5,7 @@ import ReactMarkdown from "react-markdown";
 import type { Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
-import { CheckCircle, XCircle, Download, Sparkles, Save } from "lucide-react";
+import { CheckCircle, Download, Sparkles, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./PlanResult.module.scss";
 
@@ -19,18 +19,8 @@ interface PlanResultProps {
 
 const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
   ({ success, message, plan, onDownloadPDF, onSaveToDrive }, ref) => {
-    if (!success) {
-      return (
-        <div className={`${styles.planResult} ${styles["planResult--error"]}`}>
-          <div className={styles.planResult__header}>
-            <XCircle className={styles.planResult__errorIcon} />
-            <p className={styles.planResult__message}>{message}</p>
-          </div>
-        </div>
-      );
-    }
 
-    if (!plan) {
+    if (!plan || !success) {
       return null;
     }
 

@@ -18,12 +18,6 @@ vi.mock("next-intl", () => ({
 }));
 
 describe("PlanResult", () => {
-  it("should render error state", () => {
-    render(<PlanResult success={false} message="Error message" />);
-    
-    expect(screen.getByText("Error message")).toBeInTheDocument();
-  });
-
   it("should return null when success without plan", () => {
     const { container } = render(<PlanResult success={true} message="Success" />);
     

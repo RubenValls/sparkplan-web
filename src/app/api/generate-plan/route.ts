@@ -5,6 +5,8 @@ import { generatePlan } from "@/lib/ai-service";
 import OpenAI from "openai";
 import { extractPlanTitle } from "@/utils";
 import { createBusinessPlan, getUserByEmail } from "@/lib/supabase";
+import { checkUsageLimit, getUsageLimitErrorData } from "@/lib/supabase/actions/usage-limits";
+import { USAGE_LIMITS } from "@/types";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,6 +14,37 @@ export async function POST(req: NextRequest) {
 
     if (!session || !session.user?.email) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const user = await getUserByEmail(session.user.email);
+
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const usageCheck = await checkUsageLimit(session.user.email, user.subscription);
+
+    if (!usageCheck.allowed) {
+      const errorData = getUsageLimitErrorData(
+        user.subscription,
+        usageCheck.currentUsage,
+        usageCheck.limit!,
+        usageCheck.periodEnd
+      );
+
+      return NextResponse.json(
+        {
+          error: "USAGE_LIMIT_REACHED",
+          data: {
+            subscription: errorData.subscription,
+            currentUsage: errorData.currentUsage,
+            limit: errorData.limit,
+            periodType: errorData.periodType,
+            periodEnd: errorData.periodEnd.toISOString(),
+          },
+        },
+        { status: 429 }
+      );
     }
 
     const { idea } = await req.json();
@@ -28,8 +61,7 @@ export async function POST(req: NextRequest) {
     const planTitle = extractPlanTitle(result.plan);
 
     try {
-      const user = await getUserByEmail(session.user.email);
-      const isPaidPlan = user?.subscription === "PLUS" || user?.subscription === "PRO";
+      const isPaidPlan = user.subscription === "PLUS" || user.subscription === "PRO";
 
       await createBusinessPlan({
         user_email: session.user.email,
@@ -45,6 +77,12 @@ export async function POST(req: NextRequest) {
       plan: result.plan,
       planName: planTitle,
       usage: result.usage,
+      usageInfo: {
+        currentUsage: usageCheck.currentUsage + 1,
+        limit: usageCheck.limit,
+        periodType: USAGE_LIMITS[user.subscription].periodType,
+        periodEnd: usageCheck.periodEnd.toISOString(),
+      },
     });
   } catch (error) {
     console.error("Error generating plan:", error);

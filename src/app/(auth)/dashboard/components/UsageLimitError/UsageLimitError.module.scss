@@ -1,0 +1,40 @@
+.error {
+  background: var(--color-error-bg);
+  border: 2px solid var(--color-error);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+
+  &__title {
+    color: var(--color-error);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+
+  &__message {
+    color: var(--color-text);
+    margin: 0 0 var(--spacing-xs) 0;
+  }
+
+  &__reset {
+    color: var(--color-muted);
+    font-size: 0.875rem;
+    margin: 0 0 var(--spacing-md) 0;
+  }
+
+  &__button {
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--color-primary-dark);
+    }
+  }
+}

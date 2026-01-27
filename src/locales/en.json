@@ -70,7 +70,8 @@
       "LOADING_STEP_5": "Organizing action plan...",
       "LOADING_STEP_6": "Finalizing your professional plan...",
       "SAVING_STEP_1": "Converting to PDF...",
-      "SAVING_STEP_2": "Uploading to Google Drive..."
+      "SAVING_STEP_2": "Uploading to Google Drive...",
+      "USAGE_LIMIT_REACHED": "Limit reached"
     },
     "PLAN_RESULT": {
       "SUBTITLE": "Professional Business Plan Generator",
@@ -91,6 +92,11 @@
       "DELETE_CONFIRM_MESSAGE": "This action cannot be undone. The plan will be permanently deleted.",
       "DELETE_CONFIRM_BUTTON": "Delete",
       "DELETE_CANCEL_BUTTON": "Cancel"
+    },
+    "USAGE_INFO": {
+      "DAILY": "Plans used today: {current}/{limit}",
+      "WEEKLY": "Plans used this week: {current}/{limit}",
+      "UNLIMITED": "Unlimited plans"
     }
   },
   "PLANS": {
@@ -159,5 +165,14 @@
     "MOST_POPULAR": "Most popular",
     "MANAGE_PLAN": "Manage Plan",
     "LOADING": ""
+  },
+  "ERRORS": {
+    "USAGE_LIMIT_REACHED": {
+      "TITLE": "Limit reached",
+      "MESSAGE_DAILY": "You've reached your limit of {limit} plans today ({currentUsage}/{limit}).",
+      "MESSAGE_WEEKLY": "You've reached your limit of {limit} plans this week ({currentUsage}/{limit}).",
+      "RESET_INFO": "Your limit will reset on {date}.",
+      "UPGRADE_CTA": "Upgrade your plan to get more plans"
+    }
   }
 }

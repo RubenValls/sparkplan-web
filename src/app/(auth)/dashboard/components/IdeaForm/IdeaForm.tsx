@@ -11,21 +11,27 @@ import DonationCard from "@/components/ui/DonationCard/DonationCard";
 import Accordion from "@/components/ui/Accordion/Accordion";
 import PlanResult from "../PlanResult/PlanResult";
 import PlanHistoryList from "../PlanHistoryList/PlanHistoryList";
+import Toast from "@/components/ui/Toast/Toast";
 
 import { usePDFPrint } from "@/hooks/usePdfPrint";
 import { useGoogleDrive } from "@/hooks/useGoogleDrive";
 import { useIdeaPlan } from "@/hooks/useIdeaPlan";
 import { usePlanHistory } from "@/hooks/usePlanHistory";
+import { useToast } from "@/hooks/useToast";
 
 import { deleteBusinessPlan } from "@/lib/supabase";
 import { formatDateISO } from "@/utils";
 import ConfirmDialog from "@/components/ui/ConfirmDialog/ConfirmDialog";
+
+import type { UsageLimitErrorResponse } from "@/types/usage-limits";
+import UsageLimitError from "../UsageLimitError/UsageLimitError";
 
 type AccordionSection = "create" | "history" | null;
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
   const tHistory = useTranslations("DASHBOARD.PLAN_HISTORY");
+  const tUsage = useTranslations("DASHBOARD.USAGE_INFO");
 
   const planResultRef = useRef<HTMLDivElement>(null);
 
@@ -33,6 +39,7 @@ export default function IdeaForm() {
   const { printToPDF, generatePDFBlob, isPrinting, isGenerating } = usePDFPrint();
   const { uploadToDrive, isUploading } = useGoogleDrive();
   const { plans, loading: plansLoading, error: plansError, refetch } = usePlanHistory();
+  const { showToast, toastMessage, isToastVisible, hideToast } = useToast();
 
   const [idea, setIdea] = useState("");
   const [savingToDrive, setSavingToDrive] = useState(false);
@@ -40,6 +47,7 @@ export default function IdeaForm() {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [planToDelete, setPlanToDelete] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [usageLimitError, setUsageLimitError] = useState<UsageLimitErrorResponse | null>(null);
 
   const MIN_LENGTH = 50;
   const isValid = idea.trim().length >= MIN_LENGTH;
@@ -62,10 +70,32 @@ export default function IdeaForm() {
       return;
     }
 
-    await generatePlan(idea.trim());
-    setIdea("");
-    setExpandedSection(null);
-    refetch();
+    setUsageLimitError(null);
+
+    const response = await generatePlan(idea.trim());
+
+    if (!response.success && response.errorData) {
+      setUsageLimitError(response.errorData);
+      setExpandedSection("create");
+      return;
+    }
+
+    if (response.success) {
+      setIdea("");
+      setExpandedSection(null);
+      refetch();
+
+      if (response.errorData) {
+        const { currentUsage, limit, periodType } = response.errorData;
+        
+        if (limit === null) {
+          showToast(tUsage("UNLIMITED"));
+        } else {
+          const messageKey = periodType === "daily" ? "DAILY" : "WEEKLY";
+          showToast(tUsage(messageKey, { current: currentUsage, limit }));
+        }
+      }
+    }
   };
 
   const handleDownloadPDF = () => {
@@ -93,6 +123,10 @@ export default function IdeaForm() {
 
   const toggleSection = (section: AccordionSection) => {
     setExpandedSection(expandedSection === section ? null : section);
+    
+    if (section !== "create") {
+      setUsageLimitError(null);
+    }
   };
 
   const handleViewPlan = (id: string) => {
@@ -180,6 +214,12 @@ export default function IdeaForm() {
 
   return (
     <div className={styles.ideaForm}>
+      <Toast
+        message={toastMessage}
+        isVisible={isToastVisible}
+        onClose={hideToast}
+      />
+
       {loading ? (
         <Loading steps={loadingSteps} duration={30000} size="large" />
       ) : savingToDrive ? (
@@ -194,6 +234,16 @@ export default function IdeaForm() {
               isExpanded={expandedSection === "create"}
               onToggle={() => toggleSection("create")}
             >
+              {usageLimitError && (
+                <UsageLimitError
+                  subscription={usageLimitError.subscription}
+                  currentUsage={usageLimitError.currentUsage}
+                  limit={usageLimitError.limit}
+                  periodType={usageLimitError.periodType}
+                  periodEnd={usageLimitError.periodEnd}
+                />
+              )}
+
               <form onSubmit={handleSubmit} className={styles.ideaForm__form}>
                 <div className={styles.ideaForm__field}>
                   <textarea

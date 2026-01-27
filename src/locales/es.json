@@ -70,7 +70,8 @@
       "LOADING_STEP_5": "Organizando plan de acción...",
       "LOADING_STEP_6": "Finalizando tu plan profesional...",
       "SAVING_STEP_1": "Convirtiendo a PDF...",
-      "SAVING_STEP_2": "Subiendo a Google Drive..."
+      "SAVING_STEP_2": "Subiendo a Google Drive...",
+      "USAGE_LIMIT_REACHED": "Límite alcanzado"
     },
     "PLAN_RESULT": {
       "SUBTITLE": "Generador Profesional de Planes de Negocio",
@@ -91,6 +92,11 @@
       "DELETE_CONFIRM_MESSAGE": "Esta acción no se puede deshacer. El plan será eliminado permanentemente.",
       "DELETE_CONFIRM_BUTTON": "Eliminar",
       "DELETE_CANCEL_BUTTON": "Cancelar"
+    },
+    "USAGE_INFO": {
+      "DAILY": "Planes usados hoy: {current}/{limit}",
+      "WEEKLY": "Planes usados esta semana: {current}/{limit}",
+      "UNLIMITED": "Planes ilimitados"
     }
   },
   "PLANS": {
@@ -159,5 +165,14 @@
     "MOST_POPULAR": "Más popular",
     "MANAGE_PLAN": "Gestionar Plan",
     "LOADING": ""
+  },
+  "ERRORS": {
+    "USAGE_LIMIT_REACHED": {
+      "TITLE": "Límite alcanzado",
+      "MESSAGE_DAILY": "Has alcanzado el límite de {limit} planes hoy ({currentUsage}/{limit}).",
+      "MESSAGE_WEEKLY": "Has alcanzado el límite de {limit} planes esta semana ({currentUsage}/{limit}).",
+      "RESET_INFO": "Tu límite se renovará el {date}.",
+      "UPGRADE_CTA": "Mejora tu plan para obtener más planes"
+    }
   }
 }

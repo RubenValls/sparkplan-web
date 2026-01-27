@@ -25,6 +25,13 @@
   --border-radius-md: 8px;
   --border-radius-lg: 12px;
   --border-radius-full: 9999px;
+
+  --color-error: var(--color-danger);
+  --color-error-bg: color-mix(
+    in srgb,
+    var(--color-danger) 12%,
+    transparent
+  );
 }
 
 [data-theme="dark"] {
@@ -39,6 +46,12 @@
   --color-border: #27272A;
   --color-text-inverse: #09090B;
   --shadow-sm: 0 2px 8px 0 rgb(0 0 0 / 0.5);
+  --color-error: var(--color-danger);
+  --color-error-bg: color-mix(
+    in srgb,
+    var(--color-danger) 18%,
+    transparent
+  );
 }
 
 @media (prefers-color-scheme: dark) {
@@ -54,6 +67,12 @@
     --color-border: #27272A;
     --color-text-inverse: #09090B;
     --shadow-sm: 0 2px 8px 0 rgb(0 0 0 / 0.5);
+    --color-error: var(--color-danger);
+    --color-error-bg: color-mix(
+      in srgb,
+      var(--color-danger) 18%,
+      transparent
+    );
   }
 }
 
