@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import { JWT } from "next-auth/jwt";
 import { ROUTES } from "@/config";
 import { env } from "@/config/env";
-import { ensureUserExists } from "@/lib/supabase";
+import { ensureUserExists, checkAndUpdateExpiredSubscription } from "@/lib/supabase";
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -31,9 +31,12 @@ export const authOptions: NextAuthOptions = {
       
       try {
         await ensureUserExists(user.email);
+        
+        await checkAndUpdateExpiredSubscription(user.email);
+        
         return true;
       } catch (error) {
-        console.error("Error ensuring user exists:", error);
+        console.error("Error in signIn callback:", error);
         return false;
       }
     },

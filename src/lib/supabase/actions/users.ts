@@ -62,3 +62,49 @@ export async function updateUserSubscription(
   
   return data;
 }
+
+export async function checkAndUpdateExpiredSubscription(
+  email: string
+): Promise<void> {
+  try {
+    const user = await getUserByEmail(email);
+    if (!user) return;
+
+    if (user.subscription === "FREE") return;
+    
+    if (!user.sub_expiration_date) {
+      await resetSubscriptionToFree(email);
+      return;
+    }
+
+    const expirationDate = new Date(user.sub_expiration_date);
+    if (isNaN(expirationDate.getTime())) {
+      await resetSubscriptionToFree(email);
+      return;
+    }
+
+    const now = new Date();
+    if (now > expirationDate) {
+      await resetSubscriptionToFree(email);
+    }
+  } catch (error) {
+    console.error("Error checking subscription, allowing login to proceed:", error);
+  }
+}
+
+async function resetSubscriptionToFree(email: string): Promise<void> {
+  const futureDate = new Date();
+  futureDate.setFullYear(futureDate.getFullYear() + 100);
+
+  const { error } = await supabase
+    .from("users")
+    .update({
+      subscription: "FREE",
+      sub_expiration_date: futureDate.toISOString(),
+    })
+    .eq("email", email);
+
+  if (error) {
+    throw error;
+  }
+}
