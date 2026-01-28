@@ -96,7 +96,7 @@
     "USAGE_INFO": {
       "DAILY": "Planes usados hoy: {current}/{limit}",
       "WEEKLY": "Planes usados esta semana: {current}/{limit}",
-      "UNLIMITED": "Planes ilimitados"
+      "UNLIMITED": "Planes ilimitados en tu suscripción"
     }
   },
   "PLANS": {

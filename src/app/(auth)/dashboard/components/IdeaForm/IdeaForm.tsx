@@ -25,6 +25,7 @@ import ConfirmDialog from "@/components/ui/ConfirmDialog/ConfirmDialog";
 
 import type { UsageLimitErrorResponse } from "@/types/usage-limits";
 import UsageLimitError from "../UsageLimitError/UsageLimitError";
+import { useUserSubscription } from "@/hooks/useUserSubscription";
 
 type AccordionSection = "create" | "history" | null;
 
@@ -40,6 +41,7 @@ export default function IdeaForm() {
   const { uploadToDrive, isUploading } = useGoogleDrive();
   const { plans, loading: plansLoading, error: plansError, refetch } = usePlanHistory();
   const { showToast, toastMessage, isToastVisible, hideToast } = useToast();
+  const { subscription } = useUserSubscription();
 
   const [idea, setIdea] = useState("");
   const [savingToDrive, setSavingToDrive] = useState(false);
@@ -308,6 +310,7 @@ export default function IdeaForm() {
                 plans={plans}
                 loading={plansLoading}
                 error={plansError}
+                currentPlan={subscription}
                 onView={handleViewPlan}
                 onDownload={handleDownloadPlan}
                 onDelete={handleDeletePlan}
@@ -315,7 +318,7 @@ export default function IdeaForm() {
             </Accordion>
           </div>
 
-          {result?.success && <DonationCard />}
+          {result?.success && subscription === "FREE" && <DonationCard />}
 
           {result && (
             <PlanResult

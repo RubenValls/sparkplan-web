@@ -4,11 +4,13 @@ import { Eye, Download, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./PlanHistoryList.module.scss";
 import type { BusinessPlan } from "@/lib/supabase/types";
+import type { SubscriptionType } from "@/lib/supabase/types";
 
 interface PlanHistoryListProps {
   plans: BusinessPlan[];
   loading: boolean;
   error: string | null;
+  currentPlan?: SubscriptionType;
   onView?: (id: string) => void;
   onDownload?: (id: string) => void;
   onDelete?: (id: string) => void;
@@ -18,11 +20,14 @@ export default function PlanHistoryList({
   plans,
   loading,
   error,
+  currentPlan,
   onView,
   onDownload,
   onDelete,
 }: PlanHistoryListProps) {
   const t = useTranslations("DASHBOARD.PLAN_HISTORY");
+
+  const canDelete = currentPlan === "PRO";
 
   if (loading) {
     return (
@@ -87,14 +92,16 @@ export default function PlanHistoryList({
                 <Download className={styles.planHistory__actionIcon} />
               </button>
 
-              <button
-                className={`${styles.planHistory__actionButton} ${styles["planHistory__actionButton--delete"]}`}
-                onClick={() => onDelete?.(plan.id)}
-                title={t("DELETE")}
-                aria-label={t("DELETE")}
-              >
-                <Trash2 className={styles.planHistory__actionIcon} />
-              </button>
+              {canDelete && (
+                <button
+                  className={`${styles.planHistory__actionButton} ${styles["planHistory__actionButton--delete"]}`}
+                  onClick={() => onDelete?.(plan.id)}
+                  title={t("DELETE")}
+                  aria-label={t("DELETE")}
+                >
+                  <Trash2 className={styles.planHistory__actionIcon} />
+                </button>
+              )}
             </div>
           </div>
         ))}

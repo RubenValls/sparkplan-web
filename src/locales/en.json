@@ -96,7 +96,7 @@
     "USAGE_INFO": {
       "DAILY": "Plans used today: {current}/{limit}",
       "WEEKLY": "Plans used this week: {current}/{limit}",
-      "UNLIMITED": "Unlimited plans"
+      "UNLIMITED": "Unlimited plans in your subscription"
     }
   },
   "PLANS": {
