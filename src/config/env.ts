@@ -1,22 +1,12 @@
-function getEnvVar(key: string, defaultValue?: string): string {
+function getEnvVar(key: string): string {
   const value = process.env[key];
-  
   if (!value) {
-    if (defaultValue !== undefined) {
-      return defaultValue;
-    }
-    
-    if (process.env.NODE_ENV === "test" || process.env.VITEST === "true") {
-      return `test-${key.toLowerCase().replace(/_/g, "-")}`;
-    }
-    
     throw new Error(`Missing required environment variable: ${key}`);
   }
-  
   return value;
 }
 
-function getOptionalEnvVar(key: string, defaultValue: string = ""): string {
+function getOptionalEnvVar(key: string, defaultValue: string): string {
   return process.env[key] || defaultValue;
 }
 
@@ -33,10 +23,9 @@ export const env = {
   
   openaiApiKey: getEnvVar("OPENAI_API_KEY"),
   
-  aiSystemPrompt: getOptionalEnvVar(
-    "AI_SYSTEM_PROMPT",
-    "You are a helpful AI assistant that generates professional business plans."
-  ),
+  aiAnalysisPrompt: getEnvVar("AI_ANALYSIS_PROMPT"),
+  aiPlanGenerationPrompt: getEnvVar("AI_PLAN_GENERATION_PROMPT"),
+  aiBrandingPrompt: getEnvVar("AI_BRANDING_PROMPT"),
 } as const;
 
 export type Environment = typeof env;

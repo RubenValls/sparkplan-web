@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { generatePlan } from "@/lib/ai-service";
+import { generateEnhancedPlan } from "@/lib/ai-service";
 import OpenAI from "openai";
 import { extractPlanTitle } from "@/utils";
 import { createBusinessPlan, getUserByEmail } from "@/lib/supabase";
-import { checkUsageLimit, getUsageLimitErrorData } from "@/lib/supabase/actions/usage-limits";
+import {
+  checkUsageLimit,
+  getUsageLimitErrorData,
+} from "@/lib/supabase/actions/usage-limits";
 import { USAGE_LIMITS } from "@/types";
 
 export async function POST(req: NextRequest) {
@@ -22,7 +25,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const usageCheck = await checkUsageLimit(session.user.email, user.subscription);
+    const usageCheck = await checkUsageLimit(
+      session.user.email,
+      user.subscription
+    );
 
     if (!usageCheck.allowed) {
       const errorData = getUsageLimitErrorData(
@@ -56,12 +62,15 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await generatePlan({ idea: idea.trim() });
+    const result = await generateEnhancedPlan({
+      idea: idea.trim(),
+    });
 
     const planTitle = extractPlanTitle(result.plan);
 
     try {
-      const isPaidPlan = user.subscription === "PLUS" || user.subscription === "PRO";
+      const isPaidPlan =
+        user.subscription === "PLUS" || user.subscription === "PRO";
 
       await createBusinessPlan({
         user_email: session.user.email,
