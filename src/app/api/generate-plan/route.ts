@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { generateEnhancedPlan } from "@/lib/ai-service";
 import OpenAI from "openai";
 import { extractPlanTitle } from "@/utils";
 import { createBusinessPlan, getUserByEmail } from "@/lib/supabase";
@@ -10,6 +9,7 @@ import {
   getUsageLimitErrorData,
 } from "@/lib/supabase/actions/usage-limits";
 import { USAGE_LIMITS } from "@/types";
+import { generateHybridPlan } from "@/lib/ai-service/hybrid-generator";
 
 export async function POST(req: NextRequest) {
   try {
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const result = await generateEnhancedPlan({
+    const result = await generateHybridPlan({
       idea: idea.trim(),
     });
 

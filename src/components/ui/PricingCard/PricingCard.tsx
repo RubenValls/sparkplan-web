@@ -41,7 +41,7 @@ export default function PricingCard({
     { key: "FEATURE_2", included: true },
     { key: "FEATURE_3", included: true },
     { key: "FEATURE_4", included: true },
-    { key: "FEATURE_5", included: plan !== "FREE" },
+    { key: "FEATURE_5", included: true },
     ...(plan === "PRO" ? [{ key: "FEATURE_6" as FeatureKey, included: true }] : []),
   ];
 

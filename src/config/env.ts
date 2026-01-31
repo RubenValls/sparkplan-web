@@ -22,6 +22,8 @@ export const env = {
   googleClientSecret: getEnvVar("GOOGLE_CLIENT_SECRET"),
   
   openaiApiKey: getEnvVar("OPENAI_API_KEY"),
+  googleAiApiKey: getEnvVar("GOOGLE_AI_API_KEY"),
+  anthropicApiKey: getEnvVar("ANTHROPIC_API_KEY"),
   
   aiAnalysisPrompt: getEnvVar("AI_ANALYSIS_PROMPT"),
   aiPlanGenerationPrompt: getEnvVar("AI_PLAN_GENERATION_PROMPT"),

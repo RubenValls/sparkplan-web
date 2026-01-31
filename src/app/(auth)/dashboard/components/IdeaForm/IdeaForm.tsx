@@ -277,15 +277,27 @@ export default function IdeaForm() {
                 </div>
 
                 <div className={styles.ideaForm__tips}>
-                  <p className={styles.ideaForm__tipsTitle}>
+                  <div className={styles.ideaForm__tipsHeader}>
                     <Lightbulb className={styles.ideaForm__tipsIcon} />
-                    {t("TIPS_TITLE")}
-                  </p>
+                    <h3 className={styles.ideaForm__tipsTitle}>{t("TIPS_TITLE")}</h3>
+                  </div>
                   <ul className={styles.ideaForm__tipsList}>
-                    <li>{t("TIP_1")}</li>
-                    <li>{t("TIP_2")}</li>
-                    <li>{t("TIP_3")}</li>
-                    <li>{t("TIP_4")}</li>
+                    <li className={styles.ideaForm__tip}>
+                      <span className={styles.ideaForm__tipNumber}>1</span>
+                      <span className={styles.ideaForm__tipText}>{t("TIP_1")}</span>
+                    </li>
+                    <li className={styles.ideaForm__tip}>
+                      <span className={styles.ideaForm__tipNumber}>2</span>
+                      <span className={styles.ideaForm__tipText}>{t("TIP_2")}</span>
+                    </li>
+                    <li className={styles.ideaForm__tip}>
+                      <span className={styles.ideaForm__tipNumber}>3</span>
+                      <span className={styles.ideaForm__tipText}>{t("TIP_3")}</span>
+                    </li>
+                    <li className={styles.ideaForm__tip}>
+                      <span className={styles.ideaForm__tipNumber}>4</span>
+                      <span className={styles.ideaForm__tipText}>{t("TIP_4")}</span>
+                    </li>
                   </ul>
                 </div>
 

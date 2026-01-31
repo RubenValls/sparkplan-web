@@ -1,4 +1,4 @@
-import OpenAI from "openai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { env } from "@/config/env";
 import {
   ANALYSIS_PROMPT,
@@ -12,10 +12,8 @@ import type {
   StrategicAnalysis,
 } from "./ai-service-types";
 
-const openai = new OpenAI({
-  apiKey: env.openaiApiKey,
-});
 
+const genAI = new GoogleGenerativeAI(env.googleAiApiKey);
 
 function prepareAnalysisPrompt(idea: string): string {
   return ANALYSIS_PROMPT.replace("{idea}", idea);
@@ -45,10 +43,7 @@ function prepareBrandingPrompt(
 
   return BRANDING_PROMPT.replace("{language}", detectedLanguage)
     .replace("{positioning}", strategicAnalysis.strategic_decisions.positioning)
-    .replace(
-      "{target}",
-      strategicAnalysis.strategic_decisions.target_hypothesis.join(", ")
-    )
+    .replace("{target}", strategicAnalysis.strategic_decisions.target_hypothesis.join(", "))
     .replace("{valueProposition}", idea.substring(0, 200))
     .replace("{projectName}", detectedProjectName || "Not provided")
     .replace("{nameEvaluation}", nameSection);
@@ -67,51 +62,54 @@ function parseStrategicAnalysis(rawResponse: string): StrategicAnalysis {
   return JSON.parse(cleanJson);
 }
 
-async function analyzeBusinessIdea(idea: string): Promise<{
+// ============================================
+// GEMINI: Analysis
+// ============================================
+
+async function analyzeBusinessIdeaWithGemini(idea: string): Promise<{
   analysis: StrategicAnalysis;
   promptTokens: number;
   completionTokens: number;
 }> {
-  const prompt = prepareAnalysisPrompt(idea);
-
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content:
-          "You are a strategic business analyst. Always respond with valid JSON only.",
-      },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-    temperature: 0.5,
-    max_tokens: 800,
+  const model = genAI.getGenerativeModel({
+    model: "models/gemini-flash-latest",
   });
 
-  const responseText = completion.choices[0]?.message?.content;
+  const prompt = prepareAnalysisPrompt(idea);
 
-  if (!responseText) {
-    throw new Error("Failed to generate strategic analysis");
-  }
+  const result = await model.generateContent({
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.5,
+      maxOutputTokens: 1500,
+      responseMimeType: "application/json",
+    },
+  });
+
+  const responseText = result.response.text();
 
   try {
     const analysis = parseStrategicAnalysis(responseText);
 
+    const estimatedPromptTokens = Math.ceil(prompt.length / 4);
+    const estimatedCompletionTokens = Math.ceil(responseText.length / 4);
+
     return {
       analysis,
-      promptTokens: completion.usage?.prompt_tokens || 0,
-      completionTokens: completion.usage?.completion_tokens || 0,
+      promptTokens: estimatedPromptTokens,
+      completionTokens: estimatedCompletionTokens,
     };
   } catch (error) {
-    console.error("Failed to parse strategic analysis:", responseText);
-    throw new Error("Invalid strategic analysis format");
+    console.error("Failed to parse Gemini analysis:", responseText);
+    throw new Error("Invalid strategic analysis format from Gemini");
   }
 }
 
-async function generateBusinessPlanContent(
+// ============================================
+// GEMINI: Business Plan
+// ============================================
+
+async function generateBusinessPlanWithGemini(
   idea: string,
   strategicAnalysis: StrategicAnalysis,
   detectedProjectName: string | null,
@@ -121,43 +119,41 @@ async function generateBusinessPlanContent(
   promptTokens: number;
   completionTokens: number;
 }> {
-  const prompt = preparePlanPrompt(
-    idea,
-    strategicAnalysis,
-    detectedProjectName,
-    language
-  );
-
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o",
-    messages: [
-      {
-        role: "system",
-        content: `You are a senior business consultant. Generate professional, long-form business plans in ${language}.`,
-      },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-    temperature: 0.7,
-    max_tokens: 10000,
+  const model = genAI.getGenerativeModel({
+    model: "models/gemini-flash-latest",
   });
 
-  const content = completion.choices[0]?.message?.content;
+  const prompt = preparePlanPrompt(idea, strategicAnalysis, detectedProjectName, language);
+
+  const result = await model.generateContent({
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.7,
+      maxOutputTokens: 10000,
+    },
+  });
+
+  const content = result.response.text();
 
   if (!content) {
-    throw new Error("Failed to generate business plan");
+    throw new Error("Failed to generate business plan with Gemini");
   }
+
+  const estimatedPromptTokens = Math.ceil(prompt.length / 4);
+  const estimatedCompletionTokens = Math.ceil(content.length / 4);
 
   return {
     content,
-    promptTokens: completion.usage?.prompt_tokens || 0,
-    completionTokens: completion.usage?.completion_tokens || 0,
+    promptTokens: estimatedPromptTokens,
+    completionTokens: estimatedCompletionTokens,
   };
 }
 
-async function generateBrandingSection(
+// ============================================
+// GEMINI: Branding
+// ============================================
+
+async function generateBrandingWithGemini(
   idea: string,
   strategicAnalysis: StrategicAnalysis,
   detectedProjectName: string | null,
@@ -167,58 +163,55 @@ async function generateBrandingSection(
   promptTokens: number;
   completionTokens: number;
 }> {
-  const prompt = prepareBrandingPrompt(
-    idea,
-    strategicAnalysis,
-    detectedProjectName,
-    language
-  );
-
-  const completion = await openai.chat.completions.create({
-    model: "gpt-4o-mini",
-    messages: [
-      {
-        role: "system",
-        content: `You are a brand strategist. Generate professional branding recommendations in ${language}.`,
-      },
-      {
-        role: "user",
-        content: prompt,
-      },
-    ],
-    temperature: 0.6,
-    max_tokens: 2000,
+  const model = genAI.getGenerativeModel({
+    model: "models/gemini-flash-latest",
   });
 
-  const content = completion.choices[0]?.message?.content || "";
+  const prompt = prepareBrandingPrompt(idea, strategicAnalysis, detectedProjectName, language);
+
+  const result = await model.generateContent({
+    contents: [{ role: "user", parts: [{ text: prompt }] }],
+    generationConfig: {
+      temperature: 0.6,
+      maxOutputTokens: 5000,
+    },
+  });
+
+  const content = result.response.text();
+
+  const estimatedPromptTokens = Math.ceil(prompt.length / 4);
+  const estimatedCompletionTokens = Math.ceil(content.length / 4);
 
   return {
     content,
-    promptTokens: completion.usage?.prompt_tokens || 0,
-    completionTokens: completion.usage?.completion_tokens || 0,
+    promptTokens: estimatedPromptTokens,
+    completionTokens: estimatedCompletionTokens,
   };
 }
 
+// ============================================
+// ORCHESTRATION
+// ============================================
 
-export async function generateEnhancedPlan(
+export async function generateHybridPlan(
   options: GeneratePlanOptions
 ): Promise<EnhancedPlanResponse> {
   const { idea } = options;
 
-  const analysisResult = await analyzeBusinessIdea(idea);
+  const analysisResult = await analyzeBusinessIdeaWithGemini(idea);
   const { analysis: strategicAnalysis } = analysisResult;
 
   const detectedProjectName = strategicAnalysis.project_name || null;
   const language = detectLanguage(idea, strategicAnalysis);
 
-  const planResult = await generateBusinessPlanContent(
+  const planResult = await generateBusinessPlanWithGemini(
     idea,
     strategicAnalysis,
     detectedProjectName,
     language
-  );
+    );
 
-  const brandingResult = await generateBrandingSection(
+  const brandingResult = await generateBrandingWithGemini(
     idea,
     strategicAnalysis,
     detectedProjectName,

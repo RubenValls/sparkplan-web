@@ -81,49 +81,72 @@
   }
 
   &__tips {
-    background: var(--color-bg);
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-md);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.05) 0%, rgba(99, 102, 241, 0.05) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-lg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  &__tipsHeader {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+    padding-left: var(--spacing-sm);
   }
 
   &__tipsTitle {
-    display: flex;
-    align-items: center;
-    gap: var(--spacing-xs);
+    font-size: 1rem;
     font-weight: 600;
-    margin-bottom: var(--spacing-sm);
     color: var(--color-text);
+    margin: 0;
   }
 
   &__tipsIcon {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     color: var(--color-primary);
+    flex-shrink: 0;
   }
 
   &__tipsList {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
 
-    li {
-      padding-left: var(--spacing-md);
-      margin-bottom: var(--spacing-xs);
-      color: var(--color-muted);
-      font-size: 0.9375rem;
-      position: relative;
+  &__tip {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+  }
 
-      &::before {
-        content: "→";
-        position: absolute;
-        left: 0;
-        color: var(--color-primary);
-      }
+  &__tipNumber {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
 
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
+  &__tipText {
+    flex: 1;
+    color: var(--color-text-secondary);
+    font-size: 0.9375rem;
+    line-height: 1.6;
   }
 
   &__submit {
