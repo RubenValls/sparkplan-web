@@ -2,7 +2,7 @@ import type { SubscriptionType } from "@/lib/supabase/types";
 
 export interface UsageLimit {
   maxPlans: number | null;
-  periodType: "daily" | "weekly";
+  periodType: "lifetime" | "monthly";
 }
 
 export interface UsageLimitConfig {
@@ -13,7 +13,7 @@ export interface UsageLimitErrorData {
   subscription: SubscriptionType;
   currentUsage: number;
   limit: number;
-  periodType: "daily" | "weekly";
+  periodType: "lifetime" | "monthly";
   periodEnd: Date;
 }
 
@@ -21,21 +21,21 @@ export interface UsageLimitErrorResponse {
   subscription: SubscriptionType;
   currentUsage: number;
   limit: number;
-  periodType: "daily" | "weekly";
+  periodType: "lifetime" | "monthly";
   periodEnd: string;
 }
 
 export const USAGE_LIMITS: Record<SubscriptionType, UsageLimit> = {
   FREE: {
-    maxPlans: 3,
-    periodType: "weekly",
+    maxPlans: 1,
+    periodType: "lifetime",
   },
   PLUS: {
-    maxPlans: 3,
-    periodType: "daily",
+    maxPlans: 30,
+    periodType: "monthly",
   },
   PRO: {
-    maxPlans: null,
-    periodType: "daily",
+    maxPlans: 100,
+    periodType: "monthly",
   },
 } as const;

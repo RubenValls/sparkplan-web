@@ -95,8 +95,10 @@
     },
     "USAGE_INFO": {
       "DAILY": "Planes usados hoy: {current}/{limit}",
-      "WEEKLY": "Planes usados esta semana: {current}/{limit}",
-      "UNLIMITED": "Planes ilimitados en tu suscripción"
+      "WEEKLY": "Planes usados este semana: {current}/{limit}",
+      "UNLIMITED": "Planes ilimitados en tu suscripción",
+      "FREE_PLAN_CREATED": "Plan de prueba creado correctamente",
+      "MONTHLY": "Planes usados este mes: {current}/{limit}"
     }
   },
   "PLANS": {
@@ -169,10 +171,11 @@
   "ERRORS": {
     "USAGE_LIMIT_REACHED": {
       "TITLE": "Límite alcanzado",
-      "MESSAGE_DAILY": "Has alcanzado el límite de {limit} planes hoy ({currentUsage}/{limit}).",
-      "MESSAGE_WEEKLY": "Has alcanzado el límite de {limit} planes esta semana ({currentUsage}/{limit}).",
+      "MESSAGE_FREE": "Ya has usado tu plan gratuito. Los usuarios FREE solo pueden crear 1 plan.",
+      "MESSAGE_MONTHLY": "Has alcanzado el límite de {limit} planes este mes ({currentUsage}/{limit}).",
       "RESET_INFO": "Tu límite se renovará el {date}.",
-      "UPGRADE_CTA": "Mejora tu plan para obtener más planes"
+      "UPGRADE_CTA_FREE": "Actualiza a PLUS para 30 planes mensuales",
+      "UPGRADE_CTA_PLUS": "Actualiza a PRO para 100 planes mensuales"
     }
   }
 }

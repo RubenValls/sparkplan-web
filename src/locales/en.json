@@ -96,7 +96,9 @@
     "USAGE_INFO": {
       "DAILY": "Plans used today: {current}/{limit}",
       "WEEKLY": "Plans used this week: {current}/{limit}",
-      "UNLIMITED": "Unlimited plans in your subscription"
+      "UNLIMITED": "Unlimited plans in your subscription",
+      "FREE_PLAN_CREATED": "Free trial plan created successfully",
+      "MONTHLY": "Plans used this month: {current}/{limit}"
     }
   },
   "PLANS": {
@@ -169,10 +171,11 @@
   "ERRORS": {
     "USAGE_LIMIT_REACHED": {
       "TITLE": "Limit reached",
-      "MESSAGE_DAILY": "You've reached your limit of {limit} plans today ({currentUsage}/{limit}).",
-      "MESSAGE_WEEKLY": "You've reached your limit of {limit} plans this week ({currentUsage}/{limit}).",
+      "MESSAGE_FREE": "You've already used your free plan. FREE users can only create 1 plan.",
+      "MESSAGE_MONTHLY": "You've reached your limit of {limit} plans this month ({currentUsage}/{limit}).",
       "RESET_INFO": "Your limit will reset on {date}.",
-      "UPGRADE_CTA": "Upgrade your plan to get more plans"
+      "UPGRADE_CTA_FREE": "Upgrade to PLUS for 30 monthly plans",
+      "UPGRADE_CTA_PLUS": "Upgrade to PRO for 100 monthly plans"
     }
   }
 }

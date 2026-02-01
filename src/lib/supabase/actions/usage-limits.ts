@@ -11,28 +11,69 @@ interface UsageCheckResult {
   periodEnd: Date;
 }
 
-export async function checkUsageLimit(
-  userEmail: string,
-  subscription: SubscriptionType
-): Promise<UsageCheckResult> {
-  const limits = USAGE_LIMITS[subscription];
+interface UserWithSubscription {
+  email: string;
+  subscription: SubscriptionType;
+  sub_expiration_date: string | null;
+}
 
-  if (limits.maxPlans === null) {
+export async function checkUsageLimit(
+  user: UserWithSubscription
+): Promise<UsageCheckResult> {
+  const limits = USAGE_LIMITS[user.subscription];
+
+  if (user.subscription === "FREE") {
+    const { count, error } = await supabase
+      .from("business_plans")
+      .select("*", { count: "exact", head: true })
+      .eq("user_email", user.email);
+
+    if (error) {
+      throw new Error("Failed to check usage limit");
+    }
+
+    const currentUsage = count || 0;
+    const allowed = currentUsage < limits.maxPlans!;
+
     return {
-      allowed: true,
+      allowed,
+      currentUsage,
+      limit: limits.maxPlans,
+      periodStart: new Date(0),
+      periodEnd: new Date(),
+    };
+  }
+
+  if (!user.sub_expiration_date) {
+    return {
+      allowed: false,
       currentUsage: 0,
-      limit: null,
+      limit: limits.maxPlans,
       periodStart: new Date(),
       periodEnd: new Date(),
     };
   }
 
-  const { periodStart, periodEnd } = calculatePeriod(limits.periodType);
+  const subExpirationDate = new Date(user.sub_expiration_date);
+  const now = new Date();
+
+  if (now > subExpirationDate) {
+    return {
+      allowed: false,
+      currentUsage: 0,
+      limit: limits.maxPlans,
+      periodStart: new Date(),
+      periodEnd: subExpirationDate,
+    };
+  }
+
+  const periodStart = calculateMonthlyPeriodStart(subExpirationDate);
+  const periodEnd = subExpirationDate;
 
   const { count, error } = await supabase
     .from("business_plans")
     .select("*", { count: "exact", head: true })
-    .eq("user_email", userEmail)
+    .eq("user_email", user.email)
     .gte("creation_date", periodStart.toISOString())
     .lte("creation_date", periodEnd.toISOString());
 
@@ -41,7 +82,7 @@ export async function checkUsageLimit(
   }
 
   const currentUsage = count || 0;
-  const allowed = currentUsage < limits.maxPlans;
+  const allowed = currentUsage < limits.maxPlans!;
 
   return {
     allowed,
@@ -52,34 +93,10 @@ export async function checkUsageLimit(
   };
 }
 
-function calculatePeriod(periodType: "daily" | "weekly"): {
-  periodStart: Date;
-  periodEnd: Date;
-} {
-  const now = new Date();
-
-  if (periodType === "daily") {
-    const periodStart = new Date(now);
-    periodStart.setHours(0, 0, 0, 0);
-
-    const periodEnd = new Date(now);
-    periodEnd.setHours(23, 59, 59, 999);
-
-    return { periodStart, periodEnd };
-  }
-
-  const dayOfWeek = now.getDay();
-  const daysToMonday = dayOfWeek === 0 ? -6 : 1 - dayOfWeek;
-  
-  const periodStart = new Date(now);
-  periodStart.setDate(now.getDate() + daysToMonday);
-  periodStart.setHours(0, 0, 0, 0);
-
-  const periodEnd = new Date(periodStart);
-  periodEnd.setDate(periodStart.getDate() + 6);
-  periodEnd.setHours(23, 59, 59, 999);
-
-  return { periodStart, periodEnd };
+function calculateMonthlyPeriodStart(expirationDate: Date): Date {
+  const periodStart = new Date(expirationDate);
+  periodStart.setMonth(periodStart.getMonth() - 1);
+  return periodStart;
 }
 
 export function getUsageLimitErrorData(

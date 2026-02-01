@@ -83,21 +83,21 @@ export default function IdeaForm() {
     }
 
     if (response.success) {
-      setIdea("");
-      setExpandedSection(null);
-      refetch();
+  setIdea("");
+  setExpandedSection(null);
+  refetch();
 
-      if (response.errorData) {
-        const { currentUsage, limit, periodType } = response.errorData;
-        
-        if (limit === null) {
-          showToast(tUsage("UNLIMITED"));
-        } else {
-          const messageKey = periodType === "daily" ? "DAILY" : "WEEKLY";
-          showToast(tUsage(messageKey, { current: currentUsage, limit }));
-        }
-      }
+  if (response.errorData) {
+    const { currentUsage, limit, periodType } = response.errorData;
+    
+    if (periodType === "lifetime") {
+      showToast(tUsage("FREE_PLAN_CREATED"));
+    } 
+    else if (periodType === "monthly") {
+      showToast(tUsage("MONTHLY", { current: currentUsage, limit }));
     }
+  }
+}
   };
 
   const handleDownloadPDF = () => {

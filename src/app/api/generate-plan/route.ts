@@ -25,10 +25,11 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
-    const usageCheck = await checkUsageLimit(
-      session.user.email,
-      user.subscription
-    );
+    const usageCheck = await checkUsageLimit({
+      email: user.email,
+      subscription: user.subscription,
+      sub_expiration_date: user.sub_expiration_date,
+    });
 
     if (!usageCheck.allowed) {
       const errorData = getUsageLimitErrorData(
