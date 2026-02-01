@@ -4,13 +4,11 @@ import { Eye, Download, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./PlanHistoryList.module.scss";
 import type { BusinessPlan } from "@/lib/supabase/types";
-import type { SubscriptionType } from "@/lib/supabase/types";
 
 interface PlanHistoryListProps {
   plans: BusinessPlan[];
   loading: boolean;
   error: string | null;
-  currentPlan?: SubscriptionType;
   onView?: (id: string) => void;
   onDownload?: (id: string) => void;
   onDelete?: (id: string) => void;
@@ -20,14 +18,13 @@ export default function PlanHistoryList({
   plans,
   loading,
   error,
-  currentPlan,
   onView,
   onDownload,
   onDelete,
 }: PlanHistoryListProps) {
   const t = useTranslations("DASHBOARD.PLAN_HISTORY");
 
-  const canDelete = currentPlan === "PRO";
+  const canDelete = false;
 
   if (loading) {
     return (

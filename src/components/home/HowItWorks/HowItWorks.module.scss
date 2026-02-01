@@ -3,6 +3,7 @@
 .howItWorks {
   padding: var(--spacing-3xl) var(--spacing-md);
   background: var(--color-bg);
+  position: relative;
 
   &__container {
     max-width: 1200px;
@@ -12,14 +13,30 @@
   &__heading {
     text-align: center;
     font-size: clamp(2rem, 4vw, 3rem);
-    margin-bottom: var(--spacing-2xl);
+    margin-bottom: var(--spacing-sm);
     color: var(--color-text);
+    font-weight: 700;
+  }
+
+  &__subheading {
+    text-align: center;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--color-muted);
+    margin-bottom: var(--spacing-2xl);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   &__steps {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: var(--spacing-xl);
+    
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: var(--spacing-lg);
+    }
   }
 }
 
@@ -29,11 +46,25 @@
   border-radius: var(--border-radius-lg);
   text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  border: 1px solid var(--color-border);
 
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(59, 130, 246, 0.15);
+    border-color: var(--color-primary);
+  }
+
+  &__number {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-md);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    opacity: 0.15;
+    line-height: 1;
   }
 
   &__icon {
@@ -42,15 +73,33 @@
     justify-content: center;
     width: 64px;
     height: 64px;
-    margin: 0 auto var(--spacing-sm);
-    background: var(--color-primary);
+    margin: 0 auto var(--spacing-md);
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
     border-radius: var(--border-radius-full);
-    color: var(--color-text-inverse);
+    color: white;
+    position: relative;
+    z-index: 1;
     
     svg {
       width: 32px;
       height: 32px;
     }
+
+    // Efecto de glow sutil
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -4px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      border-radius: var(--border-radius-full);
+      opacity: 0;
+      z-index: -1;
+      transition: opacity 0.3s;
+    }
+  }
+
+  &:hover &__icon::after {
+    opacity: 0.3;
   }
 
   &__title {
@@ -63,5 +112,35 @@
   &__description {
     color: var(--color-text-secondary, var(--color-muted));
     line-height: 1.6;
+    font-size: 0.9375rem;
+  }
+
+  @media (max-width: 768px) {
+    padding: var(--spacing-lg);
+
+    &__number {
+      font-size: 2rem;
+      top: var(--spacing-sm);
+      right: var(--spacing-sm);
+    }
+
+    &__icon {
+      width: 56px;
+      height: 56px;
+      margin-bottom: var(--spacing-sm);
+
+      svg {
+        width: 28px;
+        height: 28px;
+      }
+    }
+
+    &__title {
+      font-size: 1.125rem;
+    }
+
+    &__description {
+      font-size: 0.875rem;
+    }
   }
 }

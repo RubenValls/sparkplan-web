@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Lock, Lightbulb, Bot, FolderOpen } from "lucide-react";
+import { LogIn, Lightbulb, Sparkles, Download } from "lucide-react";
 import styles from "./HowItWorks.module.scss";
 
 export default function HowItWorks() {
@@ -11,22 +11,26 @@ export default function HowItWorks() {
     {
       title: t("STEP_1_TITLE"),
       description: t("STEP_1_DESC"),
-      icon: Lock
+      icon: LogIn,
+      number: "01"
     },
     {
       title: t("STEP_2_TITLE"),
       description: t("STEP_2_DESC"),
-      icon: Lightbulb
+      icon: Lightbulb,
+      number: "02"
     },
     {
       title: t("STEP_3_TITLE"),
       description: t("STEP_3_DESC"),
-      icon: Bot
+      icon: Sparkles,
+      number: "03"
     },
     {
       title: t("STEP_4_TITLE"),
       description: t("STEP_4_DESC"),
-      icon: FolderOpen
+      icon: Download,
+      number: "04"
     }
   ];
 
@@ -34,11 +38,14 @@ export default function HowItWorks() {
     <section className={styles.howItWorks}>
       <div className={styles.howItWorks__container}>
         <h2 className={styles.howItWorks__heading}>{t("HEADING")}</h2>
+        <p className={styles.howItWorks__subheading}>{t("SUBHEADING")}</p>
+        
         <div className={styles.howItWorks__steps}>
           {steps.map((step) => {
             const IconComponent = step.icon;
             return (
               <div key={step.title} className={styles.step}>
+                <div className={styles.step__number}>{step.number}</div>
                 <div className={styles.step__icon}>
                   <IconComponent />
                 </div>

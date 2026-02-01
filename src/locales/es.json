@@ -3,21 +3,24 @@
     "TITLE": "Bienvenido a SparkPlan",
     "SUBTITLE": "Transforma tus ideas en planes accionables mediante IA y automatización.",
     "HERO": {
-      "TITLE": "Transforma Tus Ideas en Planes de Acción",
-      "SUBTITLE": "SparkPlan usa IA para convertir tus pensamientos en planes estructurados y accionables — guardados automáticamente en tu Google Drive.",
-      "GET_STARTED": "Comenzar Gratis",
+      "BADGE": "Potenciado por IA",
+      "TITLE": "Tu Idea de Negocio, Transformada en un Plan Profesional",
+      "SUBTITLE": "Genera planes de negocio completos con análisis estratégico y branding en segundos. Descarga en PDF o guarda en Google Drive.",
+      "GET_STARTED": "Crear Mi Primer Plan Gratis",
+      "NOTE": "1 plan gratuito • Sin tarjeta de crédito",
       "GO_TO_DASHBOARD": "Ir al Panel"
     },
     "HOW_IT_WORKS": {
       "HEADING": "Cómo Funciona",
-      "STEP_1_TITLE": "Inicia sesión con Google",
-      "STEP_1_DESC": "Autenticación segura usando tu cuenta de Google.",
-      "STEP_2_TITLE": "Comparte Tu Idea",
-      "STEP_2_DESC": "Describe tu idea en cualquier idioma — simple o detallada.",
-      "STEP_3_TITLE": "La IA Genera Tu Plan",
-      "STEP_3_DESC": "Nuestra IA crea un plan estructurado con pasos, recursos y cronogramas.",
-      "STEP_4_TITLE": "Guardado Automático en Drive",
-      "STEP_4_DESC": "Tu plan se guarda automáticamente en tu Google Drive en una carpeta dedicada."
+      "SUBHEADING": "Crea tu plan de negocio profesional en 4 pasos simples",
+      "STEP_1_TITLE": "Inicia Sesión con Google",
+      "STEP_1_DESC": "Autenticación segura con tu cuenta de Google. Sin contraseñas adicionales.",
+      "STEP_2_TITLE": "Describe Tu Idea",
+      "STEP_2_DESC": "Escribe tu idea en cualquier idioma. Mínimo 50 caracteres, el resto lo hace la IA.",
+      "STEP_3_TITLE": "IA Genera Plan Completo",
+      "STEP_3_DESC": "Análisis estratégico, plan de negocio detallado y recomendaciones de branding en segundos.",
+      "STEP_4_TITLE": "Descarga o Guarda",
+      "STEP_4_DESC": "Descarga tu plan en PDF o guárdalo directamente en Google Drive."
     },
     "FEATURES": {
       "HEADING": "¿Por Qué SparkPlan?",
@@ -139,7 +142,7 @@
     },
     "PLUS": {
       "TITLE": "PLUS",
-      "PRICE": "$1.99",
+      "PRICE": "$2.49",
       "PERIOD": "/mes",
       "DESCRIPTION": "Ideal para emprendedores activos",
       "FEATURE_1": "30 planes mensuales",
@@ -152,7 +155,7 @@
     },
     "PRO": {
       "TITLE": "PRO",
-      "PRICE": "$6.99",
+      "PRICE": "$5.99",
       "PERIOD": "/mes",
       "DESCRIPTION": "Para profesionales",
       "FEATURE_1": "100 planes mensuales",

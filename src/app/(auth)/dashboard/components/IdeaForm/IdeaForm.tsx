@@ -322,7 +322,6 @@ export default function IdeaForm() {
                 plans={plans}
                 loading={plansLoading}
                 error={plansError}
-                currentPlan={subscription}
                 onView={handleViewPlan}
                 onDownload={handleDownloadPlan}
                 onDelete={handleDeletePlan}

@@ -3,21 +3,24 @@
     "TITLE": "Welcome to SparkPlan",
     "SUBTITLE": "Transform your ideas into actionable plans with AI and automation.",
     "HERO": {
-      "TITLE": "Turn Your Ideas Into Action Plans",
-      "SUBTITLE": "SparkPlan uses AI to convert your thoughts into structured, actionable plans — automatically saved to your Google Drive.",
-      "GET_STARTED": "Get Started Free",
+      "BADGE": "AI-Powered",
+      "TITLE": "Your Business Idea, Transformed into a Professional Plan",
+      "SUBTITLE": "Generate complete business plans with strategic analysis and branding in seconds. Download as PDF or save to Google Drive.",
+      "GET_STARTED": "Create My First Plan Free",
+      "NOTE": "1 free plan • No credit card",
       "GO_TO_DASHBOARD": "Go to Dashboard"
     },
     "HOW_IT_WORKS": {
       "HEADING": "How It Works",
-      "STEP_1_TITLE": "Sign in with Google",
-      "STEP_1_DESC": "Secure authentication using your Google account.",
-      "STEP_2_TITLE": "Share Your Idea",
-      "STEP_2_DESC": "Describe your idea in any language — simple or detailed.",
-      "STEP_3_TITLE": "AI Generates Your Plan",
-      "STEP_3_DESC": "Our AI creates a structured plan with steps, resources, and timelines.",
-      "STEP_4_TITLE": "Auto-Save to Drive",
-      "STEP_4_DESC": "Your plan is automatically saved to your Google Drive in a dedicated folder."
+      "SUBHEADING": "Create your professional business plan in 4 simple steps",
+      "STEP_1_TITLE": "Sign In with Google",
+      "STEP_1_DESC": "Secure authentication with your Google account. No additional passwords.",
+      "STEP_2_TITLE": "Describe Your Idea",
+      "STEP_2_DESC": "Write your idea in any language. Minimum 50 characters, AI does the rest.",
+      "STEP_3_TITLE": "AI Generates Complete Plan",
+      "STEP_3_DESC": "Strategic analysis, detailed business plan, and branding recommendations in seconds.",
+      "STEP_4_TITLE": "Download or Save",
+      "STEP_4_DESC": "Download your plan as PDF or save it directly to Google Drive."
     },
     "FEATURES": {
       "HEADING": "Why SparkPlan?",
@@ -139,7 +142,7 @@
     },
     "PLUS": {
       "TITLE": "PLUS",
-      "PRICE": "$1.99",
+      "PRICE": "$2.49",
       "PERIOD": "/month",
       "DESCRIPTION": "Ideal for active entrepreneurs",
       "FEATURE_1": "30 monthly plans",
@@ -152,7 +155,7 @@
     },
     "PRO": {
       "TITLE": "PRO",
-      "PRICE": "$6.99",
+      "PRICE": "$5.99",
       "PERIOD": "/month",
       "DESCRIPTION": "For professionals",
       "FEATURE_1": "100 monthly plans",
