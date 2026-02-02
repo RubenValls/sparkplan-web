@@ -24,21 +24,25 @@
     },
     "FEATURES": {
       "HEADING": "¿Por Qué SparkPlan?",
-      "FEATURE_1_TITLE": "Rapidísimo",
-      "FEATURE_1_DESC": "Genera planes completos en segundos, no en horas.",
-      "FEATURE_2_TITLE": "Soporte Multilingüe",
-      "FEATURE_2_DESC": "Escribe en inglés o español — la IA se adapta a tu idioma.",
-      "FEATURE_3_TITLE": "Almacenamiento en la Nube",
-      "FEATURE_3_DESC": "Todos los planes se guardan de forma segura en tu Google Drive personal."
+      "SUBHEADING": "Todo lo que necesitas para crear planes de negocio profesionales",
+      "FEATURE_1_TITLE": "IA Avanzada",
+      "FEATURE_1_DESC": "Genera análisis estratégico, plan completo y branding en segundos. No en horas.",
+      "FEATURE_2_TITLE": "Multiidioma Automático",
+      "FEATURE_2_DESC": "Escribe en cualquier idioma — la IA detecta y adapta todo el plan automáticamente.",
+      "FEATURE_3_TITLE": "Descarga o Google Drive",
+      "FEATURE_3_DESC": "Descarga tus planes en PDF o guárdalos directamente en Google Drive con un clic.",
+      "FEATURE_4_TITLE": "Historial Completo",
+      "FEATURE_4_DESC": "Accede a todos tus planes anteriores. Solo para usuarios PLUS y PRO."
     },
     "PRICING": {
       "HEADING": "Elige Tu Plan",
       "SUBHEADING": "Comienza gratis y actualiza cuando lo necesites"
     },
     "CTA": {
-      "HEADING": "¿Listo para Dar Vida a Tus Ideas?",
-      "TEXT": "Únete a miles de creadores, emprendedores y pensadores que usan SparkPlan.",
-      "START_NOW": "Comenzar Ahora",
+      "HEADING": "¿Listo para Transformar Tu Idea?",
+      "TEXT": "Crea tu primer plan de negocio profesional gratis. Sin tarjeta de crédito, sin compromisos.",
+      "START_NOW": "Crear Mi Plan Gratis",
+      "NOTE": "1 plan gratuito • Genera en segundos",
       "GO_TO_DASHBOARD": "Ir al Panel"
     }
   },

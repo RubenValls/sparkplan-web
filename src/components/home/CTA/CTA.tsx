@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { signIn } from "next-auth/react";
 import { ROUTES } from "@/config";
+import { ArrowRight } from "lucide-react";
 import styles from "./CTA.module.scss";
 
 export default function CTA() {
@@ -19,7 +20,9 @@ export default function CTA() {
         <p className={styles.cta__text}>{t("TEXT")}</p>
         <button className={styles.cta__button} onClick={handleAction}>
           {t("START_NOW")}
+          <ArrowRight className={styles.cta__buttonIcon} />
         </button>
+        <p className={styles.cta__note}>{t("NOTE")}</p>
       </div>
     </section>
   );

@@ -24,21 +24,25 @@
     },
     "FEATURES": {
       "HEADING": "Why SparkPlan?",
-      "FEATURE_1_TITLE": "Lightning Fast",
-      "FEATURE_1_DESC": "Generate complete plans in seconds, not hours.",
-      "FEATURE_2_TITLE": "Multilingual Support",
-      "FEATURE_2_DESC": "Write in English or Spanish — AI adapts to your language.",
-      "FEATURE_3_TITLE": "Cloud Storage",
-      "FEATURE_3_DESC": "All plans are securely stored in your personal Google Drive."
+      "SUBHEADING": "Everything you need to create professional business plans",
+      "FEATURE_1_TITLE": "Advanced AI",
+      "FEATURE_1_DESC": "Generate strategic analysis, complete plan, and branding in seconds. Not hours.",
+      "FEATURE_2_TITLE": "Automatic Multilingual",
+      "FEATURE_2_DESC": "Write in any language — AI detects and adapts the entire plan automatically.",
+      "FEATURE_3_TITLE": "Download or Google Drive",
+      "FEATURE_3_DESC": "Download your plans as PDF or save them directly to Google Drive with one click.",
+      "FEATURE_4_TITLE": "Complete History",
+      "FEATURE_4_DESC": "Access all your previous plans. Only for PLUS and PRO users."
     },
     "PRICING": {
       "HEADING": "Choose Your Plan",
       "SUBHEADING": "Start free and upgrade when you need it"
     },
     "CTA": {
-      "HEADING": "Ready to Bring Your Ideas to Life?",
-      "TEXT": "Join thousands of creators, entrepreneurs, and thinkers using SparkPlan.",
-      "START_NOW": "Start Now",
+      "HEADING": "Ready to Transform Your Idea?",
+      "TEXT": "Create your first professional business plan for free. No credit card, no commitments.",
+      "START_NOW": "Create My Free Plan",
+      "NOTE": "1 free plan • Generate in seconds",
       "GO_TO_DASHBOARD": "Go to Dashboard"
     }
   },

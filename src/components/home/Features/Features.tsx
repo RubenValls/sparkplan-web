@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Zap, Globe, Cloud } from "lucide-react";
+import { Sparkles, Languages, Save, History } from "lucide-react";
 import styles from "./Features.module.scss";
 
 export default function Features() {
@@ -11,17 +11,22 @@ export default function Features() {
     {
       title: t("FEATURE_1_TITLE"),
       description: t("FEATURE_1_DESC"),
-      icon: Zap
+      icon: Sparkles
     },
     {
       title: t("FEATURE_2_TITLE"),
       description: t("FEATURE_2_DESC"),
-      icon: Globe
+      icon: Languages
     },
     {
       title: t("FEATURE_3_TITLE"),
       description: t("FEATURE_3_DESC"),
-      icon: Cloud
+      icon: Save
+    },
+    {
+      title: t("FEATURE_4_TITLE"),
+      description: t("FEATURE_4_DESC"),
+      icon: History
     }
   ];
 
@@ -29,6 +34,8 @@ export default function Features() {
     <section className={styles.features}>
       <div className={styles.features__container}>
         <h2 className={styles.features__heading}>{t("HEADING")}</h2>
+        <p className={styles.features__subheading}>{t("SUBHEADING")}</p>
+        
         <div className={styles.features__grid}>
           {features.map((feature, index) => {
             const IconComponent = feature.icon;
