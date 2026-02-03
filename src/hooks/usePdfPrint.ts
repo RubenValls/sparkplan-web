@@ -115,12 +115,16 @@ function extractPlanContent(element: HTMLElement) {
 function createTempContainer(planContent: ReturnType<typeof extractPlanContent>) {
   const container = document.createElement("div");
   
+  container.setAttribute("data-theme", "light");
+  
   Object.assign(container.style, {
     position: "absolute",
     left: "-9999px",
     width: `${PDF_CONFIG.A4_WIDTH_PX}px`,
     background: "white",
     padding: "0",
+    color: "#1a1a1a",
+    colorScheme: "light",
   });
 
   container.appendChild(createHeader());
@@ -152,9 +156,33 @@ function createHeader() {
 
 function createContentSection(htmlContent: string) {
   const content = document.createElement("div");
-  content.style.cssText = `padding: ${PDF_CONFIG.PADDING.CONTENT};`;
+  content.style.cssText = `
+    padding: ${PDF_CONFIG.PADDING.CONTENT};
+    background: white;
+    color: #1a1a1a;
+  `;
   content.innerHTML = htmlContent;
+  
+  applyLightModeStyles(content);
+  
   return content;
+}
+
+function applyLightModeStyles(element: HTMLElement) {
+  element.style.setProperty("--color-text", "#1a1a1a");
+  element.style.setProperty("--color-text-secondary", "#666666");
+  element.style.setProperty("--color-bg", "#ffffff");
+  element.style.setProperty("--color-surface", "#f8f9fa");
+  element.style.setProperty("--color-border", "#e5e7eb");
+  element.style.setProperty("--color-muted", "#6b7280");
+  
+  const children = element.querySelectorAll("*");
+  children.forEach((child) => {
+    if (child instanceof HTMLElement) {
+      child.style.color = "inherit";
+      child.style.backgroundColor = "transparent";
+    }
+  });
 }
 
 function createFooterFromHTML(footerHTML: string) {
