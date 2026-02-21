@@ -182,7 +182,10 @@
       "MESSAGE_MONTHLY": "Has alcanzado el límite de {limit} planes este mes ({currentUsage}/{limit}).",
       "RESET_INFO": "Tu límite se renovará el {date}.",
       "UPGRADE_CTA_FREE": "Actualiza a PLUS para 30 planes mensuales",
-      "UPGRADE_CTA_PLUS": "Actualiza a PRO para 100 planes mensuales"
+      "UPGRADE_CTA_PLUS": "Actualiza a PRO para 100 planes mensuales",
+      "GLOBAL_TITLE": "Límite mensual de usuarios gratuitos alcanzado",
+      "GLOBAL_MESSAGE": "Se ha superado el límite de planes generados para usuarios gratuitos este mes.",
+      "GLOBAL_RESET_INFO": "El límite se restablecerá el {date}. Actualiza a PLUS para continuar generando planes."
     }
   }
 }

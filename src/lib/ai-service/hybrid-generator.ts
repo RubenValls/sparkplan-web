@@ -12,8 +12,10 @@ import type {
   StrategicAnalysis,
 } from "./ai-service-types";
 
-
 const genAI = new GoogleGenerativeAI(env.googleAiApiKey);
+
+const GEMINI_MODEL_ANALYSIS = "gemini-2.0-flash-lite";
+const GEMINI_MODEL_CONTENT  = "gemini-2.5-flash";
 
 function prepareAnalysisPrompt(idea: string): string {
   return ANALYSIS_PROMPT.replace("{idea}", idea);
@@ -71,10 +73,7 @@ async function analyzeBusinessIdeaWithGemini(idea: string): Promise<{
   promptTokens: number;
   completionTokens: number;
 }> {
-  const model = genAI.getGenerativeModel({
-    model: "models/gemini-flash-latest",
-  });
-
+  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL_ANALYSIS });
   const prompt = prepareAnalysisPrompt(idea);
 
   const result = await model.generateContent({
@@ -90,15 +89,10 @@ async function analyzeBusinessIdeaWithGemini(idea: string): Promise<{
 
   try {
     const analysis = parseStrategicAnalysis(responseText);
-
     const estimatedPromptTokens = Math.ceil(prompt.length / 4);
     const estimatedCompletionTokens = Math.ceil(responseText.length / 4);
 
-    return {
-      analysis,
-      promptTokens: estimatedPromptTokens,
-      completionTokens: estimatedCompletionTokens,
-    };
+    return { analysis, promptTokens: estimatedPromptTokens, completionTokens: estimatedCompletionTokens };
   } catch (error) {
     console.error("Failed to parse Gemini analysis:", responseText);
     throw new Error("Invalid strategic analysis format from Gemini");
@@ -119,10 +113,7 @@ async function generateBusinessPlanWithGemini(
   promptTokens: number;
   completionTokens: number;
 }> {
-  const model = genAI.getGenerativeModel({
-    model: "models/gemini-flash-latest",
-  });
-
+  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL_CONTENT });
   const prompt = preparePlanPrompt(idea, strategicAnalysis, detectedProjectName, language);
 
   const result = await model.generateContent({
@@ -142,11 +133,7 @@ async function generateBusinessPlanWithGemini(
   const estimatedPromptTokens = Math.ceil(prompt.length / 4);
   const estimatedCompletionTokens = Math.ceil(content.length / 4);
 
-  return {
-    content,
-    promptTokens: estimatedPromptTokens,
-    completionTokens: estimatedCompletionTokens,
-  };
+  return { content, promptTokens: estimatedPromptTokens, completionTokens: estimatedCompletionTokens };
 }
 
 // ============================================
@@ -163,10 +150,7 @@ async function generateBrandingWithGemini(
   promptTokens: number;
   completionTokens: number;
 }> {
-  const model = genAI.getGenerativeModel({
-    model: "models/gemini-flash-latest",
-  });
-
+  const model = genAI.getGenerativeModel({ model: GEMINI_MODEL_CONTENT });
   const prompt = prepareBrandingPrompt(idea, strategicAnalysis, detectedProjectName, language);
 
   const result = await model.generateContent({
@@ -182,11 +166,7 @@ async function generateBrandingWithGemini(
   const estimatedPromptTokens = Math.ceil(prompt.length / 4);
   const estimatedCompletionTokens = Math.ceil(content.length / 4);
 
-  return {
-    content,
-    promptTokens: estimatedPromptTokens,
-    completionTokens: estimatedCompletionTokens,
-  };
+  return { content, promptTokens: estimatedPromptTokens, completionTokens: estimatedCompletionTokens };
 }
 
 // ============================================
@@ -209,7 +189,7 @@ export async function generateHybridPlan(
     strategicAnalysis,
     detectedProjectName,
     language
-    );
+  );
 
   const brandingResult = await generateBrandingWithGemini(
     idea,

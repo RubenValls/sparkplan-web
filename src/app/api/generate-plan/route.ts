@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import OpenAI from "openai";
 import { extractPlanTitle } from "@/utils";
 import { createBusinessPlan, getUserByEmail } from "@/lib/supabase";
 import {
@@ -96,16 +95,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (error) {
     console.error("Error generating plan:", error);
-
-    if (error instanceof OpenAI.APIError) {
-      return NextResponse.json(
-        {
-          error: "OpenAI API error",
-          message: error.message,
-        },
-        { status: error.status || 500 }
-      );
-    }
 
     return NextResponse.json(
       {

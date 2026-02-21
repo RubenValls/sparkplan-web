@@ -182,7 +182,10 @@
       "MESSAGE_MONTHLY": "You've reached your limit of {limit} plans this month ({currentUsage}/{limit}).",
       "RESET_INFO": "Your limit will reset on {date}.",
       "UPGRADE_CTA_FREE": "Upgrade to PLUS for 30 monthly plans",
-      "UPGRADE_CTA_PLUS": "Upgrade to PRO for 100 monthly plans"
+      "UPGRADE_CTA_PLUS": "Upgrade to PRO for 100 monthly plans",
+      "GLOBAL_TITLE": "Monthly free user limit reached",
+      "GLOBAL_MESSAGE": "The limit of plans generated for free users this month has been exceeded.",
+      "GLOBAL_RESET_INFO": "The limit will reset on {date}. Upgrade to PLUS to continue generating plans."
     }
   }
 }

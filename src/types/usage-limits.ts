@@ -23,6 +23,7 @@ export interface UsageLimitErrorResponse {
   limit: number;
   periodType: "lifetime" | "monthly";
   periodEnd: string;
+  isGlobalLimit?: boolean;
 }
 
 export const USAGE_LIMITS: Record<SubscriptionType, UsageLimit> = {
@@ -39,3 +40,5 @@ export const USAGE_LIMITS: Record<SubscriptionType, UsageLimit> = {
     periodType: "monthly",
   },
 } as const;
+
+export const GLOBAL_FREE_MONTHLY_LIMIT = 10000;

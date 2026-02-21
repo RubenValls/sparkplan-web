@@ -243,6 +243,7 @@ export default function IdeaForm() {
                   limit={usageLimitError.limit}
                   periodType={usageLimitError.periodType}
                   periodEnd={usageLimitError.periodEnd}
+                  isGlobalLimit={usageLimitError.isGlobalLimit || false}
                 />
               )}
 

@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase/client";
-import { USAGE_LIMITS } from "@/types/usage-limits";
+import { GLOBAL_FREE_MONTHLY_LIMIT, USAGE_LIMITS } from "@/types/usage-limits";
 import type { SubscriptionType } from "@/lib/supabase/types";
 import type { UsageLimitErrorData } from "@/types/usage-limits";
 
@@ -9,12 +9,51 @@ interface UsageCheckResult {
   limit: number | null;
   periodStart: Date;
   periodEnd: Date;
+  globalLimitReached?: boolean;
 }
 
 interface UserWithSubscription {
   email: string;
   subscription: SubscriptionType;
   sub_expiration_date: string | null;
+}
+
+async function checkGlobalFreeLimitForMonth(): Promise<boolean> {  
+  const now = new Date();
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+  
+  const { data: freeUsers, error: usersError } = await supabase
+    .from("users")
+    .select("email")
+    .eq("subscription", "FREE");
+
+  if (usersError) {
+    return false;
+  }
+
+  if (!freeUsers || freeUsers.length === 0) {
+    return false;
+  }
+
+  const freeUserEmails = freeUsers.map(u => u.email);
+  
+  const { count, error: plansError } = await supabase
+    .from("business_plans")
+    .select("*", { count: "exact", head: true })
+    .in("user_email", freeUserEmails)
+    .gte("creation_date", monthStart.toISOString())
+    .lte("creation_date", monthEnd.toISOString());
+
+  if (plansError) {
+    return false;
+  }
+
+  const totalFreeThisMonth = count || 0;
+
+  const isLimitReached = totalFreeThisMonth >= GLOBAL_FREE_MONTHLY_LIMIT;
+  
+  return isLimitReached;
 }
 
 export async function checkUsageLimit(
@@ -33,14 +72,41 @@ export async function checkUsageLimit(
     }
 
     const currentUsage = count || 0;
-    const allowed = currentUsage < limits.maxPlans!;
+
+    if (currentUsage >= limits.maxPlans!) {
+      return {
+        allowed: false,
+        currentUsage,
+        limit: limits.maxPlans,
+        periodStart: new Date(0),
+        periodEnd: new Date(),
+        globalLimitReached: false,
+      };
+    }
+
+    const globalLimitReached = await checkGlobalFreeLimitForMonth();
+    
+    if (globalLimitReached) {
+      const now = new Date();
+      const monthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59);
+
+      return {
+        allowed: false,
+        currentUsage: 0,
+        limit: limits.maxPlans,
+        periodStart: new Date(now.getFullYear(), now.getMonth(), 1),
+        periodEnd: monthEnd,
+        globalLimitReached: true,
+      };
+    }
 
     return {
-      allowed,
+      allowed: true,
       currentUsage,
       limit: limits.maxPlans,
       periodStart: new Date(0),
       periodEnd: new Date(),
+      globalLimitReached: false,
     };
   }
 

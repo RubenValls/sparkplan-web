@@ -11,6 +11,7 @@ interface UsageLimitErrorProps {
   limit: number;
   periodType: "lifetime" | "monthly";
   periodEnd: string;
+  isGlobalLimit?: boolean;
 }
 
 export default function UsageLimitError({
@@ -19,9 +20,40 @@ export default function UsageLimitError({
   limit,
   periodType,
   periodEnd,
+  isGlobalLimit = false
 }: UsageLimitErrorProps) {
   const t = useTranslations("ERRORS.USAGE_LIMIT_REACHED");
   const router = useRouter();
+
+  if (isGlobalLimit) {
+    const resetDate = new Date(periodEnd).toLocaleDateString(undefined, {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+
+    const handleUpgrade = () => {
+      router.push(ROUTES.PLANS);
+    };
+
+    return (
+      <div className={styles.error}>
+        <h3 className={styles.error__title}>{t("GLOBAL_TITLE")}</h3>
+        
+        <p className={styles.error__message}>
+          {t("GLOBAL_MESSAGE")}
+        </p>
+
+        <p className={styles.error__reset}>
+          {t("GLOBAL_RESET_INFO", { date: resetDate })}
+        </p>
+
+        <button onClick={handleUpgrade} className={styles.error__button}>
+          {t("UPGRADE_CTA_FREE")}
+        </button>
+      </div>
+    );
+  }
 
   const isFree = periodType === "lifetime";
   
