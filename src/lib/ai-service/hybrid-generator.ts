@@ -14,7 +14,7 @@ import type {
 
 const genAI = new GoogleGenerativeAI(env.googleAiApiKey);
 
-const GEMINI_MODEL_ANALYSIS = "gemini-2.0-flash-lite";
+const GEMINI_MODEL_ANALYSIS = "gemini-2.5-flash-lite";
 const GEMINI_MODEL_CONTENT  = "gemini-2.5-flash";
 
 function prepareAnalysisPrompt(idea: string): string {
