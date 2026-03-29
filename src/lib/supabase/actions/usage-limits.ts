@@ -1,4 +1,6 @@
-import { supabase } from "@/lib/supabase/client";
+'use server';
+
+import { supabase } from "@/lib/supabase/server";
 import { GLOBAL_FREE_MONTHLY_LIMIT, USAGE_LIMITS } from "@/types/usage-limits";
 import type { SubscriptionType } from "@/lib/supabase/types";
 import type { UsageLimitErrorData } from "@/types/usage-limits";
@@ -165,12 +167,12 @@ function calculateMonthlyPeriodStart(expirationDate: Date): Date {
   return periodStart;
 }
 
-export function getUsageLimitErrorData(
+export async function getUsageLimitErrorData(
   subscription: SubscriptionType,
   currentUsage: number,
   limit: number,
   periodEnd: Date
-): UsageLimitErrorData {
+): Promise<UsageLimitErrorData> {
   const limits = USAGE_LIMITS[subscription];
 
   return {

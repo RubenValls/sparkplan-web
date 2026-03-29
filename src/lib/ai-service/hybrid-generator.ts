@@ -51,6 +51,12 @@ function prepareBrandingPrompt(
     .replace("{nameEvaluation}", nameSection);
 }
 
+function validateStrategicAnalysis(analysis: StrategicAnalysis): void {
+  if (analysis.is_valid_idea === false) {
+    throw new Error("INVALID_IDEA");
+  }
+}
+
 function detectLanguage(idea: string, analysis: StrategicAnalysis): string {
   return analysis.detected_language || (idea.match(/[áéíóúñ]/i) ? "Spanish" : "English");
 }
@@ -180,6 +186,8 @@ export async function generateHybridPlan(
 
   const analysisResult = await analyzeBusinessIdeaWithGemini(idea);
   const { analysis: strategicAnalysis } = analysisResult;
+
+  validateStrategicAnalysis(strategicAnalysis);
 
   const detectedProjectName = strategicAnalysis.project_name || null;
   const language = detectLanguage(idea, strategicAnalysis);

@@ -5,6 +5,7 @@ import { LanguageProvider } from "@/components/providers/LanguageProvider";
 import { SessionProvider } from "@/components/providers/SessionProvider";
 import { ThemeProvider } from "next-themes";
 import Header from "@/components/layout/Header";
+import CookieBanner from "@/components/ui/CookieBanner/CookieBanner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
             <ThemeProvider attribute="data-theme" defaultTheme="system">
               <Header />
               {children}
+              <CookieBanner />
             </ThemeProvider>
           </LanguageProvider>
         </SessionProvider>

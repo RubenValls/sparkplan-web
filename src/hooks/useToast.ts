@@ -1,18 +1,23 @@
 import { useState, useCallback } from "react";
 
+export type ToastVariant = "success" | "error" | "warning";
+
 interface UseToastReturn {
-  showToast: (message: string) => void;
+  showToast: (message: string, variant?: ToastVariant) => void;
   toastMessage: string;
+  toastVariant: ToastVariant;
   isToastVisible: boolean;
   hideToast: () => void;
 }
 
 export function useToast(): UseToastReturn {
   const [toastMessage, setToastMessage] = useState("");
+  const [toastVariant, setToastVariant] = useState<ToastVariant>("success");
   const [isToastVisible, setIsToastVisible] = useState(false);
 
-  const showToast = useCallback((message: string) => {
+  const showToast = useCallback((message: string, variant: ToastVariant = "success") => {
     setToastMessage(message);
+    setToastVariant(variant);
     setIsToastVisible(true);
   }, []);
 
@@ -20,5 +25,5 @@ export function useToast(): UseToastReturn {
     setIsToastVisible(false);
   }, []);
 
-  return { showToast, toastMessage, isToastVisible, hideToast };
+  return { showToast, toastMessage, toastVariant, isToastVisible, hideToast };
 }

@@ -1,4 +1,5 @@
 export interface StrategicAnalysis {
+  is_valid_idea: boolean;
   detected_language?: string;
   project_name: string | null;
   user_provided: string[];

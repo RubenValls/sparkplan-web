@@ -40,7 +40,7 @@ export default function IdeaForm() {
   const { printToPDF, generatePDFBlob, isPrinting, isGenerating } = usePDFPrint();
   const { uploadToDrive, isUploading } = useGoogleDrive();
   const { plans, loading: plansLoading, error: plansError, refetch } = usePlanHistory();
-  const { showToast, toastMessage, isToastVisible, hideToast } = useToast();
+  const { showToast, toastMessage, toastVariant, isToastVisible, hideToast } = useToast();
   const { subscription } = useUserSubscription();
 
   const [idea, setIdea] = useState("");
@@ -61,6 +61,8 @@ export default function IdeaForm() {
     t("LOADING_STEP_4"),
     t("LOADING_STEP_5"),
     t("LOADING_STEP_6"),
+    t("LOADING_STEP_7"),
+    t("LOADING_STEP_8"),
   ];
 
   const savingSteps = [t("SAVING_STEP_1"), t("SAVING_STEP_2")];
@@ -75,6 +77,11 @@ export default function IdeaForm() {
     setUsageLimitError(null);
 
     const response = await generatePlan(idea.trim());
+
+    if (!response.success && response.message === "INVALID_IDEA_ERROR") {
+      showToast(t("INVALID_IDEA_ERROR"), "error");
+      return;
+    }
 
     if (!response.success && response.errorData) {
       setUsageLimitError(response.errorData);
@@ -220,6 +227,7 @@ export default function IdeaForm() {
         message={toastMessage}
         isVisible={isToastVisible}
         onClose={hideToast}
+        variant={toastVariant}
       />
 
       {loading ? (

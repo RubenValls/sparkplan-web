@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (!usageCheck.allowed) {
-      const errorData = getUsageLimitErrorData(
+      const errorData = await getUsageLimitErrorData(
         user.subscription,
         usageCheck.currentUsage,
         usageCheck.limit!,
@@ -94,6 +94,13 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (error) {
+    if (error instanceof Error && error.message === "INVALID_IDEA") {
+      return NextResponse.json(
+        { error: "INVALID_IDEA" },
+        { status: 422 }
+      );
+    }
+
     console.error("Error generating plan:", error);
 
     return NextResponse.json(

@@ -31,6 +31,10 @@ function isCustomer(object: unknown): object is Stripe.Customer {
   return typeof object === "object" && object !== null && "email" in object && !("deleted" in object);
 }
 
+function isInvoice(object: unknown): object is Stripe.Invoice {
+  return typeof object === "object" && object !== null && "customer_email" in object && "billing_reason" in object;
+}
+
 async function getSubscriptionData(subscriptionId: string) {
   const subscriptionResponse = await stripe.subscriptions.retrieve(subscriptionId);
   
@@ -89,6 +93,27 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
   }
 }
 
+async function handleInvoicePaymentSucceeded(invoice: Stripe.Invoice) {
+  if (invoice.billing_reason !== "subscription_cycle") return;
+
+  const customerEmail = invoice.customer_email;
+  const subscriptionId = invoice.parent?.subscription_details?.subscription;
+  if (!customerEmail || !subscriptionId) return;
+
+  const { priceId, currentPeriodEnd } = await getSubscriptionData(
+    typeof subscriptionId === "string" ? subscriptionId : subscriptionId.id
+  );
+
+  const plan: SubscriptionType = priceId === STRIPE_PRICE_IDS.PLUS ? "PLUS" : "PRO";
+  const expirationDate = new Date(currentPeriodEnd * 1000);
+
+  await updateUserSubscription(customerEmail, plan, expirationDate);
+}
+
+async function handleInvoicePaymentFailed(invoice: Stripe.Invoice) {
+  console.warn(`Payment failed for customer: ${invoice.customer_email}`);
+}
+
 async function handleSubscriptionDeleted(subscription: Stripe.Subscription) {  
   const customer = await stripe.customers.retrieve(subscription.customer as string);
   
@@ -101,6 +126,16 @@ const eventHandlers: Record<string, (data: unknown) => Promise<void>> = {
   "checkout.session.completed": async (data) => {
     if (isCheckoutSession(data)) {
       await handleCheckoutCompleted(data);
+    }
+  },
+  "invoice.payment_succeeded": async (data) => {
+    if (isInvoice(data)) {
+      await handleInvoicePaymentSucceeded(data);
+    }
+  },
+  "invoice.payment_failed": async (data) => {
+    if (isInvoice(data)) {
+      await handleInvoicePaymentFailed(data);
     }
   },
   "customer.subscription.deleted": async (data) => {

@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { CheckCircle, X } from "lucide-react";
+import { CheckCircle, XCircle, AlertTriangle, X } from "lucide-react";
+import type { ToastVariant } from "@/hooks/useToast";
 import styles from "./Toast.module.scss";
 
 interface ToastProps {
@@ -9,6 +10,7 @@ interface ToastProps {
   isVisible: boolean;
   onClose: () => void;
   duration?: number;
+  variant?: ToastVariant;
 }
 
 export default function Toast({
@@ -16,6 +18,7 @@ export default function Toast({
   isVisible,
   onClose,
   duration = 5000,
+  variant = "success",
 }: ToastProps) {
   useEffect(() => {
     if (isVisible) {
@@ -30,8 +33,10 @@ export default function Toast({
   if (!isVisible) return null;
 
   return (
-    <div className={styles.toast}>
-      <CheckCircle className={styles.toast__icon} />
+    <div className={`${styles.toast} ${styles[`toast--${variant}`]}`}>
+      {variant === "error" && <XCircle className={styles.toast__icon} />}
+      {variant === "warning" && <AlertTriangle className={styles.toast__icon} />}
+      {variant === "success" && <CheckCircle className={styles.toast__icon} />}
       <p className={styles.toast__message}>{message}</p>
       <button
         onClick={onClose}

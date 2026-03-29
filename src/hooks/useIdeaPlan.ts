@@ -25,6 +25,15 @@ export function useIdeaPlan(): UseIdeaPlanReturn {
 
       const data = await response.json();
 
+      if (response.status === 422 && data.error === "INVALID_IDEA") {
+        const errorResult: PlanResultInterface = {
+          success: false,
+          message: "INVALID_IDEA_ERROR",
+        };
+        setResult(errorResult);
+        return errorResult;
+      }
+
       if (response.status === 429 && data.error === "USAGE_LIMIT_REACHED") {
         const errorResult: PlanResultInterface = {
           success: false,
