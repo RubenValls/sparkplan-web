@@ -125,6 +125,11 @@ export default function IdeaForm() {
       window.open(fileUrl, "_blank", "noopener,noreferrer");
     } catch (error) {
       console.error("Error saving to Google Drive:", error);
+      if (error instanceof Error && error.message === "DRIVE_PERMISSION_DENIED") {
+        showToast(t("DRIVE_PERMISSION_DENIED"), "error");
+      } else {
+        showToast(t("DRIVE_UPLOAD_FAILED"), "error");
+      }
     } finally {
       setSavingToDrive(false);
     }

@@ -69,13 +69,10 @@ export async function POST(req: NextRequest) {
     const planTitle = extractPlanTitle(result.plan);
 
     try {
-      const isPaidPlan =
-        user.subscription === "PLUS" || user.subscription === "PRO";
-
       await createBusinessPlan({
         user_email: session.user.email,
         plan_name: planTitle,
-        plan: isPaidPlan ? result.plan : "",
+        plan: result.plan,
       });
     } catch (dbError) {
       console.error("Error saving plan to database:", dbError);

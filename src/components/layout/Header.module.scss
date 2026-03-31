@@ -71,6 +71,32 @@
     }
   }
 
+  &__skeleton {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &-item {
+      height: 36px;
+      border-radius: var(--border-radius-md);
+      background: var(--color-border);
+      animation: skeleton-pulse 1.5s ease-in-out infinite;
+
+      &--icon {
+        width: 36px;
+      }
+
+      &--btn {
+        width: 100px;
+      }
+    }
+  }
+
+  @keyframes skeleton-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
   &__link {
     display: flex;
     align-items: center;

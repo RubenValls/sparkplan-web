@@ -1,6 +1,7 @@
 "use client";
 
-import { Eye, Download, Trash2 } from "lucide-react";
+import { useState, useMemo } from "react";
+import { Eye, Download, Trash2, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./PlanHistoryList.module.scss";
 import type { BusinessPlan } from "@/lib/supabase/types";
@@ -25,6 +26,15 @@ export default function PlanHistoryList({
   const t = useTranslations("DASHBOARD.PLAN_HISTORY");
 
   const canDelete = false;
+  const [search, setSearch] = useState("");
+
+  const filteredPlans = useMemo(() => {
+    const term = search.trim().toLowerCase();
+    if (!term) return plans;
+    return plans.filter((plan) =>
+      plan.plan_name?.toLowerCase().includes(term)
+    );
+  }, [plans, search]);
 
   if (loading) {
     return (
@@ -42,9 +52,7 @@ export default function PlanHistoryList({
     );
   }
 
-  const plansWithContent = plans.filter((plan) => plan.plan && plan.plan.trim() !== "");
-
-  if (plansWithContent.length === 0) {
+  if (plans.length === 0) {
     return (
       <div className={styles.planHistory__empty}>
         <p>{t("EMPTY")}</p>
@@ -54,8 +62,24 @@ export default function PlanHistoryList({
 
   return (
     <div className={styles.planHistory}>
+      <div className={styles.planHistory__search}>
+        <Search className={styles.planHistory__searchIcon} />
+        <input
+          type="text"
+          className={styles.planHistory__searchInput}
+          placeholder={t("SEARCH_PLACEHOLDER")}
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      {filteredPlans.length === 0 ? (
+        <div className={styles.planHistory__empty}>
+          <p>{t("NO_RESULTS")}</p>
+        </div>
+      ) : (
       <div className={styles.planHistory__table}>
-        {plansWithContent.map((plan) => (
+        {filteredPlans.map((plan) => (
           <div key={plan.id} className={styles.planHistory__row}>
             <div className={styles.planHistory__name}>
               <span className={styles.planHistory__nameText}>
@@ -103,6 +127,7 @@ export default function PlanHistoryList({
           </div>
         ))}
       </div>
+      )}
     </div>
   );
 }

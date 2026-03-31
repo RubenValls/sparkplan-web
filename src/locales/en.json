@@ -32,7 +32,7 @@
       "FEATURE_3_TITLE": "Download or Google Drive",
       "FEATURE_3_DESC": "Download your plans as PDF or save them directly to Google Drive with one click.",
       "FEATURE_4_TITLE": "Complete History",
-      "FEATURE_4_DESC": "Access all your previous plans. Only for PLUS and PRO users."
+      "FEATURE_4_DESC": "Access all your previous plans."
     },
     "PRICING": {
       "HEADING": "Choose Your Plan",
@@ -65,6 +65,8 @@
       "SUCCESS_MESSAGE": "Your plan has been successfully generated!",
       "ERROR_MESSAGE": "Something went wrong. Please try again.",
       "INVALID_IDEA_ERROR": "We couldn't analyze your idea. Make sure it describes a clear business proposal and try again.",
+      "DRIVE_PERMISSION_DENIED": "You don't have permission to access Google Drive. Sign out, sign back in, and accept the Drive permissions when prompted.",
+      "DRIVE_UPLOAD_FAILED": "The file could not be saved to Google Drive. Please try again.",
       "VIEW_IN_DRIVE": "View in Google Drive",
       "TIPS_TITLE": "Tips for better results:",
       "TIP_1": "Write in your preferred language — the complete plan will be generated in that language",
@@ -95,6 +97,8 @@
       "LOADING": "Loading plans...",
       "ERROR": "Error loading plans: {error}",
       "EMPTY": "You don't have any saved plans yet.",
+      "NO_RESULTS": "No plans found with that name.",
+      "SEARCH_PLACEHOLDER": "Search by name...",
       "VIEW": "View plan",
       "DOWNLOAD": "Download PDF",
       "DELETE": "Delete plan",

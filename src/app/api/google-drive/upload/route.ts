@@ -172,6 +172,9 @@ function buildMultipartBody(
 
 async function throwIfResponseNotOk(response: Response, errorMessage: string): Promise<void> {
   if (!response.ok) {
+    if (response.status === 401 || response.status === 403) {
+      throw new Error("DRIVE_PERMISSION_DENIED");
+    }
     const errorData = await response.json();
     throw new Error(`${errorMessage}: ${JSON.stringify(errorData)}`);
   }
@@ -190,7 +193,11 @@ function buildSuccessResponse(fileId: string): NextResponse {
 
 function handleUploadError(error: unknown): NextResponse {
   const errorMessage = error instanceof Error ? error.message : "Failed to upload file to Google Drive";
-  const statusCode = errorMessage.includes("Unauthorized") ? 401 : 500;
 
+  if (errorMessage === "DRIVE_PERMISSION_DENIED") {
+    return NextResponse.json({ error: "DRIVE_PERMISSION_DENIED" }, { status: 403 });
+  }
+
+  const statusCode = errorMessage.includes("Unauthorized") ? 401 : 500;
   return NextResponse.json({ error: errorMessage }, { status: statusCode });
 }

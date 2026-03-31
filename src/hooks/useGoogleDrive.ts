@@ -30,7 +30,7 @@ export function useGoogleDrive(): UseGoogleDriveReturn {
 
       if (!response.ok) {
         const data = await response.json();
-        throw new Error(data.error || "Failed to upload to Google Drive");
+        throw new Error(data.error || "DRIVE_UPLOAD_FAILED");
       }
 
       const data = await response.json();

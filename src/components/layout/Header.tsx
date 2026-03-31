@@ -28,7 +28,12 @@ export default function Header() {
 
         <nav className={styles.header__nav}>
 
-          {!isLoading && (
+          {isLoading ? (
+            <div className={styles.header__skeleton}>
+              <div className={`${styles["header__skeleton-item"]} ${styles["header__skeleton-item--icon"]}`} />
+              <div className={`${styles["header__skeleton-item"]} ${styles["header__skeleton-item--btn"]}`} />
+            </div>
+          ) : (
             <div className={styles.header__actions}>
               {session ? (
                 <>
