@@ -176,7 +176,7 @@ export default function IdeaForm() {
         behavior: "smooth",
         block: "start",
       });
-    }, 0);
+    }, 800);
   };
 
   const handleDownloadPlan = async (id: string) => {
