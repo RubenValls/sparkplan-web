@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import { CheckCircle, Download, Sparkles, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Button from "@/components/ui/Button";
 import styles from "./PlanResult.module.scss";
 
 interface PlanResultProps {
@@ -15,10 +16,12 @@ interface PlanResultProps {
   plan?: string;
   onDownloadPDF?: () => void;
   onSaveToDrive?: () => void;
+  isDownloading?: boolean;
+  isSavingToDrive?: boolean;
 }
 
 const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
-  ({ success, message, plan, onDownloadPDF, onSaveToDrive }, ref) => {
+  ({ success, message, plan, onDownloadPDF, onSaveToDrive, isDownloading, isSavingToDrive }, ref) => {
 
     if (!plan || !success) {
       return null;
@@ -29,9 +32,11 @@ const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
         ref={ref}
         className={`${styles.planResult} ${styles["planResult--success"]}`}
       >
-        <BrandHeader 
+        <BrandHeader
           onDownloadPDF={onDownloadPDF}
           onSaveToDrive={onSaveToDrive}
+          isDownloading={isDownloading}
+          isSavingToDrive={isSavingToDrive}
         />
 
         <SuccessMessage message={message} />
@@ -44,10 +49,12 @@ const PlanResult = forwardRef<HTMLDivElement, PlanResultProps>(
   }
 );
 
-function BrandHeader({ 
-  onDownloadPDF, 
-  onSaveToDrive 
-}: Pick<PlanResultProps, "onDownloadPDF" | "onSaveToDrive">) {
+function BrandHeader({
+  onDownloadPDF,
+  onSaveToDrive,
+  isDownloading,
+  isSavingToDrive,
+}: Pick<PlanResultProps, "onDownloadPDF" | "onSaveToDrive" | "isDownloading" | "isSavingToDrive">) {
   const t = useTranslations("DASHBOARD.PLAN_RESULT");
 
   return (
@@ -61,41 +68,50 @@ function BrandHeader({
           </p>
         </div>
       </div>
-      <ActionButtons 
+      <ActionButtons
         onDownloadPDF={onDownloadPDF}
         onSaveToDrive={onSaveToDrive}
+        isDownloading={isDownloading}
+        isSavingToDrive={isSavingToDrive}
       />
     </div>
   );
 }
 
-function ActionButtons({ 
-  onDownloadPDF, 
-  onSaveToDrive 
-}: Pick<PlanResultProps, "onDownloadPDF" | "onSaveToDrive">) {
+function ActionButtons({
+  onDownloadPDF,
+  onSaveToDrive,
+  isDownloading,
+  isSavingToDrive,
+}: Pick<PlanResultProps, "onDownloadPDF" | "onSaveToDrive" | "isDownloading" | "isSavingToDrive">) {
   const t = useTranslations("DASHBOARD.PLAN_RESULT");
 
   return (
     <div className={styles.planResult__actions}>
       {onDownloadPDF && (
-        <button
+        <Button
+          variant="ghost-inverse"
+          size="sm"
           onClick={onDownloadPDF}
-          className={styles.planResult__actionBtn}
+          isLoading={isDownloading}
+          icon={<Download size={18} />}
           title={t("DOWNLOAD_PDF_TITLE")}
         >
-          <Download size={20} />
           {t("PDF_BUTTON")}
-        </button>
+        </Button>
       )}
       {onSaveToDrive && (
-        <button
+        <Button
+          variant="ghost-inverse"
+          size="sm"
           onClick={onSaveToDrive}
-          className={`${styles.planResult__actionBtn} ${styles["planResult__actionBtn--primary"]}`}
+          isLoading={isSavingToDrive}
+          icon={<Save size={18} />}
           title={t("SAVE_TO_DRIVE_TITLE")}
+          className={styles["planResult__actionBtn--primary"]}
         >
-          <Save size={20} />
           {t("DRIVE_BUTTON")}
-        </button>
+        </Button>
       )}
     </div>
   );

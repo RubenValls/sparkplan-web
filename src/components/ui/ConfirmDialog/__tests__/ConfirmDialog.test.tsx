@@ -80,16 +80,16 @@ describe('ConfirmDialog', () => {
       <ConfirmDialog {...defaultProps} variant="danger" />
     );
 
-    let confirmButton = screen.getByText('Delete');
-    expect(confirmButton.className).toContain('dialog__button--danger');
+    let confirmButton = screen.getByText('Delete').closest('button')!;
+    expect(confirmButton.className).toContain('btn--danger');
 
     rerender(<ConfirmDialog {...defaultProps} variant="warning" />);
-    confirmButton = screen.getByText('Delete');
-    expect(confirmButton.className).toContain('dialog__button--warning');
+    confirmButton = screen.getByText('Delete').closest('button')!;
+    expect(confirmButton.className).toContain('btn--primary');
 
     rerender(<ConfirmDialog {...defaultProps} variant="info" />);
-    confirmButton = screen.getByText('Delete');
-    expect(confirmButton.className).toContain('dialog__button--info');
+    confirmButton = screen.getByText('Delete').closest('button')!;
+    expect(confirmButton.className).toContain('btn--primary');
   });
 
   it('should set body overflow when open and restore on unmount', () => {

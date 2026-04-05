@@ -2,6 +2,7 @@
 
 import { Coffee, HandCoins } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Button from "@/components/ui/Button";
 import styles from "./DonationCard.module.scss";
 
 interface DonationCardProps {
@@ -38,14 +39,15 @@ export default function DonationCard({
           value="Support SparkPlan Development"
         />
         
-        <button
+        <Button
           type="submit"
-          className={styles.donationCard__button}
+          variant="primary"
+          size="md"
+          icon={<HandCoins size={18} />}
           aria-label={t("BUTTON")}
         >
-          <HandCoins className={styles.donationCard__icon}/>
           {t("BUTTON")}
-        </button>
+        </Button>
       </form>
     </div>
   );

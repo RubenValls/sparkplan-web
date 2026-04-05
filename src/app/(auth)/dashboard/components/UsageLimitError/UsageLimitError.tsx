@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { ROUTES } from "@/config";
+import Button from "@/components/ui/Button";
 import styles from "./UsageLimitError.module.scss";
 
 interface UsageLimitErrorProps {
@@ -48,9 +49,9 @@ export default function UsageLimitError({
           {t("GLOBAL_RESET_INFO", { date: resetDate })}
         </p>
 
-        <button onClick={handleUpgrade} className={styles.error__button}>
+        <Button variant="primary" size="md" onClick={handleUpgrade}>
           {t("UPGRADE_CTA_FREE")}
-        </button>
+        </Button>
       </div>
     );
   }
@@ -87,12 +88,12 @@ export default function UsageLimitError({
       )}
 
       {(subscription === "FREE" || subscription === "PLUS") && (
-        <button onClick={handleUpgrade} className={styles.error__button}>
+        <Button variant="primary" size="md" onClick={handleUpgrade}>
           {subscription === "FREE" 
             ? t("UPGRADE_CTA_FREE")
             : t("UPGRADE_CTA_PLUS")
           }
-        </button>
+        </Button>
       )}
     </div>
   );

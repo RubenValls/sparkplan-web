@@ -9,6 +9,7 @@ import styles from "./IdeaForm.module.scss";
 import Loading from "@/components/ui/Loading/Loading";
 import DonationCard from "@/components/ui/DonationCard/DonationCard";
 import Accordion from "@/components/ui/Accordion/Accordion";
+import Button from "@/components/ui/Button";
 import PlanResult from "../PlanResult/PlanResult";
 import PlanHistoryList from "../PlanHistoryList/PlanHistoryList";
 import Toast from "@/components/ui/Toast/Toast";
@@ -50,6 +51,7 @@ export default function IdeaForm() {
   const [planToDelete, setPlanToDelete] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [usageLimitError, setUsageLimitError] = useState<UsageLimitErrorResponse | null>(null);
+  const [downloadingPlanId, setDownloadingPlanId] = useState<string | null>(null);
 
   const MIN_LENGTH = 50;
   const isValid = idea.trim().length >= MIN_LENGTH;
@@ -107,9 +109,19 @@ export default function IdeaForm() {
 }
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
     if (!planResultRef.current) return;
-    printToPDF(planResultRef.current);
+    try {
+      const blob = await generatePDFBlob(planResultRef.current);
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `SparkPlan-${formatDateISO()}.pdf`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch {
+      // error queda en el estado `error` del hook
+    }
   };
 
   const handleSaveToDrive = async () => {
@@ -167,7 +179,7 @@ export default function IdeaForm() {
     }, 0);
   };
 
-  const handleDownloadPlan = (id: string) => {
+  const handleDownloadPlan = async (id: string) => {
     const plan = plans.find((p) => p.id === id);
 
     if (!plan) {
@@ -175,15 +187,20 @@ export default function IdeaForm() {
       return;
     }
 
-    setResult({
-      success: true,
-      message: "SUCCESS_MESSAGE",
-      plan: plan.plan,
-    });
+    setDownloadingPlanId(id);
 
-    setTimeout(() => {
-      handleDownloadPDF();
-    }, 0);
+    try {
+      setResult({
+        success: true,
+        message: "SUCCESS_MESSAGE",
+        plan: plan.plan,
+      });
+
+      await new Promise<void>((resolve) => setTimeout(resolve, 0));
+      await handleDownloadPDF();
+    } finally {
+      setDownloadingPlanId(null);
+    }
   };
 
   const handleDeletePlan = (id: string) => {
@@ -315,13 +332,16 @@ export default function IdeaForm() {
                   </ul>
                 </div>
 
-                <button
+                <Button
                   type="submit"
+                  variant="primary"
+                  size="md"
+                  fullWidth
+                  isLoading={loading}
                   disabled={!isValid || isBusy}
-                  className={styles.ideaForm__submit}
                 >
                   {t("SUBMIT")}
-                </button>
+                </Button>
               </form>
             </Accordion>
 
@@ -339,6 +359,7 @@ export default function IdeaForm() {
                 onView={handleViewPlan}
                 onDownload={handleDownloadPlan}
                 onDelete={handleDeletePlan}
+                downloadingPlanId={downloadingPlanId}
               />
             </Accordion>
           </div>
@@ -353,6 +374,8 @@ export default function IdeaForm() {
               plan={result.plan}
               onDownloadPDF={handleDownloadPDF}
               onSaveToDrive={handleSaveToDrive}
+              isDownloading={isGenerating}
+              isSavingToDrive={savingToDrive}
             />
           )}
 

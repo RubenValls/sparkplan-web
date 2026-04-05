@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { X } from "lucide-react";
+import Button from "@/components/ui/Button";
 import styles from "./ConfirmDialog.module.scss";
 
 interface ConfirmDialogProps {
@@ -78,20 +79,17 @@ export default function ConfirmDialog({
         </div>
 
         <div className={styles.dialog__actions}>
-          <button
-            className={styles.dialog__button}
-            onClick={onCancel}
-            type="button"
-          >
+          <Button variant="ghost" size="md" onClick={onCancel} type="button">
             {cancelText}
-          </button>
-          <button
-            className={`${styles.dialog__button} ${styles[`dialog__button--${variant}`]}`}
+          </Button>
+          <Button
+            variant={variant === "danger" ? "danger" : "primary"}
+            size="md"
             onClick={onConfirm}
             type="button"
           >
             {confirmText}
-          </button>
+          </Button>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import { Eye, Download, Trash2, Search } from "lucide-react";
+import { Eye, Download, Trash2, Search, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import styles from "./PlanHistoryList.module.scss";
 import type { BusinessPlan } from "@/lib/supabase/types";
@@ -13,6 +13,7 @@ interface PlanHistoryListProps {
   onView?: (id: string) => void;
   onDownload?: (id: string) => void;
   onDelete?: (id: string) => void;
+  downloadingPlanId?: string | null;
 }
 
 export default function PlanHistoryList({
@@ -22,6 +23,7 @@ export default function PlanHistoryList({
   onView,
   onDownload,
   onDelete,
+  downloadingPlanId,
 }: PlanHistoryListProps) {
   const t = useTranslations("DASHBOARD.PLAN_HISTORY");
 
@@ -109,8 +111,13 @@ export default function PlanHistoryList({
                 onClick={() => onDownload?.(plan.id)}
                 title={t("DOWNLOAD")}
                 aria-label={t("DOWNLOAD")}
+                disabled={downloadingPlanId === plan.id}
               >
-                <Download className={styles.planHistory__actionIcon} />
+                {downloadingPlanId === plan.id ? (
+                  <Loader2 className={`${styles.planHistory__actionIcon} ${styles["planHistory__actionIcon--spinning"]}`} />
+                ) : (
+                  <Download className={styles.planHistory__actionIcon} />
+                )}
               </button>
 
               {canDelete && (

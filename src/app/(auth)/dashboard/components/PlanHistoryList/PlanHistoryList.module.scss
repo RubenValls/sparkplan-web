@@ -141,6 +141,16 @@
     height: 18px;
     color: var(--color-muted);
     transition: color 0.2s;
+
+    &--spinning {
+      animation: history-spin 0.75s linear infinite;
+      color: var(--color-primary);
+    }
+  }
+
+  @keyframes history-spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
   }
 
   @media (max-width: 640px) {
