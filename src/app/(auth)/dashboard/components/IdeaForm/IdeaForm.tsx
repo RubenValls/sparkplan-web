@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Lightbulb, History, Plus } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 import styles from "./IdeaForm.module.scss";
 
@@ -22,6 +23,7 @@ import { useToast } from "@/hooks/useToast";
 
 import { deleteBusinessPlan } from "@/lib/supabase";
 import { formatDateISO } from "@/utils";
+import { getStorageItem, setStorageItem, removeStorageItem } from "@/utils/storage";
 import ConfirmDialog from "@/components/ui/ConfirmDialog/ConfirmDialog";
 
 import type { UsageLimitErrorResponse } from "@/types/usage-limits";
@@ -29,6 +31,8 @@ import UsageLimitError from "../UsageLimitError/UsageLimitError";
 import { useUserSubscription } from "@/hooks/useUserSubscription";
 
 type AccordionSection = "create" | "history" | null;
+
+const PENDING_DRIVE_PLAN_KEY = "sparkplan_pending_drive_plan";
 
 export default function IdeaForm() {
   const t = useTranslations("DASHBOARD.IDEA_FORM");
@@ -38,7 +42,7 @@ export default function IdeaForm() {
   const planResultRef = useRef<HTMLDivElement>(null);
 
   const { result, loading, generatePlan, setResult } = useIdeaPlan();
-  const { printToPDF, generatePDFBlob, isPrinting, isGenerating } = usePDFPrint();
+  const { generatePDFBlob, isPrinting, isGenerating } = usePDFPrint();
   const { uploadToDrive, isUploading } = useGoogleDrive();
   const { plans, loading: plansLoading, error: plansError, refetch } = usePlanHistory();
   const { showToast, toastMessage, toastVariant, isToastVisible, hideToast } = useToast();
@@ -52,6 +56,13 @@ export default function IdeaForm() {
   const [deleting, setDeleting] = useState(false);
   const [usageLimitError, setUsageLimitError] = useState<UsageLimitErrorResponse | null>(null);
   const [downloadingPlanId, setDownloadingPlanId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const pending = getStorageItem<{ plan: string }>(PENDING_DRIVE_PLAN_KEY);
+    if (!pending) return;
+    removeStorageItem(PENDING_DRIVE_PLAN_KEY);
+    setResult({ success: true, message: "SUCCESS_MESSAGE", plan: pending.plan });
+  }, [setResult]);
 
   const MIN_LENGTH = 50;
   const isValid = idea.trim().length >= MIN_LENGTH;
@@ -119,9 +130,7 @@ export default function IdeaForm() {
       a.download = `SparkPlan-${formatDateISO()}.pdf`;
       a.click();
       URL.revokeObjectURL(url);
-    } catch {
-      // error queda en el estado `error` del hook
-    }
+    } catch {}
   };
 
   const handleSaveToDrive = async () => {
@@ -138,7 +147,11 @@ export default function IdeaForm() {
     } catch (error) {
       console.error("Error saving to Google Drive:", error);
       if (error instanceof Error && error.message === "DRIVE_PERMISSION_DENIED") {
-        showToast(t("DRIVE_PERMISSION_DENIED"), "error");
+        setStorageItem(PENDING_DRIVE_PLAN_KEY, { plan: result.plan });
+        showToast(t("DRIVE_REAUTH_TOAST"), "warning");
+        setTimeout(() => {
+          signIn("google", { callbackUrl: window.location.href }, { prompt: "consent" });
+        }, 1500);
       } else {
         showToast(t("DRIVE_UPLOAD_FAILED"), "error");
       }
