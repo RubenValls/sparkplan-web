@@ -41,7 +41,7 @@ function prepareBrandingPrompt(
   detectedProjectName: string | null,
   detectedLanguage: string
 ): string {
-  const nameSection = getNameEvaluationSection(detectedProjectName || undefined);
+  const nameSection = getNameEvaluationSection(detectedProjectName || undefined, detectedLanguage);
 
   return BRANDING_PROMPT.replace("{language}", detectedLanguage)
     .replace("{positioning}", strategicAnalysis.strategic_decisions.positioning)
