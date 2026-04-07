@@ -26,9 +26,6 @@ export const metadata: Metadata = {
   },
   description:
     "Generate professional business plans with AI in seconds. Define your strategy, financials, and go-to-market plan effortlessly.",
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     title: "SparkPlan - Transform Your Ideas Into Business Plans",
     description:
@@ -36,14 +33,8 @@ export const metadata: Metadata = {
     url: "https://www.sparkplanapp.com",
     siteName: "SparkPlan",
     type: "website",
-    images: [
-      {
-        url: "/globe.svg",
-        width: 1200,
-        height: 630,
-        alt: "SparkPlan - AI Business Plan Generator",
-      },
-    ],
+    // TODO: add /public/og-image.png (1200x630px) and uncomment:
+    // images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "SparkPlan - AI Business Plan Generator" }],
   },
   twitter: {
     card: "summary_large_image",
